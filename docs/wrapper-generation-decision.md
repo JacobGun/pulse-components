@@ -143,6 +143,47 @@ The visual checked state and Vue state remained synchronized.
 
 No custom `modelValue` adapter or Vue runtime wrapper was required for the tested Checkbox contract.
 
+### Dialog result
+
+`m3e-dialog` was validated with:
+
+- direct import from `@pulse/web/dialog`;
+- a typed Vue template ref;
+- direct calls to the native `show()` and `hide()` methods;
+- `opening`, `opened`, `closing`, and `closed` lifecycle events;
+- default content;
+- named `header` and `actions` slots;
+- dismissible behavior;
+- keyboard focus entering the Dialog and returning after it closed;
+- TypeScript compilation;
+- production Vite build;
+- runtime rendering and interaction;
+- styling through the local `@pulse/tokens` package.
+
+Representative usage:
+
+```vue
+<m3e-dialog
+  ref="dialog"
+  dismissible
+  @opening="handleDialogOpening"
+  @opened="handleDialogOpened"
+  @closing="handleDialogClosing"
+  @closed="handleDialogClosed"
+>
+  <span slot="header">Vue Dialog</span>
+
+  <p>
+    This dialog is consumed directly from @pulse/web.
+  </p>
+
+  <div slot="actions">
+    <m3e-button @click="hideDialog">
+      Close
+    </m3e-button>
+  </div>
+</m3e-dialog>
+
 ## Generate versus handwrite
 
 ### Generate or derive
@@ -208,21 +249,36 @@ The package should not be established as a complete public API until more repres
 
 ## Known limitations
 
-The current Vue evidence covers Button and Checkbox only.
+The current Vue evidence covers Button, Checkbox, and Dialog.
 
-It does not yet prove:
+Together these validate:
 
-- complex named-slot composition;
-- imperative APIs and refs;
-- dialogs, focus management, and portal behavior;
+- property and boolean binding;
+- native DOM events;
+- default and named slots;
+- Vue `v-model`;
+- template refs;
+- imperative element APIs;
+- dialog lifecycle events;
+- dismiss and focus behavior;
+- Pulse token consumption;
+- TypeScript compilation;
+- production Vite builds;
+- runtime interaction.
+
+The current validation does not yet prove:
+
 - select or autocomplete value binding;
-- complex event payloads;
-- constraint validation and form submission;
+- complex custom-event payloads;
+- constraint validation and form submission beyond Checkbox state;
 - server-side rendering;
-- broader Edge Gateway integration;
-- package publication and version compatibility.
+- package publication and version compatibility;
+- behavior across the complete Pulse component inventory.
 
-The current result is evidence for a thin Vue approach, not proof that every component requires no wrapper.
+No tested Vue case currently demonstrates a need for a runtime component wrapper.
+
+This is evidence for a thin Vue integration approach, not evidence that every Pulse component will work without framework-specific glue.
+
 
 ## Roadmap interpretation
 
@@ -237,8 +293,11 @@ It does not mark WRP-06 complete. Product demand now exists through the Vue-base
 Proceed with the following direction:
 
 1. Keep `@pulse/web` as the canonical implementation.
-2. Prefer direct Vue consumption where it satisfies the wrapper contract.
-3. Generate metadata, typing, registration, and inventories from Custom Elements Manifest.
-4. Add runtime framework adapters only for demonstrated integration gaps.
-5. Validate one more representative complex component before finalizing the Vue conventions.
-6. Document framework exceptions before recommending WRP-02B as Done.
+2. Prefer direct Vue consumption as the default integration pattern.
+3. Do not generate Vue runtime component wrappers unless a component demonstrates a concrete integration gap.
+4. Generate or derive component metadata, typings, registration information, imports, events, slots, and support inventories from Custom Elements Manifest where reliable.
+5. Maintain a small Vue conventions layer for compiler configuration, template-ref typing, CSS-package declarations, and any future component-specific exceptions.
+6. Keep `@pulse/tokens` as a consumer-level CSS dependency rather than duplicating Pulse styling inside Vue integrations.
+7. Treat Button, Checkbox, and Dialog as the initial Vue reference cases.
+8. Record new Vue adapters as explicit exceptions with their technical reason rather than making wrappers the default.
+9. Review the generate-versus-handwrite decision against the wrapper contract before recommending WRP-02B as Done.
