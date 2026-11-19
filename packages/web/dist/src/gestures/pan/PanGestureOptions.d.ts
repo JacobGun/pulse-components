@@ -1,0 +1,50 @@
+import { GestureOptions } from "@pulse/web/gestures";
+/**
+ * Specifies the possible modes in which to active a pan gesture.
+ * - `"press"` — Pointer must be pressed to activate the gesture.
+ * - `"move"` — Pointer must be moved to activate the gesture.
+ */
+export type PanGestureActivationMode = "press" | "move";
+/** Specifies the axes to which a pan gesture can lock. */
+export type PanGestureLockAxis = "x" | "y" | "auto" | "none";
+/** Encapsulates options used to detect and interpret pan gestures. */
+export interface PanGestureOptions extends GestureOptions {
+    /**
+     * Number of pointers required for the gesture to be recognized.
+     * @default 1
+     */
+    readonly pointers: number;
+    /**
+     * Mode in which to activate the gesture.
+     * @default "press"
+     */
+    readonly activationMode: PanGestureActivationMode;
+    /**
+     * Minimum distance (px) a pointer must move before the gesture starts.
+     * @default 4
+     */
+    readonly minDisplacement: number;
+    /**
+     * The axis to which movement is locked.
+     * @default "none"
+     */
+    readonly lockAxis: PanGestureLockAxis;
+    /**
+     * Minimum total displacement (px) required before axis locking resolves.
+     * @default 8
+     */
+    readonly axisThreshold: number;
+    /**
+     * Minimum incremental movement (px) on the secondary axis required before emitting detail for a locked axis.
+     * @default 0
+     */
+    readonly deltaThreshold: number;
+    /**
+     * Maximum allowed time (ms) between the earliest and latest press.
+     * @default 120
+     */
+    readonly maxPressInterval: number;
+}
+/** Defines the default options used to detect and interpret pan gestures. */
+export declare const DefaultPanGestureOptions: PanGestureOptions;
+//# sourceMappingURL=PanGestureOptions.d.ts.map

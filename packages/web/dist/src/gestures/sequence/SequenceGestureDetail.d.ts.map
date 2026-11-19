@@ -1,0 +1,1 @@
+{"version":3,"file":"SequenceGestureDetail.d.ts","sourceRoot":"","sources":["../../../../src/gestures/sequence/SequenceGestureDetail.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAE,MAAM,qBAAqB,CAAC;AAEpD,gEAAgE;AAChE,MAAM,WAAW,qBAAsB,SAAQ,aAAa;IAC1D,8EAA8E;IAC9E,QAAQ,CAAC,OAAO,EAAE,SAAS,aAAa,EAAE,CAAC;CAC5C"}

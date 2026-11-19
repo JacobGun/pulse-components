@@ -1,0 +1,7 @@
+/**
+ * @license MIT
+ * Copyright (c) 2025–2026 matraic
+ * See LICENSE file in the project root for full license text.
+ */
+export { FocusKeyManager, KeyCode, ListKeyManager, ListManager, M3eAriaDescriber, M3eFocusTrapElement, M3eInteractivityChecker, M3eLiveAnnouncer, ModifierKeys, RadioKeyManager, RovingTabIndexManager, SelectionManager, Typeahead, addAriaReferencedId, getAriaReferenceIds, getKeyCode, hasModifierKey, isModifierAllowed, isTypeaheadItem, removeAriaReferencedId, selectionManager, typeaheadLabel } from './LiveAnnouncer.js';
+//# sourceMappingURL=core-a11y.js.map

@@ -1,0 +1,7 @@
+/**
+ * @license MIT
+ * Copyright (c) 2025–2026 matraic
+ * See LICENSE file in the project root for full license text.
+ */
+export { M3eRichTooltipActionElement, M3eRichTooltipElement, M3eTooltipElement, TooltipElementBase, isRichTooltipPosition, isTooltipPosition, isTooltipTouchGestures } from './TooltipElement.js';
+//# sourceMappingURL=tooltip.js.map

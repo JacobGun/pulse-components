@@ -1,0 +1,1 @@
+{"version":3,"file":"GestureInputSource.d.ts","sourceRoot":"","sources":["../../../src/gestures/GestureInputSource.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,gBAAgB,CAAC;AAE9C;;;GAGG;AACH,MAAM,WAAW,kBAAkB;IACjC,+DAA+D;IAC/D,OAAO,CAAC,EAAE,CAAC,KAAK,EAAE,YAAY,KAAK,IAAI,CAAC;IAExC,iCAAiC;IACjC,OAAO,IAAI,IAAI,CAAC;CACjB"}
