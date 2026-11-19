@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import type { M3eThemeElement } from "@m3e/web/theme";
 
 import { expect, test } from "./fixtures";
 
@@ -75,6 +76,23 @@ test.describe("m3e-theme color", () => {
     );
     expect(changed).toBe(true);
     expect(await primary()).not.toBe(before);
+  });
+});
+
+test.describe("m3e-theme reconnection", () => {
+  test("reapplies styles when moved between body and a nested parent", async ({ page, render }) => {
+    await render(`
+      <div id="nested">
+        <m3e-theme id="theme" color="#006A6A" scheme="light"><div id="probe"></div></m3e-theme>
+      </div>`);
+    const primary = () => readToken(page, "#probe", "--md-sys-color-primary");
+    const initial = await primary();
+
+    await page.locator("#theme").evaluate((element) => document.body.append(element));
+    await expect.poll(primary).toBe(initial);
+
+    await page.locator("#theme").evaluate((element) => document.querySelector("#nested")!.append(element));
+    await expect.poll(primary).toBe(initial);
   });
 });
 
@@ -214,4 +232,73 @@ test.describe("m3e-theme options", () => {
 
     await expect.poll(() => readToken(page, "#probe", "--m3e-focus-ring-visibility")).toBe("visible");
   });
+});
+
+test.describe("m3e-theme attribute removal", () => {
+  /** Attributes that can be removed from a live element, each with a non-default value to set first. */
+  const REMOVABLE = [
+    { attr: "color", value: "#006A6A", property: "color" },
+    { attr: "variant", value: "vibrant", property: "variant" },
+    { attr: "scheme", value: "dark", property: "scheme" },
+    { attr: "contrast", value: "high", property: "contrast" },
+    { attr: "motion", value: "standard", property: "motion" },
+    { attr: "density", value: "-2", property: "density" },
+    { attr: "strong-focus", value: "", property: "strongFocus" },
+  ] as const;
+
+  /** The tokens a theme derives that vary with the attributes above. */
+  const TOKENS = [
+    "--md-sys-color-primary",
+    "--md-sys-color-surface",
+    "--md-sys-density-scale",
+    "--m3e-focus-ring-visibility",
+    ...SPRINGS.map((x) => `--md-sys-motion-spring-${x}`),
+  ];
+
+  const readTokens = (page: Page, selector: string) =>
+    page.$eval(
+      selector,
+      (element, names) => names.map((x) => getComputedStyle(element).getPropertyValue(x).trim()),
+      TOKENS,
+    );
+
+  test("removing an invalid variant restores the default rather than the invalid-value fallback", async ({
+    page,
+    render,
+  }) => {
+    await render(`<m3e-theme id="live" variant="bogus"></m3e-theme>`);
+    const live = page.locator("#live");
+
+    expect(await live.evaluate((x) => (x as HTMLElement & { variant: string }).variant)).toBe("neutral");
+    expect(
+      await live.evaluate(async (el) => {
+        el.removeAttribute("variant");
+        await (el as HTMLElement & { updateComplete: Promise<unknown> }).updateComplete;
+        return (el as HTMLElement & { variant: string }).variant;
+      }),
+    ).toBe("tonal-spot");
+  });
+
+  for (const { attr, value, property } of REMOVABLE) {
+    test(`removing ${attr} restores the fresh element's default`, async ({ page, render }) => {
+      await page.emulateMedia({ colorScheme: "light" });
+      await render(`
+        <m3e-theme id="fresh"><div id="fresh-probe"></div></m3e-theme>
+        <m3e-theme id="live" ${attr}="${value}"><div id="live-probe"></div></m3e-theme>`);
+
+      const live = page.locator("#live");
+      const readProperty = (selector: string) => page.$eval(selector, (x, p) => (x as M3eThemeElement)[p], property);
+
+      // The non-default value must have taken effect, otherwise removal proves nothing.
+      expect(await readProperty("#live")).not.toBe(await readProperty("#fresh"));
+
+      await live.evaluate(async (el, name) => {
+        el.removeAttribute(name);
+        await (el as HTMLElement & { updateComplete: Promise<unknown> }).updateComplete;
+      }, attr);
+
+      expect(await readProperty("#live")).toBe(await readProperty("#fresh"));
+      await expect.poll(() => readTokens(page, "#live-probe")).toEqual(await readTokens(page, "#fresh-probe"));
+    });
+  }
 });

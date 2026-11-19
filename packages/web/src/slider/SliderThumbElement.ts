@@ -24,19 +24,20 @@ import {
  * It emits `input` and `change` events to reflect value updates.
  *
  * @example
- * The following example illustrates a labelled slider with thumb used to select a single numeric value.
+ * Place a thumb inside a slider to select a value.
+ *
  * ```html
- * <m3e-slider labelled>
- *  <m3e-slider-thumb value="50"></m3e-slider-thumb>
+ * <m3e-slider>
+ *   <m3e-slider-thumb></m3e-slider-thumb>
  * </m3e-slider>
  * ```
  *
  * @example
- * The next example illustrates a labelled range slider with two thumbs used to select a minimum and maximum numeric value.
+ * Use `min`, `max`, and `step` on the slider and `value` on its thumb.
+ *
  * ```html
- * <m3e-slider labelled>
- *  <m3e-slider-thumb value="25"></m3e-slider-thumb>
- *  <m3e-slider-thumb value="75"></m3e-slider-thumb>
+ * <m3e-slider min="1" max="5" step="0.5">
+ *   <m3e-slider-thumb value="1.5"></m3e-slider-thumb>
  * </m3e-slider>
  * ```
  *
@@ -58,6 +59,8 @@ import {
  * @cssprop --m3e-slider-thumb-disabled-color - Color of the thumb when disabled.
  * @cssprop --m3e-slider-thumb-disabled-opacity - Opacity of the thumb when disabled.
  * @cssprop --m3e-slider-label-width - Width of the floating label above the thumb.
+ * @cssprop --m3e-slider-label-height - Height of the floating label above the thumb.
+ * @cssprop --m3e-slider-label-margin - Space between the floating label and the thumb.
  * @cssprop --m3e-slider-label-container-color - Background color of the label container.
  * @cssprop --m3e-slider-label-color - Text color of the label.
  * @cssprop --m3e-slider-label-font-size - Font size of the label text.
@@ -132,8 +135,8 @@ export class M3eSliderThumbElement extends Dirty(
           visibility ${DesignToken.motion.duration.short3} ${DesignToken.motion.easing.standard} allow-discrete`,
       )};
       width: var(--m3e-slider-label-width, 48px);
-      height: var(--_m3e-slider-label-height, 44px);
-      top: calc(0px - var(--_m3e-slider-label-height, 44px) - var(--_m3e-slider-label-margin, 4px));
+      height: var(--m3e-slider-label-height, 44px);
+      top: calc(0px - var(--m3e-slider-label-height, 44px) - var(--m3e-slider-label-margin, 4px));
       inset-inline-start: calc(0px - 100%);
       border-radius: var(--m3e-slider-label-shape, ${DesignToken.shape.corner.full});
       background-color: var(--m3e-slider-label-container-color, ${DesignToken.color.inverseSurface});
@@ -234,8 +237,8 @@ export class M3eSliderThumbElement extends Dirty(
       right: calc(0px - var(--m3e-focus-ring-thickness, 3px));
     }
     :host(:is(:state(--vertical), :--vertical)) .label {
-      top: calc(50% - calc(var(--_m3e-slider-label-height, 44px) / 2));
-      inset-inline-start: calc(0px - var(--m3e-slider-label-width, 48px) - var(--_m3e-slider-label-margin, 4px));
+      top: calc(50% - calc(var(--m3e-slider-label-height, 44px) / 2));
+      inset-inline-start: calc(0px - var(--m3e-slider-label-width, 48px) - var(--m3e-slider-label-margin, 4px));
     }
   `;
 

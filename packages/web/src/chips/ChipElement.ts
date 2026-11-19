@@ -17,6 +17,7 @@ import {
   renderPseudoLink,
   setCustomEnumState,
   setCustomState,
+  SuppressInitialAnimation,
 } from "@pulse/web/core";
 
 import { ChipVariant, isChipVariant } from "./ChipVariant";
@@ -30,14 +31,33 @@ import { ChipVariant, isChipVariant } from "./ChipVariant";
  * variants include `elevated` and `outlined`, enabling visual differentiation and contextual emphasis.
  *
  * @example
- * The following example illustrates use of the `m3e-chip` and `m3e-chip-set` components to present non-interactive chips.
+ * Group non-interactive chips in a chip set.
+ *
  * ```html
  * <m3e-chip-set>
- *  <m3e-chip><m3e-icon slot="icon" name="palette"></m3e-icon>Design</m3e-chip>
- *  <m3e-chip><m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility</m3e-chip>
- *  <m3e-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion</m3e-chip>
- *  <m3e-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation</m3e-chip>
+ *   <m3e-chip>Confidential</m3e-chip>
+ *   <m3e-chip>Draft</m3e-chip>
+ *   <m3e-chip>Finance</m3e-chip>
+ *   <m3e-chip>Presentation</m3e-chip>
  * </m3e-chip-set>
+ * ```
+ *
+ * @example
+ * Choose the `outlined` (default) or `elevated` variant.
+ *
+ * ```html
+ * <m3e-chip>Outlined</m3e-chip>
+ * <m3e-chip variant="elevated">Elevated</m3e-chip>
+ * ```
+ *
+ * @example
+ * Place an icon before the Finance chip's text with the `icon` slot.
+ *
+ * ```html
+ * <m3e-chip>
+ *   <m3e-icon slot="icon" name="finance"></m3e-icon>
+ *   Finance
+ * </m3e-chip>
  * ```
  *
  * @tag m3e-chip
@@ -70,7 +90,7 @@ import { ChipVariant, isChipVariant } from "./ChipVariant";
  * @cssprop --m3e-outlined-chip-outline-color - Outline color for outlined variant.
  */
 @customElement("m3e-chip")
-export class M3eChipElement extends AttachInternals(LitElement) {
+export class M3eChipElement extends SuppressInitialAnimation(AttachInternals(LitElement)) {
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
@@ -82,6 +102,11 @@ export class M3eChipElement extends AttachInternals(LitElement) {
     :host([hidden]) {
       display: none;
     }
+    :host(:not(:is(:state(--no-animate), :--no-animate))) .base {
+      transition: ${unsafeCSS(
+        `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
+      )};
+    }
     .base {
       box-sizing: border-box;
       vertical-align: middle;
@@ -90,9 +115,6 @@ export class M3eChipElement extends AttachInternals(LitElement) {
       justify-content: center;
       position: relative;
       width: 100%;
-      transition: ${unsafeCSS(
-        `background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
-      )};
       border-radius: var(--m3e-chip-container-shape, ${DesignToken.shape.corner.small});
       height: calc(var(--m3e-chip-container-height, 32px) + ${DesignToken.density.calc(-3)});
       font-size: var(--m3e-chip-label-text-font-size, ${DesignToken.typescale.standard.label.large.fontSize});
@@ -219,12 +241,12 @@ export class M3eChipElement extends AttachInternals(LitElement) {
       --m3e-elevation-level: var(--m3e-elevated-chip-disabled-elevation, ${DesignToken.elevation.level0});
     }
     @media (prefers-reduced-motion) {
-      .base {
+      :host(:not(:is(:state(--no-animate), :--no-animate))) .base {
         transition: none;
       }
     }
     @media (forced-colors: active) {
-      .base {
+      :host(:not(:is(:state(--no-animate), :--no-animate))) .base {
         transition: none;
       }
       :host(:not(:disabled):not([disabled-interactive]):not([selected])) .base,

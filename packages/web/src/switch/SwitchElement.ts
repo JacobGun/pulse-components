@@ -39,18 +39,50 @@ import { isSwitchIcons, SwitchIcons } from "./SwitchIcons";
  * and integrates with form-associated behavior, emitting `input` and `change` events when toggled.
  *
  * @example
- * The following example illustrates a switch wrapped by a `label`.
+ * Use `checked` to set the switch state.
  *
  * ```html
- * <label>Switch label&nbsp;<m3e-switch></m3e-switch></label>
+ * <m3e-switch checked></m3e-switch>
  * ```
  *
  * @example
- * By default, icons are not presented. Use the `icons` attribute to control which icons to show. The next
- * example illustrates showing both the unselected and selected icons.
+ * Associate labels with the controls.
  *
  * ```html
- * <label>Switch label&nbsp;<m3e-switch icons="both"></m3e-switch></label>
+ * <label><m3e-switch></m3e-switch>&nbsp;Switch 1</label>
+ * <m3e-switch id="switch2"></m3e-switch>
+ * <label for="switch2">&nbsp;Switch 2</label>
+ * ```
+ *
+ * @example
+ * Use `icons` to choose `none` (default), `selected`, or `both`.
+ *
+ * ```html
+ * <m3e-switch icons="selected" checked></m3e-switch>
+ * <m3e-switch icons="both"></m3e-switch>
+ * ```
+ *
+ * @example
+ * Use `disabled` to prevent interaction with the switch.
+ *
+ * ```html
+ * <label><m3e-switch disabled></m3e-switch>Disabled Switch 1</label>
+ * <m3e-switch id="chk3" disabled></m3e-switch>
+ * <label for="chk3">Disabled Switch 2</label>
+ * ```
+ *
+ * @example
+ * Apply a density scale of `-3` to adjust spacing.
+ *
+ * ```html
+ * <m3e-switch class="density-3"></m3e-switch>
+ * <!-- Additional switches omitted for brevity -->
+ * ```
+ *
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-switch

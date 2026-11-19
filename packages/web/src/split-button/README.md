@@ -12,16 +12,79 @@ import "@m3e/web/split-button";
 
 ## 🧪 Examples
 
-The following example illustrates use of the `m3e-split-button` to combine the `m3e-button`, `m3e-icon-button`, and `m3e-menu` components into a split button.
+Combine a leading button, trailing menu trigger, and menu in a split button.
 
 ```html
 <m3e-split-button>
-  <m3e-button slot="leading-button"> <m3e-icon slot="icon" name="edit"></m3e-icon>Edit </m3e-button>
+  <m3e-button slot="leading-button">
+    <m3e-icon slot="icon" name="edit"></m3e-icon>Edit
+  </m3e-button>
   <m3e-icon-button slot="trailing-button">
     <m3e-icon name="keyboard_arrow_down"></m3e-icon>
-    <m3e-menu-trigger for="menu1"></m3e-menu-trigger>
+    <m3e-menu-trigger for="menu"></m3e-menu-trigger>
   </m3e-icon-button>
 </m3e-split-button>
+<m3e-menu id="menu" position-x="before">
+  <m3e-menu-item>Rename</m3e-menu-item>
+  <m3e-menu-item>Copy</m3e-menu-item>
+  <m3e-menu-item>Delete</m3e-menu-item>
+</m3e-menu>
+```
+
+Use `variant` to choose `filled` (default), `tonal`, `outlined`, or `elevated`.
+
+```html
+<m3e-split-button variant="filled">
+  <m3e-button slot="leading-button">
+    <m3e-icon slot="icon" name="edit"></m3e-icon>Edit
+  </m3e-button>
+  <m3e-icon-button slot="trailing-button">
+    <m3e-icon name="keyboard_arrow_down"></m3e-icon>
+    <m3e-menu-trigger for="menu"></m3e-menu-trigger>
+  </m3e-icon-button>
+</m3e-split-button>
+<!-- Additional variants omitted for brevity -->
+<!-- Menu omitted for brevity -->
+```
+
+Use `size` to choose `extra-small`, `small` (default), `medium`, `large`, or `extra-large`.
+
+```html
+<m3e-split-button size="extra-small">
+  <m3e-button slot="leading-button">
+    <m3e-icon slot="icon" name="edit"></m3e-icon>Edit
+  </m3e-button>
+  <m3e-icon-button slot="trailing-button">
+    <m3e-icon name="keyboard_arrow_down"></m3e-icon>
+    <m3e-menu-trigger for="menu"></m3e-menu-trigger>
+  </m3e-icon-button>
+</m3e-split-button>
+<!-- Additional sizes omitted for brevity -->
+<!-- Menu omitted for brevity -->
+```
+
+Apply a density scale of `-3` to adjust spacing.
+
+```html
+<m3e-split-button size="extra-small" class="density-3">
+  <m3e-button slot="leading-button">
+    <m3e-icon slot="icon" name="edit"></m3e-icon>Edit
+  </m3e-button>
+  <m3e-icon-button slot="trailing-button">
+    <m3e-icon name="keyboard_arrow_down"></m3e-icon>
+    <m3e-menu-trigger for="menu"></m3e-menu-trigger>
+  </m3e-icon-button>
+</m3e-split-button>
+
+<m3e-menu id="menu" position-x="before" class="density-3">
+  <!-- Menu items omitted for brevity -->
+</m3e-menu>
+```
+
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
 ```
 
 ## 📖 API Reference

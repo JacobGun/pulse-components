@@ -40,32 +40,85 @@ import { isSplitPaneOrientation, SplitPaneOrientation } from "./SplitPaneOrienta
  * for consistent, accessible content distribution.
  *
  * @example
- * The following example illustrates the basic use of the `m3e-split-pane` with start and end content.
- * In this example, the start pane occupies 25% of the available width.
+ * Use the `start` and `end` slots for pane content and `value` for the start pane percentage.
+ *
  * ```html
- * <m3e-split-pane value="25">
- *  <m3e-card slot="start"></m3e-card>
- *  <m3e-card slot="end"></m3e-card>
+ * <m3e-split-pane value="50">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
  * </m3e-split-pane>
  * ```
  *
  * @example
- * The next example demonstrates minimum and maximum constraints, where the start pane
- * may shrink to 25% but cannot grow beyond 50% of the available space.
+ * Use `orientation` to choose `horizontal` (default), `vertical`, or `auto`.
+ *
  * ```html
- * <m3e-split-pane value="25" min="25" max="50">
- *  <m3e-card slot="start"></m3e-card>
- *  <m3e-card slot="end"></m3e-card>
+ * <m3e-split-pane value="50" orientation="vertical">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
  * </m3e-split-pane>
  * ```
  *
  * @example
- * The next example demonstrates percentage‑based detents, allowing the drag handle to snap at
- * 0%, 25%, 50%, 75%, and 100% of the available space.
+ * Use `min` and `max` to constrain the start pane percentage.
+ *
  * ```html
- * <m3e-split-pane value="50" detents="0 25 50 75 100">
- *  <m3e-card slot="start"></m3e-card>
- *  <m3e-card slot="end"></m3e-card>
+ * <m3e-split-pane value="50" min="25" max="75">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
+ * </m3e-split-pane>
+ * ```
+ *
+ * @example
+ * Use `step` to control the increment for keyboard resizing.
+ *
+ * ```html
+ * <m3e-split-pane value="50" step="10">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
+ * </m3e-split-pane>
+ * ```
+ *
+ * @example
+ * Use `detents` to define split positions and `wrap-detents` to cycle back to the first.
+ *
+ * ```html
+ * <m3e-split-pane value="50" detents="0 25 50 75 100"  wrap-detents>
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
+ * </m3e-split-pane>
+ * ```
+ *
+ * @example
+ * Use `disabled` to prevent resizing.
+ *
+ * ```html
+ * <m3e-split-pane value="50" disabled>
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end"></m3e-card>
+ * </m3e-split-pane>
+ * ```
+ *
+ * @example
+ * Hide or omit pane content to let the visible pane fill the available space.
+ *
+ * ```html
+ * <m3e-split-pane value="50">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-card slot="end" hidden></m3e-card>
+ * </m3e-split-pane>
+ * ```
+ *
+ * @example
+ * Nest split panes to create a more complex layout. Size the panes to suit the layout.
+ *
+ * ```html
+ * <m3e-split-pane value="25" class="complex">
+ *   <m3e-card slot="start"></m3e-card>
+ *   <m3e-split-pane slot="end" value="50" orientation="vertical">
+ *     <m3e-card slot="start"></m3e-card>
+ *     <m3e-card slot="end"></m3e-card>
+ *   </m3e-split-pane>
  * </m3e-split-pane>
  * ```
  *

@@ -55,7 +55,10 @@ export const IconButtonStyle: CSSResultGroup = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastEffects}`)};
+    transition: var(
+      --_swipe-reveal-sizing-transition,
+      ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastEffects}`)}
+    );
   }
   .icon {
     transition: ${unsafeCSS(`color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`)};
@@ -99,10 +102,13 @@ export const IconButtonStyle: CSSResultGroup = css`
     flex: 1 1 auto;
   }
   :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) {
-    transition: ${unsafeCSS(`width ${DesignToken.motion.spring.fastSpatial}`)};
+    transition: var(--_swipe-reveal-sizing-transition, ${unsafeCSS(`width ${DesignToken.motion.spring.fastSpatial}`)});
   }
   :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) .wrapper {
-    transition: ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastSpatial}`)};
+    transition: var(
+      --_swipe-reveal-sizing-transition,
+      ${unsafeCSS(`padding-inline ${DesignToken.motion.spring.fastSpatial}`)}
+    );
   }
   :host(:is(:state(--grouped), :--grouped):not(:is(:state(--connected), :--connected))) {
     flex-shrink: 0;
@@ -131,6 +137,11 @@ export const IconButtonStyle: CSSResultGroup = css`
     width: calc(var(--_button-width) + var(--_pressed-growth, 0px));
     /* Padding grows with the width, so the icon keeps its box while the spring overshoots on release. */
     --_adjacent-shrink: calc(var(--_pressed-growth, 0px) * -1);
+  }
+  :host(:is(:state(--squished), :--squished)) {
+    --_adjacent-shrink: calc(var(--_button-width) * (1 - var(--_squish-progress, 1)));
+    width: calc(var(--_button-width) - var(--_adjacent-shrink));
+    flex-shrink: 0;
   }
   @media (forced-colors: active) {
     .base,

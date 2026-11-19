@@ -13,18 +13,18 @@ import { SearchBarLightDomStyle, SearchBarStyle } from "./styles";
  *
  * @description
  * The `m3e-search-bar` component provides a prominent entry point for search,
- * capturing user input and emitting `query` and `clear` events as the text
- * changes. It reflects focus and interaction states through customizable CSS
- * properties for container, icons, and text styling.
+ * capturing user input and optionally providing a clear button that clears
+ * the input and emits a `clear` event. It reflects focus and interaction states
+ * through customizable CSS properties for container, icons, and text styling.
  *
  * @example
- * The following example illustrates typical usage with a leading icon and the
- * ability to clear the current search text.
+ * Use a leading icon and `clearable` to let users clear the search input.
+ *
  * ```html
  * <m3e-search-bar clearable>
- *  <m3e-icon name="search" slot="leading"></m3e-icon>
- *  <input slot="input" placeholder="Search..." />
- *  </m3e-search-bar>
+ *   <m3e-icon name="search" slot="leading"></m3e-icon>
+ *   <input slot="input" placeholder="Search..." />
+ * </m3e-search-bar>
  * ```
  *
  * @tag m3e-search-bar

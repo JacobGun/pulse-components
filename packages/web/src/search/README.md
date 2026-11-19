@@ -13,8 +13,7 @@ import "@m3e/web/search";
 
 ## 🧪 Examples
 
-The following example illustrates typical usage of a `m3e-search-bar` with a leading icon and the
-ability to clear the current search text.
+Use a leading icon and `clearable` to let users clear the search input.
 
 ```html
 <m3e-search-bar clearable>
@@ -23,16 +22,52 @@ ability to clear the current search text.
 </m3e-search-bar>
 ```
 
-The next example shows a contained `m3e-search-view` in docked mode with a simple set of search results.
+Use the default docked search view to present results near the search bar.
 
 ```html
-<m3e-search-view mode="docked" contained>
+<m3e-search-view>
   <input slot="input" placeholder="Search..." />
   <m3e-list>
     <m3e-list-item>Result One</m3e-list-item>
     <m3e-list-item>Result Two</m3e-list-item>
     <m3e-list-item>Result Three</m3e-list-item>
   </m3e-list>
+</m3e-search-view>
+```
+
+Use `mode="fullscreen"` to present results across the viewport.
+
+```html
+<m3e-search-view mode="fullscreen">
+  <input slot="input" placeholder="Search..." />
+  <!-- Results omitted for brevity -->
+</m3e-search-view>
+```
+
+Use `contained` in docked mode for a filled search container.
+
+```html
+<m3e-search-view mode="docked" contained>
+  <input slot="input" placeholder="Search..." />
+  <!-- Results omitted for brevity -->
+</m3e-search-view>
+```
+
+Use `contained` in fullscreen mode for a filled search container.
+
+```html
+<m3e-search-view mode="fullscreen" contained>
+  <input slot="input" placeholder="Search..." />
+  <!-- Results omitted for brevity -->
+</m3e-search-view>
+```
+
+Use `hide-search-icon` to hide the icon when the search view is closed.
+
+```html
+<m3e-search-view mode="docked" hide-search-icon>
+  <input slot="input" placeholder="Search..." />
+  <!-- Results omitted for brevity -->
 </m3e-search-view>
 ```
 

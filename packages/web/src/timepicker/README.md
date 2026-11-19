@@ -15,6 +15,112 @@ import "@m3e/web/timepicker";
 - `m3e-timepicker-dial` — A clock-face surface for selecting hours and minutes using a movable hand.
 - `m3e-timepicker-toggle` — An element, nested within a clickable element, used to toggle a timepicker.
 
+## 🧪 Examples
+
+Use a timepicker toggle to open a picker from a form field. The native input is not automatically bound: handle the picker's `change` event to format and update its value.
+
+```html
+<m3e-form-field variant="outlined">
+  <label slot="label" for="field">Time Field</label>
+  <input autocomplete="off" id="field" />
+  <m3e-icon-button slot="suffix">
+    <m3e-icon name="schedule"></m3e-icon>
+    <m3e-timepicker-toggle for="timepicker"></m3e-timepicker-toggle>
+  </m3e-icon-button>
+  <span slot="hint">HH:MM</span>
+</m3e-form-field>
+<m3e-timepicker id="timepicker" variant="auto"></m3e-timepicker>
+```
+
+Connect a timepicker to a time-enabled date input for time entry.
+
+```html
+<m3e-form-field variant="outlined">
+  <label slot="label" for="field">Time Picker</label>
+  <m3e-date-input id="field" type="time"></m3e-date-input>
+  <m3e-icon-button aria-label="Open time picker" slot="suffix">
+    <m3e-icon name="schedule"></m3e-icon>
+    <m3e-timepicker-toggle for="timepicker"></m3e-timepicker-toggle>
+  </m3e-icon-button>
+  <span slot="hint">HH:MM</span>
+</m3e-form-field>
+<m3e-timepicker id="timepicker" for="field"></m3e-timepicker>
+```
+
+Use `variant` to choose the picker presentation.
+
+```html
+<m3e-timepicker variant="auto"></m3e-timepicker>
+```
+
+Use `orientation` to select the picker layout; pair `auto` with `variant="auto"` for responsive layouts.
+
+```html
+<m3e-timepicker variant="auto" orientation="horizontal"></m3e-timepicker>
+```
+
+Use `mode="input"` and `hide-mode-toggle` to force keyboard entry.
+
+```html
+<m3e-timepicker mode="input" hide-mode-toggle></m3e-timepicker>
+```
+
+Set the initial picker date and copy its formatted time to `#field` on initialization and on `change`. Provide a `toLocaleTimeString(date)` formatter for the field.
+
+```html
+<!-- Form field omitted for brevity -->
+<m3e-timepicker id="timepicker" date="2026-07-13T23:30:00Z"></m3e-timepicker>
+```
+
+```js
+const picker = document.querySelector("#timepicker");
+const field = document.querySelector("#field");
+field.value = toLocaleTimeString(picker.date);
+picker.addEventListener("change", () => {
+  field.value = toLocaleTimeString(picker.date);
+});
+```
+
+Use `format="24"` for a 24-hour clock.
+
+```html
+<m3e-timepicker format="24"></m3e-timepicker>
+```
+
+Use `min-time` and `max-time` to constrain selectable times.
+
+```html
+<m3e-timepicker min-time="8:15 AM"  max-time="5:30 PM"></m3e-timepicker>
+```
+
+Set `blackoutTimes` to a function that disables unavailable times. Apply this to a timepicker with the matching id.
+
+```js
+document.querySelector("#blackout-times").blackoutTimes = (t) => t.hour < 8 || t.hour > 18;
+```
+
+Use `show-seconds` to display the seconds segment.
+
+```html
+<m3e-timepicker show-seconds></m3e-timepicker>
+```
+
+Use timepicker input and dial elements together for a custom presentation. Provide an element with id `inputValue` for the output.
+
+```html
+<m3e-timepicker-input id="input" for="dial"></m3e-timepicker-input>
+<m3e-timepicker-dial id="dial"></m3e-timepicker-dial>
+<span id="inputValue"></span>
+```
+
+```js
+document.querySelector("#input").addEventListener("change", (e) => {
+  const picker = e.target;
+  document.querySelector("#inputValue").innerText =
+    `hour = ${picker.hour ?? ""}, minute = ${picker.minute ?? ""}`;
+});
+```
+
 ## 📖 API Reference
 
 ### 🗂️ Timepicker

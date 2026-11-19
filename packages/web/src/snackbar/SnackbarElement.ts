@@ -10,6 +10,51 @@ import "@pulse/web/icon-button";
 
 /**
  * Presents short updates about application processes at the bottom of the screen.
+ * @example
+ * Use the snackbar service to display a message.
+ *
+ * ```js
+ * M3eSnackbar.open("File deleted");
+ * ```
+ *
+ * @example
+ * Pass an action label and callback to the snackbar service.
+ *
+ * ```js
+ * M3eSnackbar.open("File deleted", "Undo", {
+ *   actionCallback: () => {
+ *     // Undo logic here
+ *   },
+ * });
+ * ```
+ *
+ * @example
+ * Pass `true` to the snackbar service to show a dismiss button.
+ *
+ * ```js
+ * M3eSnackbar.open("File deleted", true);
+ * ```
+ *
+ * @example
+ * Use the `open` attribute for declarative usage. It is cleared when the snackbar is dismissed.
+ *
+ * ```html
+ * <!-- Show the snackbar declaratively -->
+ * <m3e-snackbar open dismissible>File deleted</m3e-snackbar>
+ *
+ * <!-- Toggle visibility in JavaScript -->
+ * <script>
+ *   const snackbar = document.querySelector("m3e-snackbar");
+ *   // Show
+ *   snackbar.open = true;
+ *   // Or equivalently: snackbar.setAttribute("open", "");
+ *
+ *   // Hide
+ *   snackbar.open = false;
+ *   // Or equivalently: snackbar.removeAttribute("open");
+ * </script>
+ * ```
+ *
  * @tag m3e-snackbar
  *
  * @slot - Renders the content of the snackbar.

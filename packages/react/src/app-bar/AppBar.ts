@@ -2,7 +2,11 @@ import React from "react";
 import { createComponent } from "@lit/react";
 
 import { M3eAppBarElement } from "@pulse/web/app-bar";
-export type { AppBarSize, M3eAppBarElement } from "@pulse/web/app-bar";
+export type {
+  AppBarSize,
+  AppBarScrollBehavior,
+  M3eAppBarElement,
+} from "@pulse/web/app-bar";
 
 /**
  * React binding for the `m3e-app-bar` Web Component from `@pulse/web/app-bar`.

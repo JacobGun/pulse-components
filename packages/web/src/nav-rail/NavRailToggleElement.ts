@@ -9,12 +9,10 @@ import { M3eNavRailElement } from "./NavRailElement";
  * An element, nested within a clickable element, used to toggle the expanded state of a navigation rail.
  *
  * @example
- * The following example illustrates a nav rail whose expanded state is automatically determined by the
- * current screen size.  In addition, a toggle button is used to allow the user to manually toggle the
- * expanded state.
+ * Place navigation items and controls in a rail; use the toggle to switch its mode.
  *
  * ```html
- * <m3e-nav-rail id="nav-rail" mode="auto">
+ * <m3e-nav-rail id="nav-rail">
  *   <m3e-icon-button toggle>
  *     <m3e-icon name="menu"></m3e-icon>
  *     <m3e-icon slot="selected" name="menu_open"></m3e-icon>

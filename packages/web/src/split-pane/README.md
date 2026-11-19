@@ -12,21 +12,78 @@ import "@m3e/web/split-pane";
 
 ## 🧪 Examples
 
-The following example illustrates a basic horizontal split pane with start and end content.
+Use the `start` and `end` slots for pane content and `value` for the start pane percentage.
 
 ```html
-<m3e-split-pane>
-  <div slot="start">Start content</div>
-  <div slot="end">End content</div>
+<m3e-split-pane value="50">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
 </m3e-split-pane>
 ```
 
-This example shows a vertical split pane with detents for snapping to specific sizes.
+Use `orientation` to choose `horizontal` (default), `vertical`, or `auto`.
 
 ```html
-<m3e-split-pane orientation="vertical" detents="25 50 75">
-  <div slot="start">Top content</div>
-  <div slot="end">Bottom content</div>
+<m3e-split-pane value="50" orientation="vertical">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
+</m3e-split-pane>
+```
+
+Use `min` and `max` to constrain the start pane percentage.
+
+```html
+<m3e-split-pane value="50" min="25" max="75">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
+</m3e-split-pane>
+```
+
+Use `step` to control the increment for keyboard resizing.
+
+```html
+<m3e-split-pane value="50" step="10">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
+</m3e-split-pane>
+```
+
+Use `detents` to define split positions and `wrap-detents` to cycle back to the first.
+
+```html
+<m3e-split-pane value="50" detents="0 25 50 75 100"  wrap-detents>
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
+</m3e-split-pane>
+```
+
+Use `disabled` to prevent resizing.
+
+```html
+<m3e-split-pane value="50" disabled>
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end"></m3e-card>
+</m3e-split-pane>
+```
+
+Hide or omit pane content to let the visible pane fill the available space.
+
+```html
+<m3e-split-pane value="50">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-card slot="end" hidden></m3e-card>
+</m3e-split-pane>
+```
+
+Nest split panes to create a more complex layout. Size the panes to suit the layout.
+
+```html
+<m3e-split-pane value="25" class="complex">
+  <m3e-card slot="start"></m3e-card>
+  <m3e-split-pane slot="end" value="50" orientation="vertical">
+    <m3e-card slot="start"></m3e-card>
+    <m3e-card slot="end"></m3e-card>
+  </m3e-split-pane>
 </m3e-split-pane>
 ```
 

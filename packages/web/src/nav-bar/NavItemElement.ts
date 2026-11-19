@@ -39,14 +39,26 @@ import { isNavItemOrientation, NavItemOrientation } from "./NavItemOrientation";
  * orientation, and extensive theming via CSS custom properties.
  *
  * @example
- * The following example illustrates a nav bar with vertically oriented items.
+ * Use `mode` to choose a compact or expanded navigation bar.
+ *
  * ```html
- * <m3e-nav-bar>
+ * <m3e-nav-bar mode="compact">
  *   <m3e-nav-item><m3e-icon slot="icon" name="news"></m3e-icon>News</m3e-nav-item>
  *   <m3e-nav-item><m3e-icon slot="icon" name="globe"></m3e-icon>Global</m3e-nav-item>
  *   <m3e-nav-item><m3e-icon slot="icon" name="star"></m3e-icon>For you</m3e-nav-item>
  *   <m3e-nav-item><m3e-icon slot="icon" name="newsstand"></m3e-icon>Trending</m3e-nav-item>
  * </m3e-nav-bar>
+ * <br />
+ * <m3e-nav-bar mode="expanded">
+ *   <!-- Items omitted for brevity -->
+ * </m3e-nav-bar>
+ * ```
+ *
+ * @example
+ * Place navigation items inside a navigation bar.
+ *
+ * ```html
+ * <m3e-nav-item><m3e-icon slot="icon" name="news"></m3e-icon>News</m3e-nav-item>
  * ```
  *
  * @tag m3e-nav-item

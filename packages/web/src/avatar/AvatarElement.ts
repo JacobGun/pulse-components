@@ -10,28 +10,14 @@ import { customElement, DesignToken } from "@pulse/web/core";
  * textual representation with consistent sizing, shape, and typography.
  *
  * @example
- * The following example illustrates use of the `m3e-avatar` to present textual initials.
+ * Use initials, an image, or an icon as an avatar. If an image or icon conveys identity, give it a text alternative.
  * ```html
  * <m3e-avatar>AB</m3e-avatar>
- * ```
- *
- * @example
- * The next example illustrates use of the `m3e-avatar` to present an icon.
- *
- * Note: This example uses the `@m3e/icon` package to present Material Design symbols, but any icon package can be
- * substituted depending on your design system or preferences.
- *
- * ```html
  * <m3e-avatar>
- *  <m3e-icon name="person"></m3e-icon>
+ *   <img src="[YOUR IMAGE URL HERE]" />
  * </m3e-avatar>
- * ```
- *
- * @example
- * The last example illustrates use of the `m3e-avatar` to present an image.
- * ```html
  * <m3e-avatar>
- *  <img src="https://avatars.githubusercontent.com/u/224686995?s=48&v=4" />
+ *   <m3e-icon name="person"></m3e-icon>
  * </m3e-avatar>
  * ```
  *

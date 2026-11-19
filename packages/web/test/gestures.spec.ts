@@ -63,11 +63,13 @@ test.describe("gesture elements", () => {
       <m3e-tap-gesture for="target"></m3e-tap-gesture>
     `);
     await page.locator("m3e-tap-gesture").evaluate((gesture) => {
-      (window as typeof window & { gestureDetails: Array<{ phase: string; clientX: number; duration: number }> })
-        .gestureDetails = [];
+      (
+        window as typeof window & { gestureDetails: Array<{ phase: string; clientX: number; duration: number }> }
+      ).gestureDetails = [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { gestureDetails: Array<{ phase: string; clientX: number; duration: number }> })
-          .gestureDetails.push((event as CustomEvent).detail);
+        (
+          window as typeof window & { gestureDetails: Array<{ phase: string; clientX: number; duration: number }> }
+        ).gestureDetails.push((event as CustomEvent).detail);
       });
     });
 
@@ -75,8 +77,9 @@ test.describe("gesture elements", () => {
     await dispatchPointer(page, "pointerup", 1, 40, 50);
 
     const tapDetails = await page.evaluate(
-      () => (window as typeof window & { gestureDetails: Array<{ phase: string; clientX: number; duration: number }> })
-        .gestureDetails,
+      () =>
+        (window as typeof window & { gestureDetails: Array<{ phase: string; clientX: number; duration: number }> })
+          .gestureDetails,
     );
     expect(tapDetails.map(({ phase }) => phase)).toEqual(["start", "end"]);
     expect(tapDetails[1].clientX).toBe(40);
@@ -90,8 +93,10 @@ test.describe("gesture elements", () => {
     await dispatchPointer(page, "pointerup", 1, 80, 50);
 
     expect(
-      await page.evaluate(
-        () => (window as typeof window & { gestureDetails: Array<{ phase: string }> }).gestureDetails.map(({ phase }) => phase),
+      await page.evaluate(() =>
+        (window as typeof window & { gestureDetails: Array<{ phase: string }> }).gestureDetails.map(
+          ({ phase }) => phase,
+        ),
       ),
     ).toEqual(["start", "cancel"]);
   });
@@ -102,18 +107,22 @@ test.describe("gesture elements", () => {
       <m3e-long-press-gesture for="target" min-duration="100"></m3e-long-press-gesture>
     `);
     await page.locator("m3e-long-press-gesture").evaluate((gesture) => {
-      (window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> }).longPressDetails = [];
+      (window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> }).longPressDetails =
+        [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> })
-          .longPressDetails.push((event as CustomEvent).detail);
+        (
+          window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> }
+        ).longPressDetails.push((event as CustomEvent).detail);
       });
     });
 
     await dispatchPointer(page, "pointerdown", 1, 40, 50, 1000);
     await page.waitForTimeout(20);
     expect(
-      await page.evaluate(
-        () => (window as typeof window & { longPressDetails: Array<{ phase: string }> }).longPressDetails.map(({ phase }) => phase),
+      await page.evaluate(() =>
+        (window as typeof window & { longPressDetails: Array<{ phase: string }> }).longPressDetails.map(
+          ({ phase }) => phase,
+        ),
       ),
     ).toEqual(["start"]);
 
@@ -121,7 +130,8 @@ test.describe("gesture elements", () => {
     await dispatchPointer(page, "pointerup", 1, 40, 50, 1120);
 
     const details = await page.evaluate(
-      () => (window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> }).longPressDetails,
+      () =>
+        (window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> }).longPressDetails,
     );
     expect(details.map(({ phase }) => phase)).toEqual(["start", "end"]);
     expect(details[1].duration).toBeGreaterThanOrEqual(100);
@@ -133,10 +143,12 @@ test.describe("gesture elements", () => {
       <m3e-long-press-gesture for="target" min-duration="300"></m3e-long-press-gesture>
     `);
     await page.locator("m3e-long-press-gesture").evaluate((gesture) => {
-      (window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> }).longPressDetails = [];
+      (window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> }).longPressDetails =
+        [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> })
-          .longPressDetails.push((event as CustomEvent).detail);
+        (
+          window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> }
+        ).longPressDetails.push((event as CustomEvent).detail);
       });
     });
 
@@ -144,7 +156,8 @@ test.describe("gesture elements", () => {
     await dispatchPointer(page, "pointerup", 1, 40, 50, 2030);
 
     const details = await page.evaluate(
-      () => (window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> }).longPressDetails,
+      () =>
+        (window as typeof window & { longPressDetails: Array<{ phase: string; duration: number }> }).longPressDetails,
     );
     expect(details.map(({ phase }) => phase)).toEqual(["start", "cancel"]);
     expect(details[1].duration).toBe(30);
@@ -158,8 +171,9 @@ test.describe("gesture elements", () => {
     await page.locator("m3e-pan-gesture").evaluate((gesture) => {
       (window as typeof window & { panDetails: Array<{ phase: string; totalDeltaX: number }> }).panDetails = [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { panDetails: Array<{ phase: string; totalDeltaX: number }> })
-          .panDetails.push((event as CustomEvent).detail);
+        (window as typeof window & { panDetails: Array<{ phase: string; totalDeltaX: number }> }).panDetails.push(
+          (event as CustomEvent).detail,
+        );
       });
     });
 
@@ -183,7 +197,9 @@ test.describe("gesture elements", () => {
     await page.locator("m3e-pan-gesture").evaluate((gesture) => {
       (window as typeof window & { panDetails: Array<{ phase: string }> }).panDetails = [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { panDetails: Array<{ phase: string }> }).panDetails.push((event as CustomEvent).detail);
+        (window as typeof window & { panDetails: Array<{ phase: string }> }).panDetails.push(
+          (event as CustomEvent).detail,
+        );
       });
     });
 
@@ -192,8 +208,8 @@ test.describe("gesture elements", () => {
     await dispatchPointer(page, "pointercancel", 1, 55, 50);
 
     expect(
-      await page.evaluate(
-        () => (window as typeof window & { panDetails: Array<{ phase: string }> }).panDetails.map(({ phase }) => phase),
+      await page.evaluate(() =>
+        (window as typeof window & { panDetails: Array<{ phase: string }> }).panDetails.map(({ phase }) => phase),
       ),
     ).toEqual(["start", "cancel"]);
   });
@@ -206,8 +222,9 @@ test.describe("gesture elements", () => {
     await page.locator("m3e-swipe-gesture").evaluate((gesture) => {
       (window as typeof window & { swipeDetails: Array<{ phase: string; direction: string }> }).swipeDetails = [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { swipeDetails: Array<{ phase: string; direction: string }> })
-          .swipeDetails.push((event as CustomEvent).detail);
+        (window as typeof window & { swipeDetails: Array<{ phase: string; direction: string }> }).swipeDetails.push(
+          (event as CustomEvent).detail,
+        );
       });
     });
 
@@ -223,6 +240,85 @@ test.describe("gesture elements", () => {
     expect(details[2].direction).toBe("right");
   });
 
+  for (const [pause, expected] of [
+    [5, "end"],
+    [250, "cancel"],
+  ] as const) {
+    test(`a swipe released after a ${pause}ms pause emits ${expected}`, async ({ page, render }) => {
+      await render(`
+        <div id="target" style="width: 200px; height: 100px"></div>
+        <m3e-swipe-gesture for="target" min-displacement="10" direction-threshold="5"></m3e-swipe-gesture>
+      `);
+      await page.locator("m3e-swipe-gesture").evaluate((gesture) => {
+        const phases: string[] = [];
+        (window as typeof window & { swipePhases: string[] }).swipePhases = phases;
+        gesture.addEventListener("gesture", (event) =>
+          phases.push((event as CustomEvent<{ phase: string }>).detail.phase),
+        );
+      });
+
+      await dispatchPointer(page, "pointerdown", 1, 40, 50, 1000);
+      await dispatchPointer(page, "pointermove", 1, 70, 50, 1040);
+      await dispatchPointer(page, "pointermove", 1, 85, 50, 1080);
+      await dispatchPointer(page, "pointerup", 1, 85, 50, 1080 + pause);
+
+      const phases = await page.evaluate(() => (window as typeof window & { swipePhases: string[] }).swipePhases);
+      expect(phases[phases.length - 1]).toBe(expected);
+    });
+  }
+
+  for (const [name, moves, releaseX, releaseTime, expected, velocity] of [
+    ["movement at release", [[55, 1020]], 100, 1030, "end", 0.5],
+    [
+      "a stationary final move",
+      [
+        [100, 1020],
+        [100, 1025],
+      ],
+      100,
+      1030,
+      "end",
+      2,
+    ],
+    [
+      "a stationary move after a pause",
+      [
+        [100, 1020],
+        [100, 1270],
+      ],
+      100,
+      1275,
+      "cancel",
+      60 / 275,
+    ],
+  ] as const) {
+    test(`evaluates swipe release velocity with ${name}`, async ({ page, render }) => {
+      await render(`
+        <div id="target" style="width: 200px; height: 100px"></div>
+        <m3e-swipe-gesture for="target"></m3e-swipe-gesture>
+      `);
+      await page.locator("m3e-swipe-gesture").evaluate((gesture) => {
+        gesture.addEventListener("gesture", (event) => {
+          const detail = (event as CustomEvent<{ phase: string; translationX: number; velocityX: number }>).detail;
+          gesture.setAttribute("data-phase", detail.phase);
+          gesture.setAttribute("data-translation", String(detail.translationX));
+          gesture.setAttribute("data-velocity", String(detail.velocityX));
+        });
+      });
+
+      await dispatchPointer(page, "pointerdown", 1, 40, 50, 1000);
+      for (const [x, timestamp] of moves) {
+        await dispatchPointer(page, "pointermove", 1, x, 50, timestamp);
+      }
+      await dispatchPointer(page, "pointerup", 1, releaseX, 50, releaseTime);
+
+      const gesture = page.locator("m3e-swipe-gesture");
+      await expect(gesture).toHaveAttribute("data-phase", expected);
+      await expect(gesture).toHaveAttribute("data-translation", "60");
+      expect(Number(await gesture.getAttribute("data-velocity"))).toBeCloseTo(velocity, 5);
+    });
+  }
+
   test("cancels a swipe when its pointer is cancelled before completion", async ({ page, render }) => {
     await render(`
       <div id="target" style="width: 200px; height: 100px"></div>
@@ -231,7 +327,9 @@ test.describe("gesture elements", () => {
     await page.locator("m3e-swipe-gesture").evaluate((gesture) => {
       (window as typeof window & { swipeDetails: Array<{ phase: string }> }).swipeDetails = [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { swipeDetails: Array<{ phase: string }> }).swipeDetails.push((event as CustomEvent).detail);
+        (window as typeof window & { swipeDetails: Array<{ phase: string }> }).swipeDetails.push(
+          (event as CustomEvent).detail,
+        );
       });
     });
 
@@ -240,8 +338,8 @@ test.describe("gesture elements", () => {
     await dispatchPointer(page, "pointercancel", 1, 60, 50);
 
     expect(
-      await page.evaluate(
-        () => (window as typeof window & { swipeDetails: Array<{ phase: string }> }).swipeDetails.map(({ phase }) => phase),
+      await page.evaluate(() =>
+        (window as typeof window & { swipeDetails: Array<{ phase: string }> }).swipeDetails.map(({ phase }) => phase),
       ),
     ).toEqual(["start", "cancel"]);
   });
@@ -254,8 +352,9 @@ test.describe("gesture elements", () => {
     await page.locator("m3e-scale-gesture").evaluate((gesture) => {
       (window as typeof window & { scaleDetails: Array<{ phase: string; scale: number }> }).scaleDetails = [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { scaleDetails: Array<{ phase: string; scale: number }> })
-          .scaleDetails.push((event as CustomEvent).detail);
+        (window as typeof window & { scaleDetails: Array<{ phase: string; scale: number }> }).scaleDetails.push(
+          (event as CustomEvent).detail,
+        );
       });
     });
 
@@ -279,7 +378,9 @@ test.describe("gesture elements", () => {
     await page.locator("m3e-scale-gesture").evaluate((gesture) => {
       (window as typeof window & { scaleDetails: Array<{ phase: string }> }).scaleDetails = [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { scaleDetails: Array<{ phase: string }> }).scaleDetails.push((event as CustomEvent).detail);
+        (window as typeof window & { scaleDetails: Array<{ phase: string }> }).scaleDetails.push(
+          (event as CustomEvent).detail,
+        );
       });
     });
 
@@ -290,8 +391,8 @@ test.describe("gesture elements", () => {
     await dispatchPointer(page, "pointercancel", 2, 80, 60);
 
     expect(
-      await page.evaluate(
-        () => (window as typeof window & { scaleDetails: Array<{ phase: string }> }).scaleDetails.map(({ phase }) => phase),
+      await page.evaluate(() =>
+        (window as typeof window & { scaleDetails: Array<{ phase: string }> }).scaleDetails.map(({ phase }) => phase),
       ),
     ).toEqual(["start", "update", "cancel"]);
   });
@@ -304,8 +405,9 @@ test.describe("gesture elements", () => {
     await page.locator("m3e-rotate-gesture").evaluate((gesture) => {
       (window as typeof window & { rotateDetails: Array<{ phase: string; rotation: number }> }).rotateDetails = [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { rotateDetails: Array<{ phase: string; rotation: number }> })
-          .rotateDetails.push((event as CustomEvent).detail);
+        (window as typeof window & { rotateDetails: Array<{ phase: string; rotation: number }> }).rotateDetails.push(
+          (event as CustomEvent).detail,
+        );
       });
     });
 
@@ -330,7 +432,9 @@ test.describe("gesture elements", () => {
     await page.locator("m3e-rotate-gesture").evaluate((gesture) => {
       (window as typeof window & { rotateDetails: Array<{ phase: string }> }).rotateDetails = [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { rotateDetails: Array<{ phase: string }> }).rotateDetails.push((event as CustomEvent).detail);
+        (window as typeof window & { rotateDetails: Array<{ phase: string }> }).rotateDetails.push(
+          (event as CustomEvent).detail,
+        );
       });
     });
 
@@ -341,8 +445,8 @@ test.describe("gesture elements", () => {
     await dispatchPointer(page, "pointercancel", 1, 50, 35);
 
     expect(
-      await page.evaluate(
-        () => (window as typeof window & { rotateDetails: Array<{ phase: string }> }).rotateDetails.map(({ phase }) => phase),
+      await page.evaluate(() =>
+        (window as typeof window & { rotateDetails: Array<{ phase: string }> }).rotateDetails.map(({ phase }) => phase),
       ),
     ).toEqual(["start", "update", "cancel"]);
   });
@@ -357,8 +461,9 @@ test.describe("gesture elements", () => {
     await page.locator("m3e-repeat-gesture").evaluate((gesture) => {
       (window as typeof window & { repeatDetails: Array<{ phase: string; details: unknown[] }> }).repeatDetails = [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { repeatDetails: Array<{ phase: string; details: unknown[] }> })
-          .repeatDetails.push((event as CustomEvent).detail);
+        (window as typeof window & { repeatDetails: Array<{ phase: string; details: unknown[] }> }).repeatDetails.push(
+          (event as CustomEvent).detail,
+        );
       });
     });
 
@@ -385,8 +490,9 @@ test.describe("gesture elements", () => {
     await page.locator("m3e-repeat-gesture").evaluate((gesture) => {
       (window as typeof window & { repeatDetails: Array<{ phase: string; details: unknown[] }> }).repeatDetails = [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { repeatDetails: Array<{ phase: string; details: unknown[] }> })
-          .repeatDetails.push((event as CustomEvent).detail);
+        (window as typeof window & { repeatDetails: Array<{ phase: string; details: unknown[] }> }).repeatDetails.push(
+          (event as CustomEvent).detail,
+        );
       });
     });
 
@@ -412,10 +518,12 @@ test.describe("gesture elements", () => {
       </m3e-sequence-gesture>
     `);
     await page.locator("m3e-sequence-gesture").evaluate((gesture) => {
-      (window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> }).sequenceDetails = [];
+      (window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> }).sequenceDetails =
+        [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> })
-          .sequenceDetails.push((event as CustomEvent).detail);
+        (
+          window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> }
+        ).sequenceDetails.push((event as CustomEvent).detail);
       });
     });
 
@@ -426,7 +534,8 @@ test.describe("gesture elements", () => {
     }
 
     const details = await page.evaluate(
-      () => (window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> }).sequenceDetails,
+      () =>
+        (window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> }).sequenceDetails,
     );
     expect(details.map(({ phase }) => phase)).toEqual(["start", "end"]);
     expect(details[1].details).toHaveLength(2);
@@ -441,10 +550,12 @@ test.describe("gesture elements", () => {
       </m3e-sequence-gesture>
     `);
     await page.locator("m3e-sequence-gesture").evaluate((gesture) => {
-      (window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> }).sequenceDetails = [];
+      (window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> }).sequenceDetails =
+        [];
       gesture.addEventListener("gesture", (event) => {
-        (window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> })
-          .sequenceDetails.push((event as CustomEvent).detail);
+        (
+          window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> }
+        ).sequenceDetails.push((event as CustomEvent).detail);
       });
     });
 
@@ -455,10 +566,104 @@ test.describe("gesture elements", () => {
     await dispatchPointer(page, "pointermove", 1, 80, 50);
 
     const details = await page.evaluate(
-      () => (window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> }).sequenceDetails,
+      () =>
+        (window as typeof window & { sequenceDetails: Array<{ phase: string; details: unknown[] }> }).sequenceDetails,
     );
     expect(details.map(({ phase }) => phase)).toEqual(["start", "cancel"]);
     expect(details[1].details).toHaveLength(1);
+  });
+});
+
+test.describe("gesture pointer capture", () => {
+  const markup = (gesture: string) => `
+    <div id="target" style="width: 200px; height: 100px">
+      <button id="child" style="width: 100px; height: 50px">Child</button>
+    </div>
+    ${gesture}
+  `;
+
+  const spy = (page: import("@playwright/test").Page) =>
+    page.evaluate(() => {
+      const w = window as typeof window & { captures: number; clicks: string[] };
+      w.captures = 0;
+      w.clicks = [];
+      const original = HTMLElement.prototype.setPointerCapture;
+      HTMLElement.prototype.setPointerCapture = function (id: number) {
+        w.captures++;
+        return original.call(this, id);
+      };
+      document.addEventListener("click", (e) => w.clicks.push((e.composedPath()[0] as Element).id), true);
+    });
+
+  const result = (page: import("@playwright/test").Page) =>
+    page.evaluate(() => {
+      const w = window as typeof window & { captures: number; clicks: string[] };
+      return { captures: w.captures, clicks: w.clicks };
+    });
+
+  const center = async (page: import("@playwright/test").Page) => {
+    const box = (await page.locator("#child").boundingBox())!;
+    return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+  };
+
+  test("a tap does not capture the pointer and the click reaches the child", async ({ page, render }) => {
+    await render(markup('<m3e-tap-gesture for="target"></m3e-tap-gesture>'));
+    await spy(page);
+
+    await page.locator("#child").click();
+
+    expect(await result(page)).toEqual({ captures: 0, clicks: ["child"] });
+  });
+
+  test("a press shorter than the long press duration does not capture the pointer", async ({ page, render }) => {
+    await render(markup('<m3e-long-press-gesture for="target" min-duration="500"></m3e-long-press-gesture>'));
+    await spy(page);
+
+    await page.locator("#child").click();
+
+    expect(await result(page)).toEqual({ captures: 0, clicks: ["child"] });
+  });
+
+  test("a discrete long press captures the pointer once the duration has elapsed", async ({ page, render }) => {
+    await render(markup('<m3e-long-press-gesture for="target" min-duration="100" discrete></m3e-long-press-gesture>'));
+    await spy(page);
+    const { x, y } = await center(page);
+
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.waitForTimeout(200);
+    await page.mouse.move(x + 1, y);
+    await page.mouse.up();
+
+    expect((await result(page)).captures).toBeGreaterThan(0);
+  });
+
+  test("a click does not capture the pointer for a pan or swipe", async ({ page, render }) => {
+    await render(
+      markup(`
+        <m3e-pan-gesture for="target"></m3e-pan-gesture>
+        <m3e-swipe-gesture for="target" directions="left right"></m3e-swipe-gesture>
+      `),
+    );
+    await spy(page);
+
+    await page.locator("#child").click();
+
+    expect(await result(page)).toEqual({ captures: 0, clicks: ["child"] });
+  });
+
+  test("a pan captures the pointer once it has started", async ({ page, render }) => {
+    await render(markup('<m3e-pan-gesture for="target"></m3e-pan-gesture>'));
+    await spy(page);
+    const { x, y } = await center(page);
+
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x + 60, y, { steps: 6 });
+    const captured = (await result(page)).captures;
+    await page.mouse.up();
+
+    expect(captured).toBeGreaterThan(0);
   });
 });
 

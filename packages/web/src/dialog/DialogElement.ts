@@ -24,16 +24,28 @@ import "@pulse/web/icon-button";
  * close icon slots, ARIA accessibility, focus management, and theming via CSS custom properties.
  *
  * @example
+ * Use a trigger to open a dismissible dialog with a header and a close action.
  * ```html
  * <m3e-button variant="filled">
  *   <m3e-dialog-trigger for="dlg">Open Dialog</m3e-dialog-trigger>
  * </m3e-button>
- * <m3e-dialog id="dlg" dismissible onclosed="console.log(this.returnValue)">
- *   <span slot="header">Dialog Title</span>
- *   Dialog content goes here.
+ * <m3e-dialog id="dlg" dismissible>
+ *   <span slot="header">Lorem ipsum dolor sit amet</span>
+ *   <!-- Content omitted for brevity -->
  *   <div slot="actions" end>
  *     <m3e-button autofocus><m3e-dialog-action return-value="ok">Close</m3e-dialog-action></m3e-button>
  *   </div>
+ * </m3e-dialog>
+ * ```
+ *
+ * @example
+ * Nest the trigger in a button and match its `for` to the dialog's `id`.
+ * ```html
+ * <m3e-button variant="filled">
+ *   <m3e-dialog-trigger for="dlg">Open Dialog</m3e-dialog-trigger>
+ * </m3e-button>
+ * <m3e-dialog id="dlg" dismissible>
+ *   <!-- Content omitted for brevity -->
  * </m3e-dialog>
  * ```
  *

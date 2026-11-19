@@ -13,9 +13,34 @@ import { customElement, DesignToken, Role } from "@pulse/web/core";
  * It is designed to reinforce spatial relationships without drawing attention, preserving focus on primary content.
  *
  * @example
- * The following example illustrates a basic horizontal divider.
+ * Place `m3e-divider` between items in a standard list.
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-list-item>Item 2</m3e-list-item>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-list-item>Item 3</m3e-list-item>
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use `inset`, `inset-start`, or `inset-end` to indent a horizontal divider.
+ * Start and end follow the text direction.
  * ```html
  * <m3e-divider></m3e-divider>
+ * <m3e-divider inset></m3e-divider>
+ * <m3e-divider inset-start></m3e-divider>
+ * <m3e-divider inset-end></m3e-divider>
+ * ```
+ *
+ * @example
+ * Use `vertical` for vertical dividers. Give their container a definite height.
+ * ```html
+ * <m3e-divider vertical></m3e-divider>
+ * <m3e-divider vertical inset></m3e-divider>
+ * <m3e-divider vertical inset-start></m3e-divider>
+ * <m3e-divider vertical inset-end></m3e-divider>
  * ```
  *
  * @tag m3e-divider
@@ -71,7 +96,10 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
     }
     :host(:not([vertical])[inset]) .line,
     :host(:not([vertical])[inset-start]) .line {
-      left: var(--m3e-divider-inset-start-size, var(--m3e-divider-inset-size, ${DesignToken.measurement.space200}));
+      inset-inline-start: var(
+        --m3e-divider-inset-start-size,
+        var(--m3e-divider-inset-size, ${DesignToken.measurement.space200})
+      );
     }
     :host([vertical][inset]) .line,
     :host([vertical][inset-end]) .line {
@@ -79,19 +107,22 @@ export class M3eDividerElement extends Role(LitElement, "separator") {
     }
     :host(:not([vertical])[inset]) .line,
     :host(:not([vertical])[inset-end]) .line {
-      right: var(--m3e-divider-inset-end-size, var(--m3e-divider-inset-size, ${DesignToken.measurement.space200}));
+      inset-inline-end: var(
+        --m3e-divider-inset-end-size,
+        var(--m3e-divider-inset-size, ${DesignToken.measurement.space200})
+      );
     }
     :host([vertical]:not([inset]):not([inset-start])) .line {
       top: 0;
     }
     :host(:not([vertical]):not([inset]):not([inset-start])) .line {
-      left: 0;
+      inset-inline-start: 0;
     }
     :host([vertical]:not([inset]):not([inset-end])) .line {
       bottom: 0;
     }
     :host(:not([vertical]):not([inset]):not([inset-end])) .line {
-      right: 0;
+      inset-inline-end: 0;
     }
     @media (forced-colors: active) {
       .line {

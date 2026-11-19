@@ -56,13 +56,102 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * as disabled but allow for it to receive focus. The button will have `aria-disabled="true"` for assistive technology.
  *
  * @example
- * The following example illustrates changing the appearance from `standard` (default) to `filled` using the `variant`
- * attribute, changing the size using the `size` attribute, and enabling toggle behavior using the `toggle` attribute.
+ * Use `variant` to choose `filled`, `tonal`, `outlined`, or `standard` (default).
  *
  * ```html
- * <m3e-icon-button variant="filled" size="large" toggle selected>
- *  <m3e-icon name="favorite"></m3e-icon>
+ * <m3e-icon-button variant="filled">
+ *     <m3e-icon name="check"></m3e-icon>
  * </m3e-icon-button>
+ * <!-- Additional variants omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Use `shape` to choose `rounded` (default) or `square`.
+ *
+ * ```html
+ * <m3e-icon-button variant="filled" shape="square">
+ *     <m3e-icon name="check"></m3e-icon>
+ * </m3e-icon-button>
+ * <!-- Additional variants omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Use `size` to choose `extra-small`, `small` (default), `medium`, `large`, or `extra-large`.
+ *
+ * ```html
+ * <m3e-icon-button variant="tonal" size="extra-small">
+ *     <m3e-icon name="add"></m3e-icon>
+ * </m3e-icon-button>
+ * <!-- Additional sizes omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Use `width` to choose `default`, `narrow`, or `wide`.
+ *
+ * ```html
+ * <m3e-icon-button variant="tonal" width="narrow">
+ *   <m3e-icon name="add"></m3e-icon>
+ * </m3e-icon-button>
+ * <m3e-icon-button variant="tonal" width="wide">
+ *   <m3e-icon name="add"></m3e-icon>
+ * </m3e-icon-button>
+ * ```
+ *
+ * @example
+ * Use `toggle` for binary selection and `selected` to control its state.
+ *
+ * ```html
+ * <m3e-icon-button variant="filled" toggle>
+ *     <m3e-icon name="check"></m3e-icon>
+ * </m3e-icon-button>
+ * <!-- Additional variants omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Use the `selected` slot to display a different icon when the toggle is selected.
+ *
+ * ```html
+ * <m3e-icon-button variant="tonal" toggle>
+ *   <m3e-icon name="close"></m3e-icon>
+ *   <m3e-icon slot="selected" name="check"></m3e-icon>
+ * </m3e-icon-button>
+ * ```
+ *
+ * @example
+ * Use `disabled` to disable the button, or `disabled-interactive` to retain keyboard focusability.
+ *
+ * ```html
+ * <m3e-icon-button variant="filled" disabled>
+ *   <m3e-icon name="check"></m3e-icon>
+ * </m3e-icon-button>
+ * <m3e-icon-button variant="filled" disabled-interactive>
+ *   <m3e-icon name="check"></m3e-icon>
+ * </m3e-icon-button>
+ * ```
+ *
+ * @example
+ * Use `href` to navigate to a destination.
+ *
+ * ```html
+ * <m3e-icon-button variant="tonal" href="https://www.google.com" target="_blank">
+ *   <m3e-icon name="open_in_new_window"></m3e-icon>
+ * </m3e-icon-button>
+ * ```
+ *
+ * @example
+ * Apply a density scale of `-3` to adjust spacing.
+ *
+ * ```html
+ * <m3e-icon-button class="density-3" variant="filled" size="extra-small">
+ *   <m3e-icon name="check"></m3e-icon>
+ * </m3e-icon-button>
+ * <!-- Additional buttons omitted for brevity -->
+ * ```
+ *
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-icon-button
@@ -99,6 +188,10 @@ import { IconButtonStyle, IconButtonSizeStyle, IconButtonVariantStyle } from "./
  * @cssprop --m3e-icon-button-selected-shape-round - Corner radius for all selected round size variants.
  * @cssprop --m3e-icon-button-selected-shape-square - Corner radius for all selected square size variants.
  * @cssprop --m3e-icon-button-shape-pressed-morph - Corner radius for all pressed size variants.
+ * @cssprop --m3e-icon-button-start-start-shape - Overrides the start-start logical corner radius in all states.
+ * @cssprop --m3e-icon-button-start-end-shape - Overrides the start-end logical corner radius in all states.
+ * @cssprop --m3e-icon-button-end-start-shape - Overrides the end-start logical corner radius in all states.
+ * @cssprop --m3e-icon-button-end-end-shape - Overrides the end-end logical corner radius in all states.
  * @cssprop --m3e-icon-button-narrow-leading-space - Leading space for all size variants (narrow).
  * @cssprop --m3e-icon-button-narrow-trailing-space - Trailing space for all size variants (narrow).
  * @cssprop --m3e-icon-button-default-leading-space - Leading space for all size variants (default).

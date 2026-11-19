@@ -14,22 +14,52 @@ import "@m3e/web/tooltip";
 
 ## 🧪 Examples
 
-The following example illustrates connecting a tooltip to a button using the `for` attribute.
+Connect a tooltip to a trigger by id.
 
 ```html
-<m3e-icon-button id="button" aria-label="Back">
+<m3e-icon-button id="button">
   <m3e-icon name="arrow_back"></m3e-icon>
 </m3e-icon-button>
 <m3e-tooltip for="button">Go Back</m3e-tooltip>
 ```
 
-The next example illustrates connecting an interactive rich tooltip to a button using the `for` attribute.
+Use `show-delay` and `hide-delay` to control the tooltip delays in milliseconds.
 
 ```html
-<m3e-icon-button id="btnSettings">
+<m3e-icon-button id="button">
+  <m3e-icon name="arrow_back"></m3e-icon>
+</m3e-icon-button>
+<m3e-tooltip for="button" show-delay="0" hide-delay="200">Go Back</m3e-tooltip>
+```
+
+Use `disabled` to prevent the tooltip from opening.
+
+```html
+<m3e-icon-button id="button">
+  <m3e-icon name="arrow_back"></m3e-icon>
+</m3e-icon-button>
+<m3e-tooltip for="button" disabled>Go Back</m3e-tooltip>
+```
+
+Connect a rich tooltip to a trigger by id.
+
+```html
+<m3e-icon-button id="button">
   <m3e-icon name="settings"></m3e-icon>
 </m3e-icon-button>
-<m3e-rich-tooltip for="btnSettings">
+<m3e-rich-tooltip for="button">
+  <span slot="subhead">New settings available</span>
+  Now you can adjust the uploaded image quality, and upgrade your available storage space.
+</m3e-rich-tooltip>
+```
+
+Place a `m3e-rich-tooltip-action` inside a clickable element in the `actions` slot to dismiss the tooltip.
+
+```html
+<m3e-icon-button id="button">
+  <m3e-icon name="settings"></m3e-icon>
+</m3e-icon-button>
+<m3e-rich-tooltip for="button">
   <span slot="subhead">New settings available</span>
   Now you can adjust the uploaded image quality, and upgrade your available storage space.
   <div slot="actions">

@@ -1,7 +1,15 @@
 import { css, CSSResultGroup, html, LitElement, PropertyValues } from "lit";
 import { property } from "lit/decorators.js";
 
-import { AttachInternals, customElement, DesignToken, Role, setCustomEnumState, setCustomState } from "@pulse/web/core";
+import {
+  AttachInternals,
+  customElement,
+  DesignToken,
+  registerStyleSheet,
+  Role,
+  setCustomEnumState,
+  setCustomState,
+} from "@pulse/web/core";
 
 import { isListVariant, ListVariant } from "./ListVariant";
 import { M3eListItemElement } from "./ListItemElement";
@@ -16,21 +24,137 @@ import { ListItemContentType } from "./ListItemContentType";
  * via CSS custom properties.
  *
  * @example
- * The following example illustrates a list with a single item using all supported slots.
- *
- * Note: This example uses the `@m3e/icon` package to present Material Design symbols, but any icon package can be
- * substituted depending on your design system or preferences
+ * Use the `leading`, `overline`, `supporting-text`, and `trailing` slots to arrange item content.
  *
  * ```html
  * <m3e-list>
- *  <m3e-list-item>
- *    <m3e-icon slot="leading-icon" name="person"></m3e-icon>
- *    <span slot="overline">Overline</span>
- *    Headline
- *    <span slot="supporting-text">Supporting text</span>
- *    <span slot="trailing-text">100+</span>
- *    <m3e-icon slot="trailing-icon" name="arrow_right"></m3e-icon>
- *  </m3e-list-item>
+ *   <m3e-list-item>
+ *     <m3e-icon slot="leading" name="person"></m3e-icon>
+ *     <span slot="overline">Overline</span>
+ *     Headline
+ *     <span slot="supporting-text">Supporting text</span>
+ *     <span slot="trailing">100+</span>
+ *   </m3e-list-item>
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use the default `standard` variant to present a list of items.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use `variant="segmented"` to separate the list items.
+ *
+ * ```html
+ * <m3e-list variant="segmented">
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use the `overline` and `supporting-text` slots to create two- or three-line items.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Label text</m3e-list-item>
+ *   <m3e-list-item>
+ *     Label text
+ *     <span slot="supporting-text">Supporting text</span>
+ *   </m3e-list-item>
+ *   <m3e-list-item>
+ *     <span slot="overline">Overline</span>
+ *     Label text
+ *     <span slot="supporting-text">Supporting text</span>
+ *   </m3e-list-item>
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use the `leading` and `trailing` slots for icons.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>
+ *     <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *     Label text
+ *     <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+ *   </m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use the `leading` slot for an avatar and `trailing` for an icon.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>
+ *     <m3e-avatar slot="leading">AB</m3e-avatar>
+ *     Label text
+ *     <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+ *   </m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use the `leading` slot for an image and `trailing` for an icon.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>
+ *     <img slot="leading" src="[YOUR IMAGE URL HERE]" />
+ *     Label text
+ *     <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+ *   </m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use the `leading` slot for a video and `trailing` for an icon.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>
+ *     <video slot="leading" autoplay loop poster="[YOUR IMAGE URL HERE]" preload="auto">
+ *       <source src="[YOUR VIDEO URL HERE]" type="video/mp4"/>
+ *     </video>
+ *     Label text
+ *     <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+ *   </m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use dividers to separate items in a standard list; dividers are hidden in segmented lists.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-list-item>Item 2</m3e-list-item>
+ *   <m3e-divider></m3e-divider>
+ *   <m3e-list-item>Item 3</m3e-list-item>
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use `inset` on a divider to inset it within a standard list.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <m3e-divider inset></m3e-divider>
+ *   <!-- Additional items omitted for brevity -->
  * </m3e-list>
  * ```
  *
@@ -53,12 +177,37 @@ import { ListItemContentType } from "./ListItemContentType";
  */
 @customElement("m3e-list")
 export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
+  static {
+    registerStyleSheet(css`
+      :is(m3e-list, m3e-action-list, m3e-selection-list):is(:state(--segmented), :--segmented)
+        :is(m3e-list-item, m3e-list-action, m3e-list-option, m3e-expandable-list-item):is(
+          :state(--first),
+          :--first,
+          :is(:state(--has-previous-open), :--has-previous-open):not([open])
+        ) {
+        --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
+      }
+      :is(m3e-list, m3e-action-list, m3e-selection-list):is(:state(--segmented), :--segmented)
+        :is(m3e-list-item, m3e-list-action, m3e-list-option, m3e-expandable-list-item):is(
+          :state(--last),
+          :--last,
+          :is(:state(--has-next-open), :--has-next-open):not([open])
+        ) {
+        --_list-item-bottom-container-shape: var(
+          --m3e-segmented-list-container-shape,
+          ${DesignToken.shape.corner.large}
+        );
+      }
+    `);
+  }
+
   /** The styles of the element. */
   static override styles: CSSResultGroup = css`
     :host {
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+      overflow-x: clip;
       box-sizing: border-box;
       padding-block: var(--m3e-list-block-padding, 0px);
 
@@ -73,7 +222,7 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
       --_list-item-trailing-video-outset: var(--m3e-list-item-trailing-space, ${DesignToken.measurement.space200});
       --_expandable-list-item-expanded-toggle-icon-container-color: transparent;
       --_expandable-list-item-animation: ${DesignToken.motion.spring.fastEffects};
-      --_expandable-list-item-slide-animation: 0s linear;
+      --_expandable-list-item-slide-dock: flex-start;
     }
     :host(:is(:state(--segmented), :--segmented)) {
       row-gap: var(--m3e-segmented-list-segment-gap, ${DesignToken.measurement.space25});
@@ -116,15 +265,6 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
         --m3e-segmented-list-container-shape,
         ${DesignToken.shape.corner.large}
       );
-    }
-    :host(:is(:state(--segmented), :--segmented)) ::slotted(:is(:state(--first), :--first)),
-    :host(:is(:state(--segmented), :--segmented))
-      ::slotted(:is(:state(--has-previous-open), :--has-previous-open):not([open])) {
-      --_list-item-top-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
-    }
-    :host(:is(:state(--segmented), :--segmented)) ::slotted(:is(:state(--has-next-open), :--has-next-open):not([open])),
-    :host(:is(:state(--segmented), :--segmented)) ::slotted(:is(:state(--last), :--last)) {
-      --_list-item-bottom-container-shape: var(--m3e-segmented-list-container-shape, ${DesignToken.shape.corner.large});
     }
     :host(:is(:state(--segmented), :--segmented)) ::slotted(m3e-divider) {
       display: none;
@@ -224,17 +364,35 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
   }
 
   /** @private */
-  #handleSlotChange(e: Event): void {
-    this.#items = (e.target as HTMLSlotElement)
-      .assignedElements({ flatten: true })
-      .filter((x) => x instanceof M3eListItemElement);
+  #handleSlotChange(): void {
+    this.#items = [
+      ...this.querySelectorAll<M3eListItemElement>(
+        "m3e-list-item, m3e-list-action, m3e-list-option, m3e-expandable-list-item",
+      ),
+    ].filter(
+      (x) =>
+        x.parentElement?.closest("m3e-list, m3e-action-list, m3e-selection-list, m3e-expandable-list-item") === this,
+    );
 
     this.#items.forEach((x, i) => {
       setCustomState(x, "--first", i === 0);
       setCustomState(x, "--last", i === this.#items.length - 1);
     });
 
+    this.notifyOpenChange();
     this.notifyItemsChange();
+  }
+
+  /**
+   * @internal
+   * Notifies the list that an item was expanded or collapsed.
+   */
+  notifyOpenChange(): void {
+    const isOpen = (x: M3eListItemElement | undefined) => (x as { open?: boolean } | undefined)?.open === true;
+    this.#items.forEach((x, i) => {
+      setCustomState(x, "--has-previous-open", isOpen(this.#items[i - 1]));
+      setCustomState(x, "--has-next-open", isOpen(this.#items[i + 1]));
+    });
   }
 
   /**
@@ -269,7 +427,7 @@ export class M3eListElement extends AttachInternals(Role(LitElement, "list")) {
       this.#trailingContentTypes[oldType]--;
     }
     if (newType) {
-      this.#trailingContentTypes[newType]--;
+      this.#trailingContentTypes[newType]++;
     }
 
     ["video", "image", "avatar", "icon"].forEach((x) => {

@@ -28,6 +28,52 @@ import "@m3e/web/gestures/tap";
 
 The element dispatches a `gesture` event with `SequenceGestureDetail` as its detail. Child gesture elements are processed in DOM order.
 
+## Showcase examples
+
+Bind `m3e-sequence-gesture` to the target with `for` and nest a long-press gesture before a pan gesture to recognize a press followed by a drag.
+
+```html
+<div id="item" class="target"></div>
+<m3e-sequence-gesture for="item" max-interval="0">
+  <m3e-long-press-gesture></m3e-long-press-gesture>
+  <m3e-pan-gesture activation-mode="move"></m3e-pan-gesture>
+</m3e-sequence-gesture>
+```
+
+Alternatively, use the same target with `detectGesture` and `phase`. Replace the handler placeholders and retain the returned controller to call `destroy()` when no longer needed.
+
+```js
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { longPress } from "@m3e/web/gestures/long-press";
+import { pan } from "@m3e/web/gestures/pan";
+import { sequence } from "@m3e/web/gestures/sequence";
+
+const item = document.getElementById("item");
+detectGesture(
+  item,
+  sequence(
+    { maxInterval: 0 },
+    longPress(
+      phase({
+        onEnd: (detail) => {
+          // Handle pick up
+        },
+      }),
+    ),
+    pan(
+      {
+        activationMode: "move",
+      },
+      phase({
+        onUpdate: (detail) => {
+          // Handle move
+        },
+      }),
+    ),
+  ),
+);
+```
+
 ## Options
 
 | Attribute       | Type                            | Default                     | Description                                                     |

@@ -22,6 +22,29 @@ import "@m3e/web/gestures/swipe";
 
 The element dispatches a `gesture` event with `SwipeGestureDetail` as its detail.
 
+## Showcase examples
+
+Bind `m3e-swipe-gesture` to the target with `for` and listen for `gesture` to respond to a swipe. Size the target and use `touch-action` to avoid conflicts with page scrolling.
+
+```html
+<div id="item"></div>
+<m3e-swipe-gesture for="item"></m3e-swipe-gesture>
+```
+
+Alternatively, use the same target with `detectGesture` and `phase`. Replace the handler placeholders and retain the returned controller to call `destroy()` when no longer needed.
+
+```js
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { swipe } from "@m3e/web/gestures/swipe";
+
+const item = document.getElementById("item");
+detectGesture(item, swipe(phase({
+  onEnd: (detail) => {
+    // Handle swipe
+  }
+})));
+```
+
 ## Options
 
 | Attribute                | Type                                               | Default                           | Description                                                                                      |
@@ -33,7 +56,7 @@ The element dispatches a `gesture` event with `SwipeGestureDetail` as its detail
 | `input-filter`           | `GestureInputFilter`                               | —                                 | Predicate used to determine whether input can be recognized.                                     |
 | `pointers`               | `number`                                           | `1`                               | Number of pointers required for the gesture to be recognized.                                    |
 | `start-threshold`        | `number`                                           | `4`                               | Minimum distance (px) a pointer must move before the gesture starts.                             |
-| `min-velocity`           | `number`                                           | `0.3`                             | Minimum velocity (px/ms) required to recognize a swipe.                                          |
+| `min-velocity`           | `number`                                           | `0.3`                             | Minimum release velocity (px/ms) required before the gesture fails.                              |
 | `directions`             | `readonly ("left" \| "right" \| "up" \| "down")[]` | `["left", "right", "up", "down"]` | The allowed directions of the swipe.                                                             |
 | `direction-threshold`    | `number`                                           | `12`                              | Minimum displacement (px) required before a direction is considered valid.                       |
 | `direction-grace-period` | `number`                                           | `0`                               | Maximum time (ms) a pointer can move in an uncommitted or disallowed direction before rejection. |

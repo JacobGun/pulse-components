@@ -24,6 +24,38 @@ import "@m3e/web/gestures/pan";
 
 The element dispatches a `gesture` event with `TransformGestureDetail` as its detail.
 
+## Showcase examples
+
+Bind `m3e-pan-gesture` to the target with `for` and listen for `gesture` to track movement as the pointer drags. Size the target and set `touch-action` to allow the drag without unwanted page scrolling.
+
+```html
+<div id="item"></div>
+<m3e-pan-gesture for="item"></m3e-pan-gesture>
+```
+
+Alternatively, use the same target with `detectGesture` and `phase`. Replace the handler placeholders and retain the returned controller to call `destroy()` when no longer needed.
+
+```js
+import { detectGesture, phase } from "@m3e/web/gestures";
+import { pan } from "@m3e/web/gestures/pan";
+
+const item = document.getElementById("item");
+detectGesture(item, pan(phase({
+  onStart: (detail) => {
+    // Begin tracking
+  },
+  onUpdate: (detail) => {
+    // Continuous movement
+  },
+  onEnd: (detail) => {
+    // Finalize pan
+  },
+  onCancel: (detail) => {
+    // Abort pan
+  }
+})));
+```
+
 ## Options
 
 | Attribute            | Type                             | Default                     | Description                                                                                                |

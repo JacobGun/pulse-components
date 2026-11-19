@@ -18,16 +18,15 @@ import "@m3e/web/bottom-sheet";
 
 ## 🧪 Examples
 
-The following example illustrates a modal bottom sheet with a drag handle, detents, and an action list:
+Open a standard bottom sheet with a trigger and close it with a bottom sheet action.
 
 ```html
 <m3e-button>
-  <m3e-bottom-sheet-trigger for="bottomSheet"> Open Bottom Sheet </m3e-bottom-sheet-trigger>
+  <m3e-bottom-sheet-trigger for="bottomSheet"> Open bottom sheet </m3e-bottom-sheet-trigger>
 </m3e-button>
-
-<m3e-bottom-sheet id="bottomSheet" modal handle hideable detents="fit half full">
+<m3e-bottom-sheet id="bottomSheet">
   <m3e-action-list>
-    <m3e-list-action autofocus>
+    <m3e-list-action>
       <m3e-bottom-sheet-action>Google Keep</m3e-bottom-sheet-action>
       <span slot="supporting-text">Add to a note</span>
     </m3e-list-action>
@@ -36,6 +35,98 @@ The following example illustrates a modal bottom sheet with a drag handle, deten
       <span slot="supporting-text">Embed in a document</span>
     </m3e-list-action>
   </m3e-action-list>
+</m3e-bottom-sheet>
+```
+
+Add `modal` to block interaction with the page while the sheet is open.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-bottom-sheet id="bottomSheet" modal>
+  <!-- Content omitted for brevity -->
+</m3e-bottom-sheet>
+```
+
+Add `handle` to show a drag handle on the modal sheet.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-bottom-sheet id="bottomSheet" modal handle>
+  <!-- Content omitted for brevity -->
+</m3e-bottom-sheet>
+```
+
+Set `detents="fit half full"` to let the sheet snap to its content height, half height, or full height.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-bottom-sheet id="bottomSheet" modal handle detents="fit half full">
+  <!-- Content omitted for brevity -->
+</m3e-bottom-sheet>
+```
+
+Set `detent="1"` on the sheet to open at the second detent, `half`.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-bottom-sheet id="bottomSheet" modal handle detents="fit half full" detent="1">
+  <!-- Content omitted for brevity -->
+</m3e-bottom-sheet>
+```
+
+Set `detent="1"` on the trigger to open the sheet at `half` from that trigger.
+
+```html
+<m3e-button>
+  <m3e-bottom-sheet-trigger for="bottomSheet" detent="1">
+    Open draggable modal bottom sheet with detents at half via trigger
+  </m3e-bottom-sheet-trigger>
+</m3e-button>
+<m3e-bottom-sheet id="bottomSheet" modal handle detents="fit half full">
+  <!-- Content omitted for brevity -->
+</m3e-bottom-sheet>
+```
+
+Use the `collapsed` detent and `--m3e-bottom-sheet-peek-height` to reveal 36px of content below the header.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-bottom-sheet
+  id="bottomSheet"
+  modal
+  handle
+  detents="collapsed fit half full"
+  style="--m3e-bottom-sheet-peek-height: 36px"
+>
+  <!-- Content omitted for brevity -->
+</m3e-bottom-sheet>
+```
+
+Use `hideable` to let users drag the sheet down to dismiss it.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-bottom-sheet id="bottomSheet" modal handle hideable>
+  <!-- Content omitted for brevity -->
+</m3e-bottom-sheet>
+```
+
+Combine `hideable` with detents to let users drag past the lowest detent to dismiss the sheet.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-bottom-sheet id="bottomSheet" modal handle hideable detents="fit half full">
+  <!-- Content omitted for brevity -->
+</m3e-bottom-sheet>
+```
+
+Place a heading in the `header` slot and reference it with `aria-labelledby="sheetTitle"` on the sheet to give the modal an accessible name.
+
+```html
+<!-- Trigger omitted for brevity -->
+<m3e-bottom-sheet id="bottomSheet" modal handle hideable detents="collapsed fit half full">
+  <m3e-heading id="sheetTitle" slot="header" variant="title" size="large"> Choose a destination </m3e-heading>
+  <!-- Content omitted for brevity -->
 </m3e-bottom-sheet>
 ```
 

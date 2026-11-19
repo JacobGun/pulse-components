@@ -14,6 +14,38 @@ import { RotateGestureRecognizer } from "./RotateGestureRecognizer";
  * A non-visual element used to detect and interpret rotate gestures from an input stream
  * produced from an attached element.
  *
+ * @example
+ * Bind `m3e-rotate-gesture` to the target with `for` and listen for `gesture` to track rotation. Give the target a visible size and set `touch-action` to avoid conflicts with browser gestures.
+ *
+ * ```html
+ * <div id="item"></div>
+ * <m3e-rotate-gesture for="item"></m3e-rotate-gesture>
+ * ```
+ *
+ * @example
+ * Alternatively, use the same target with `detectGesture` and `phase`. Replace the handler placeholders and retain the returned controller to call `destroy()` when no longer needed.
+ *
+ * ```js
+ * import { detectGesture, phase } from "@m3e/web/gestures";
+ * import { rotate } from "@m3e/web/gestures/rotate";
+ *
+ * const item = document.getElementById("item");
+ * detectGesture(item, rotate(phase({
+ *   onStart: (detail) => {
+ *     // Begin tracking
+ *   },
+ *   onUpdate: (detail) => {
+ *     // Continuous movement
+ *   },
+ *   onEnd: (detail) => {
+ *     // Finalize rotate
+ *   },
+ *   onCancel: (detail) => {
+ *     // Abort rotate
+ *   }
+ * })));
+ * ```
+ *
  * @tag m3e-rotate-gesture
  *
  * @attr for - The identifier of the interactive control to which this element is attached.

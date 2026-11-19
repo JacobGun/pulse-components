@@ -36,18 +36,32 @@ import { TocGenerator, TocNode } from "./TocGenerator";
  * to that heading element.
  *
  * @example
+ * Connect a table of contents to a container by id.
+ *
  * ```html
- * <m3e-toc for="content" max-depth="3">
- *   <span slot="overline">Contents</span>
- *   <span slot="title">Documentation</span>
- * </m3e-toc>
- * <div id="content">
- *   <h2>Introduction</h2>
- *   <h2>Getting Started</h2>
- *   <h3>Installation</h3>
- *   <h3>Usage</h3>
- *   <h2>API Reference</h2>
+ * <div id="d1">
+ *   <m3e-toc for="d1">
+ *     <span slot="overline">Overline</span>
+ *     <span slot="title">Title</span>
+ *   </m3e-toc>
+ *   <div>
+ *     <h2 id="h1">Heading 1</h2>
+ *     <h3 id="h1.1">Heading 1.1</h3>
+ *     <h4 id="h1.1.1">Heading 1.1.1</h4>
+ *     <h3 id="h2">Heading 1.2</h3>
+ *     <h2 id="h2.1">Heading 2</h2>
+ *   </div>
  * </div>
+ * ```
+ *
+ * @example
+ * Use the `overline` and `title` slots for table of contents heading text.
+ *
+ * ```html
+ * <m3e-toc for="d1">
+ *     <span slot="overline">Overline</span>
+ *     <span slot="title">Title</span>
+ *   </m3e-toc>
  * ```
  *
  * @tag m3e-toc
@@ -409,7 +423,56 @@ export class M3eTocElement extends HtmlFor(AttachInternals(Role(LitElement, "nav
   #handleClick(e: Event): void {
     if (e.target instanceof M3eTocItemElement && !e.target.disabled && e.target.node?.element) {
       this.#ignoreScroll = true;
-      e.target.node.element.scrollIntoView({ block: "start", behavior: "smooth" });
+      const heading = e.target.node.element;
+      const control = this.control;
+      const style = control && getComputedStyle(control);
+
+      if (
+        control &&
+        style &&
+        control !== this.ownerDocument.body &&
+        control !== this.ownerDocument.documentElement &&
+        ["auto", "scroll", "hidden"].includes(style.overflowY)
+      ) {
+        const marginTop = parseFloat(getComputedStyle(heading).scrollMarginTop) || 0;
+        const headingTop = heading.getBoundingClientRect().top;
+
+        let displacement = 0;
+        for (let container = heading.parentElement; container; container = container.parentElement) {
+          const containerStyle = getComputedStyle(container);
+
+          if (["auto", "scroll", "hidden"].includes(containerStyle.overflowY)) {
+            const padding = parseFloat(containerStyle.scrollPaddingTop) || 0;
+            const paddingTop = containerStyle.scrollPaddingTop.endsWith("%")
+              ? (padding * container.clientHeight) / 100
+              : padding;
+
+            const top = Math.max(
+              0,
+              Math.min(
+                container.scrollHeight - container.clientHeight,
+                container.scrollTop +
+                  headingTop -
+                  displacement -
+                  container.getBoundingClientRect().top -
+                  container.clientTop -
+                  paddingTop -
+                  marginTop,
+              ),
+            );
+
+            displacement += top - container.scrollTop;
+            container.scrollTo({ top, behavior: "smooth" });
+          }
+
+          if (container === control) {
+            break;
+          }
+        }
+      } else {
+        heading.scrollIntoView({ block: "start", behavior: "smooth" });
+      }
+
       this.#selectionManager.updateActiveItem(e.target);
       this.#selectionManager.select(e.target);
     }

@@ -1,6 +1,6 @@
 {
   "name": "@pulse/web",
-  "version": "2.10.2",
+  "version": "2.13.5",
   "description": "Platform-native Web Components for M3E",
   "author": "matraic <matraic@yahoo.com>",
   "license": "MIT",
@@ -26,6 +26,7 @@
     "calendar",
     "callout",
     "card",
+    "carousel",
     "checkbox",
     "chips",
     "content-pane",
@@ -63,6 +64,7 @@
     "split-button",
     "split-pane",
     "stepper",
+    "swipe-reveal",
     "switch",
     "tabs",
     "textarea-autosize",
@@ -75,6 +77,9 @@
   ],
   "type": "module",
   "exports": {
+    "./custom-elements.json": "./dist/custom-elements.json",
+    "./css-custom-data.json": "./dist/css-custom-data.json",
+    "./html-custom-data.json": "./dist/html-custom-data.json",
     "./core": {
       "types": "./dist/src/core/index.d.ts",
       "default": "./dist/core.js"
@@ -142,6 +147,10 @@
     "./card": {
       "types": "./dist/src/card/index.d.ts",
       "default": "./dist/card.js"
+    },
+    "./carousel": {
+      "types": "./dist/src/carousel/index.d.ts",
+      "default": "./dist/carousel.js"
     },
     "./checkbox": {
       "types": "./dist/src/checkbox/index.d.ts",
@@ -322,6 +331,10 @@
     "./stepper": {
       "types": "./dist/src/stepper/index.d.ts",
       "default": "./dist/stepper.js"
+    },
+    "./swipe-reveal": {
+      "types": "./dist/src/swipe-reveal/index.d.ts",
+      "default": "./dist/swipe-reveal.js"
     },
     "./switch": {
       "types": "./dist/src/switch/index.d.ts",
