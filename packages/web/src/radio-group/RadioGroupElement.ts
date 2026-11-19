@@ -32,15 +32,58 @@ import { M3eRadioElement } from "./RadioElement";
  * behavior, focus, and feedback across its radios.
  *
  * @example
- * The following example illustrates using `m3e-radio-group` and `m3e-radio` to present a group of options.
+ * Group radio buttons to offer mutually exclusive choices.
+ *
  * ```html
- * <label for="rdg1">Radio group</label>
- * <br />
- * <m3e-radio-group id="rdg1">
- *  <label><m3e-radio value="1"></m3e-radio> Value 1</label>
- *  <label><m3e-radio value="2"></m3e-radio> Value 2</label>
- *  <label><m3e-radio value="3"></m3e-radio> Value 3</label>
- *  <label><m3e-radio value="4"></m3e-radio> Value 4</label>
+ * <m3e-radio-group>
+ *   <label><m3e-radio value="1"></m3e-radio> Option 1</label>
+ *   <label><m3e-radio value="2"></m3e-radio> Option 2</label>
+ *   <label><m3e-radio value="3"></m3e-radio> Option 3</label>
+ *   <label><m3e-radio value="4"></m3e-radio> Option 4</label>
+ * </m3e-radio-group>
+ * ```
+ *
+ * @example
+ * Use a `label` element to label a radio or radio group.
+ *
+ * ```html
+ * <label for="radio-group">Select an option</label>
+ * <m3e-radio-group id="radio-group">
+ *   <label><m3e-radio value="1"></m3e-radio> Option 1</label>
+ *   <!-- Additional radios omitted for brevity -->
+ * </m3e-radio-group>
+ * ```
+ *
+ * @example
+ * Use `disabled` on an individual radio to disable that option.
+ *
+ * ```html
+ * <label for="radio-group">Select an option</label>
+ * <m3e-radio-group id="radio-group">
+ *   <label><m3e-radio disabled value="1"></m3e-radio> Option 1</label>
+ *   <!-- Additional radios omitted for brevity -->
+ * </m3e-radio-group>
+ * ```
+ *
+ * @example
+ * Use `disabled` on the radio group to disable the entire group.
+ *
+ * ```html
+ * <label for="radio-group">Select an option</label>
+ * <m3e-radio-group id="radio-group" disabled>
+ *   <label><m3e-radio value="1"></m3e-radio> Option 1</label>
+ *   <!-- Additional radios omitted for brevity -->
+ * </m3e-radio-group>
+ * ```
+ *
+ * @example
+ * Use `required` to require a selection.
+ *
+ * ```html
+ * <label for="radio-group">Select an option</label>
+ * <m3e-radio-group id="radio-group" required>
+ *   <label><m3e-radio value="1"></m3e-radio> Option 1</label>
+ *   <!-- Additional radios omitted for brevity -->
  * </m3e-radio-group>
  * ```
  *

@@ -13,28 +13,86 @@ import "@m3e/web/slider";
 
 ## 🧪 Examples
 
-The following example illustrates a labelled slider with thumb used to select a single numeric value.
+Place a thumb inside a slider to select a value.
 
 ```html
-<m3e-slider labelled>
+<m3e-slider>
+  <m3e-slider-thumb></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Use `min`, `max`, and `step` on the slider and `value` on its thumb.
+
+```html
+<m3e-slider min="1" max="5" step="0.5">
+  <m3e-slider-thumb value="1.5"></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Use two slider thumbs to select a range.
+
+```html
+<m3e-slider>
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
+  <m3e-slider-thumb value="80"></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Set `min` to allow negative values.
+
+```html
+<m3e-slider min="-50">
+  <m3e-slider-thumb value="-20"></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Use `orientation` to choose `horizontal` (default) or `vertical`.
+
+```html
+<m3e-slider orientation="vertical">
   <m3e-slider-thumb value="50"></m3e-slider-thumb>
 </m3e-slider>
 ```
 
-The next example illustrates a labelled range slider with two thumbs used to select a minimum and maximum numeric value.
+Use `size` to choose `extra-small` (default), `small`, `medium`, `large`, or `extra-large`.
+
+```html
+<m3e-slider size="extra-small">
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
+</m3e-slider>
+<!-- Additional sizes omitted for brevity -->
+```
+
+Use `labelled` to show thumb values; set `displayWith` to customize their format.
 
 ```html
 <m3e-slider labelled>
-  <m3e-slider-thumb value="25"></m3e-slider-thumb>
-  <m3e-slider-thumb value="75"></m3e-slider-thumb>
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
 </m3e-slider>
 ```
 
-The last example illustrates a vertical slider. Values run bottom-to-top, and `size` continues to control track thickness.
+Use `discrete` and a `step` greater than 1 to display tick marks.
 
 ```html
-<m3e-slider orientation="vertical" labelled discrete step="10">
-  <m3e-slider-thumb value="40"></m3e-slider-thumb>
+<m3e-slider discrete step="10">
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Use `disabled` on the slider to disable the control.
+
+```html
+<m3e-slider labelled disabled>
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
+</m3e-slider>
+```
+
+Use `disabled` on an individual thumb while leaving the other thumb enabled.
+
+```html
+<m3e-slider labelled>
+  <m3e-slider-thumb value="20"></m3e-slider-thumb>
+  <m3e-slider-thumb disabled value="80"></m3e-slider-thumb>
 </m3e-slider>
 ```
 
@@ -126,18 +184,20 @@ This section details the attributes, events and CSS custom properties available 
 
 #### 🎛️ CSS Custom Properties
 
-| Property                              | Description                                    |
-| ------------------------------------- | ---------------------------------------------- |
-| `--m3e-slider-thumb-width`            | Width of the slider thumb.                     |
-| `--m3e-slider-thumb-padding`          | Horizontal padding around the thumb.           |
-| `--m3e-slider-thumb-color`            | Active color of the slider thumb when enabled. |
-| `--m3e-slider-thumb-pressed-width`    | Width of the thumb when pressed.               |
-| `--m3e-slider-thumb-disabled-color`   | Color of the thumb when disabled.              |
-| `--m3e-slider-thumb-disabled-opacity` | Opacity of the thumb when disabled.            |
-| `--m3e-slider-label-width`            | Width of the floating label above the thumb.   |
-| `--m3e-slider-label-container-color`  | Background color of the label container.       |
-| `--m3e-slider-label-color`            | Text color of the label.                       |
-| `--m3e-slider-label-font-size`        | Font size of the label text.                   |
-| `--m3e-slider-label-font-weight`      | Font weight of the label text.                 |
-| `--m3e-slider-label-line-height`      | Line height of the label text.                 |
-| `--m3e-slider-label-tracking`         | Letter spacing of the label text.              |
+| Property                              | Description                                     |
+| ------------------------------------- | ----------------------------------------------- |
+| `--m3e-slider-thumb-width`            | Width of the slider thumb.                      |
+| `--m3e-slider-thumb-padding`          | Horizontal padding around the thumb.            |
+| `--m3e-slider-thumb-color`            | Active color of the slider thumb when enabled.  |
+| `--m3e-slider-thumb-pressed-width`    | Width of the thumb when pressed.                |
+| `--m3e-slider-thumb-disabled-color`   | Color of the thumb when disabled.               |
+| `--m3e-slider-thumb-disabled-opacity` | Opacity of the thumb when disabled.             |
+| `--m3e-slider-label-width`            | Width of the floating label above the thumb.    |
+| `--m3e-slider-label-height`           | Height of the floating label above the thumb.   |
+| `--m3e-slider-label-margin`           | Space between the floating label and the thumb. |
+| `--m3e-slider-label-container-color`  | Background color of the label container.        |
+| `--m3e-slider-label-color`            | Text color of the label.                        |
+| `--m3e-slider-label-font-size`        | Font size of the label text.                    |
+| `--m3e-slider-label-font-weight`      | Font weight of the label text.                  |
+| `--m3e-slider-label-line-height`      | Line height of the label text.                  |
+| `--m3e-slider-label-tracking`         | Letter spacing of the label text.               |

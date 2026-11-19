@@ -22,21 +22,58 @@ import type { M3eFabMenuElement } from "./FabMenuElement";
  * An item of a floating action button (FAB) menu.
  *
  * @example
- * The following example illustrates triggering a `m3e-fab-menu` from an `m3e-fab` using a `m3e-fab-menu-trigger`.
+ * Nest `m3e-fab-menu-trigger` in a FAB and match its `for` to the menu's `id`.
+ *
  * ```html
  * <m3e-fab variant="primary" size="large">
- *  <m3e-fab-menu-trigger for="fabmenu">
- *    <m3e-icon name="edit"></m3e-icon>
- *  </m3e-fab-menu-trigger>
+ *   <m3e-fab-menu-trigger for="fabmenu">
+ *     <m3e-icon name="edit"></m3e-icon>
+ *   </m3e-fab-menu-trigger>
  * </m3e-fab>
- * <m3e-fab-menu id="fabmenu" variant="secondary">
- *  <m3e-fab-menu-item>First</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Second</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Third</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Forth</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Fifth</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Sixth</m3e-fab-menu-item>
+ * <m3e-fab-menu id="fabmenu">
+ *   <m3e-fab-menu-item>
+ *     <m3e-icon slot="icon" name="email" filled></m3e-icon>
+ *     Email
+ *   </m3e-fab-menu-item>
+ *   <m3e-fab-menu-item>
+ *     <m3e-icon slot="icon" name="chat" filled></m3e-icon>
+ *     Message
+ *   </m3e-fab-menu-item>
+ *   <m3e-fab-menu-item>
+ *     <m3e-icon slot="icon" name="folder" filled></m3e-icon>
+ *     Folder
+ *   </m3e-fab-menu-item>
  * </m3e-fab-menu>
+ * ```
+ *
+ * @example
+ * Put an item in an `m3e-fab-menu` and use its `icon` slot to display an icon before the label.
+ *
+ * ```html
+ * <m3e-fab-menu-item>
+ *   <m3e-icon slot="icon" name="email" filled></m3e-icon>
+ *   Email
+ * </m3e-fab-menu-item>
+ * ```
+ *
+ * @example
+ * Set `disabled` on a menu item to make that action unavailable without disabling the menu.
+ *
+ * ```html
+ * <m3e-fab-menu-item disabled>
+ *   <m3e-icon slot="icon" name="email" filled></m3e-icon>
+ *   Email
+ * </m3e-fab-menu-item>
+ * ```
+ *
+ * @example
+ * Set `href` on a menu item to make it a link. Use `target="_blank"` to open the destination separately.
+ *
+ * ```html
+ * <m3e-fab-menu-item href="https://www.google.com" target="_blank">
+ *   <m3e-icon slot="icon" name="open_in_new_window" filled></m3e-icon>
+ *   Google
+ * </m3e-fab-menu-item>
  * ```
  *
  * @tag m3e-fab-menu-item

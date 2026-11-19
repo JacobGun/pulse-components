@@ -55,9 +55,83 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * as disabled but allow for it to receive focus. The button will have `aria-disabled="true"` for assistive technology.
  *
  * @example
- * The following example illustrates changing the appearance from `text` (default), to `tonal` using the `variant` attribute.
+ * Use `variant="elevated"` to raise the button above the surrounding surface.
  * ```html
- * <m3e-button variant="tonal">Tonal Button</m3e-button>
+ * <m3e-button variant="elevated">Elevated</m3e-button>
+ * <!-- Additional variants omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Use `shape="square"` to replace the default rounded shape.
+ * ```html
+ * <m3e-button variant="elevated" shape="square">Square Elevated</m3e-button>
+ * <!-- Additional variants omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Use `size="extra-small"` for a compact tonal button.
+ * ```html
+ * <m3e-button variant="tonal" size="extra-small">Extra Small</m3e-button>
+ * <!-- Additional sizes omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Use `icon` to place an icon before the label or `trailing-icon` to place it after the label.
+ * ```html
+ * <m3e-button variant="tonal">
+ *   <m3e-icon slot="icon" name="send"></m3e-icon>Send
+ * </m3e-button>
+ * <m3e-button variant="tonal">
+ *   Open<m3e-icon slot="trailing-icon" name="open_in_new_window"></m3e-icon>
+ * </m3e-button>
+ * ```
+ *
+ * @example
+ * Add `toggle` to make a button selectable. Use `selected` to set its state or cancel `beforeinput` to prevent a user-initiated change.
+ * ```html
+ * <m3e-button variant="elevated" toggle>Elevated Toggle</m3e-button>
+ * <!-- Additional variants omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Use the `selected` and `selected-icon` slots to replace the label and icon when the toggle is selected.
+ * ```html
+ * <m3e-button variant="filled" toggle>
+ *   <m3e-icon slot="icon" name="play_arrow"></m3e-icon>
+ *   <m3e-icon slot="selected-icon" name="stop"></m3e-icon>
+ *   Start
+ *   <span slot="selected">Stop</span>
+ * </m3e-button>
+ * ```
+ *
+ * @example
+ * Use `disabled` to disable a button, or `disabled-interactive` to keep a disabled button focusable.
+ * ```html
+ * <m3e-button variant="filled" disabled>Disabled</m3e-button>
+ * <m3e-button variant="filled" disabled-interactive>Disabled Interactive</m3e-button>
+ * ```
+ *
+ * @example
+ * Set `href` to make the button a link and `target="_blank"` to open the destination in a new tab or window.
+ * ```html
+ * <m3e-button variant="tonal" href="https://www.google.com" target="_blank">
+ *   Google<m3e-icon slot="trailing-icon" name="open_in_new_window"></m3e-icon>
+ * </m3e-button>
+ * ```
+ *
+ * @example
+ * Set `--md-sys-density-scale: -3` to reduce the density of an extra-small button.
+ * ```html
+ * <m3e-button variant="filled" size="extra-small" class="density-3">
+ *   <m3e-icon slot="icon" name="stars"></m3e-icon>
+ *   Density -3
+ * </m3e-button>
+ * <!-- Additional buttons omitted for brevity -->
+ * ```
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-button
@@ -100,6 +174,10 @@ import { ButtonSizeStyle, ButtonStyle, ButtonVariantStyle } from "./styles";
  * @cssprop --m3e-button-selected-shape-round - Corner radius when selected (round), for all size variants.
  * @cssprop --m3e-button-selected-shape-square - Corner radius when selected (square), for all size variants.
  * @cssprop --m3e-button-shape-pressed-morph - Corner radius when pressed, for all size variants.
+ * @cssprop --m3e-button-start-start-shape - Overrides the start-start logical corner radius in all states.
+ * @cssprop --m3e-button-start-end-shape - Overrides the start-end logical corner radius in all states.
+ * @cssprop --m3e-button-end-start-shape - Overrides the end-start logical corner radius in all states.
+ * @cssprop --m3e-button-end-end-shape - Overrides the end-end logical corner radius in all states.
  * @cssprop --m3e-button-leading-space - Space before icon or label, for all size variants.
  * @cssprop --m3e-button-trailing-space - Space after icon or label, for all size variants.
  * @cssprop --m3e-button-icon-label-space - Space between icon and label, for all size variants.

@@ -8,6 +8,7 @@ import {
   customElement,
   DesignToken,
   DisabledMixin,
+  forcedColorsActive,
   hasCustomState,
   prefersReducedMotion,
   Role,
@@ -24,6 +25,12 @@ import { positionAnchor } from "@pulse/web/core/anchoring";
 import { M3eFabElement } from "@pulse/web/fab";
 
 import { FabMenuVariant, isFabMenuVariant } from "./FabMenuVariant";
+
+/** The minimum space, in pixels, kept between the menu and the top and bottom of the viewport. */
+const viewportMargin = 8;
+
+/** The space, in pixels, between the menu and its trigger. */
+const menuOffset = 8;
 
 /**
  * Returns when each item of a menu appears or disappears, as in Compose's `FloatingActionButtonMenu`: a counter animates
@@ -65,22 +72,47 @@ function staggerDelays(count: number, open: boolean): number[] {
  * floating action button (FAB). Designed using expressive, adaptive surfaces, it enables seamless access
  * to contextual actions in modern, visually rich interfaces.
  *
+ * When the items do not fit above the FAB, they scroll behind it and can be revealed below it up to the viewport edge.
+ * On devices with a touch-capable pointer, the scrollable menu also receives touches in its empty space.
+ *
  * @example
- * The following example illustrates triggering a `m3e-fab-menu` from an `m3e-fab` using a `m3e-fab-menu-trigger`.
+ * Nest `m3e-fab-menu-trigger` in a FAB and match its `for` to the menu's `id`.
+ *
  * ```html
  * <m3e-fab variant="primary" size="large">
- *  <m3e-fab-menu-trigger for="fabmenu">
- *    <m3e-icon name="edit"></m3e-icon>
- *  </m3e-fab-menu-trigger>
+ *   <m3e-fab-menu-trigger for="fabmenu">
+ *     <m3e-icon name="edit"></m3e-icon>
+ *   </m3e-fab-menu-trigger>
+ * </m3e-fab>
+ * <m3e-fab-menu id="fabmenu">
+ *   <m3e-fab-menu-item>
+ *     <m3e-icon slot="icon" name="email" filled></m3e-icon>
+ *     Email
+ *   </m3e-fab-menu-item>
+ *   <m3e-fab-menu-item>
+ *     <m3e-icon slot="icon" name="chat" filled></m3e-icon>
+ *     Message
+ *   </m3e-fab-menu-item>
+ *   <m3e-fab-menu-item>
+ *     <m3e-icon slot="icon" name="folder" filled></m3e-icon>
+ *     Folder
+ *   </m3e-fab-menu-item>
+ * </m3e-fab-menu>
+ * ```
+ *
+ * @example
+ * Set `variant="secondary"` on the menu and its FAB to give them a matching appearance.
+ *
+ * ```html
+ * <m3e-fab variant="secondary" size="large">
+ *   <m3e-fab-menu-trigger for="fabmenu">
+ *     <m3e-icon name="edit"></m3e-icon>
+ *   </m3e-fab-menu-trigger>
  * </m3e-fab>
  * <m3e-fab-menu id="fabmenu" variant="secondary">
- *  <m3e-fab-menu-item>First</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Second</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Third</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Forth</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Fifth</m3e-fab-menu-item>
- *  <m3e-fab-menu-item>Sixth</m3e-fab-menu-item>
+ *   <!-- Items omitted for brevity -->
  * </m3e-fab-menu>
+ * <!-- Other variants omitted for brevity -->
  * ```
  *
  * @tag m3e-fab-menu
@@ -123,25 +155,65 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       margin: unset;
       border: unset;
       overflow: visible;
+      overscroll-behavior: contain;
+      scrollbar-width: none;
       width: var(--_fab-menu-width, fit-content);
       max-width: var(--m3e-fab-menu-max-width, 280px);
       background-color: transparent;
       display: none;
+      will-change: clip-path;
+    }
+    :host::-webkit-scrollbar {
+      display: none;
+    }
+    :host(:is(:state(--scrolls), :--scrolls)) {
+      --_fab-menu-ring-space: max(
+        0px,
+        calc(
+          var(--m3e-focus-ring-outward-offset, 2px) + var(--m3e-focus-ring-thickness, 3px) *
+            max(1, var(--m3e-focus-ring-growth-factor, 2))
+        )
+      );
+      padding-block-start: var(--_fab-menu-ring-space);
+      padding-inline: var(--_fab-menu-ring-space);
+      max-width: max(0px, calc(var(--m3e-fab-menu-max-width, 280px) - 2 * var(--_fab-menu-ring-space)));
+      scroll-padding-top: var(--_fab-menu-ring-space);
+      scroll-padding-bottom: calc(var(--_fab-menu-inset, 0px) + var(--_fab-menu-ring-space));
+      pointer-events: none;
+    }
+    :host(:is(:state(--scrolls), :--scrolls)) ::slotted(m3e-fab-menu-item) {
+      pointer-events: auto;
+    }
+    @media (any-pointer: coarse) {
+      :host(:is(:state(--scrolls), :--scrolls)) {
+        pointer-events: auto;
+      }
+    }
+    .spacer {
+      display: none;
+      flex: none;
+      height: max(
+        0px,
+        calc(var(--_fab-menu-inset, 0px) - var(--m3e-fab-menu-spacing, ${DesignToken.measurement.space50}))
+      );
+    }
+    :host(:is(:state(--scrolls), :--scrolls)) .spacer {
+      display: block;
     }
     :host([hidden]) {
       display: none;
     }
     :host(:not(:is(:state(--no-animate), :--no-animate))) {
       transition: ${unsafeCSS(
-        `overlay ${DesignToken.motion.spring.fastSpatial} allow-discrete var(--_fab-menu-delay, 0ms),
-        display ${DesignToken.motion.spring.fastSpatial} allow-discrete var(--_fab-menu-delay, 0ms)`,
+        `overlay ${DesignToken.motion.spring.fastSpatial} allow-discrete,
+        display ${DesignToken.motion.spring.fastSpatial} allow-discrete`,
       )};
     }
     ::slotted(m3e-fab-menu-item) {
       width: 0;
       opacity: 0;
     }
-    :host(:popover-open) ::slotted(m3e-fab-menu-item) {
+    :host(:popover-open:not(:is(:state(--closing), :--closing))) ::slotted(m3e-fab-menu-item) {
       width: var(--_fab-menu-item-width, auto);
       opacity: 1;
     }
@@ -210,6 +282,10 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       }
     }
     @media (forced-colors: active) {
+      :host(:not(:is(:state(--no-animate), :--no-animate))),
+      :host(:not(:is(:state(--no-animate), :--no-animate))) ::slotted(m3e-fab-menu-item) {
+        transition: none;
+      }
       :host {
         border-radius: ${DesignToken.shape.corner.medium};
         outline: 1px solid MenuText;
@@ -221,6 +297,12 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   /** @private */ #fabTabIndex?: number;
   /** @private */ #trigger?: HTMLElement;
   /** @private */ #anchoringCleanup?: () => void;
+  /** @private */ #clipFrame?: number;
+  /** @private */ #focusTimer?: number;
+  /** @private */ #closing = false;
+  /** @private */ #scrollToEnd = false;
+  /** @private */ #lastY = 0;
+  /** @private */ #closeId = 0;
 
   /** @private */
   readonly #listManager = new RovingTabIndexManager<LitElement & DisabledMixin>()
@@ -232,7 +314,10 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   /** @private */ readonly #transitionEndHandler = (e: TransitionEvent) => this.#handleTransitionEnd(e);
 
   /** @private */
-  readonly #scrollController = new ScrollController(this, { target: null, callback: () => this.hide() });
+  readonly #scrollController = new ScrollController(this, {
+    target: null,
+    callback: () => this.#hide(false, false),
+  });
 
   /** @private */ readonly #clickOutsideController = new ClickOutsideController(this, {
     target: null,
@@ -247,13 +332,23 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
         if (this.#trigger) {
           this.#clickOutsideController.observe(this.#trigger);
         }
-        setTimeout(() => this.#listManager.setActiveItem(this.#listManager.items.find((x) => !x.disabled)), 40);
+        this.#focusTimer = setTimeout(() => {
+          this.#focusTimer = undefined;
+          if (!this.#trigger) return;
+          const item = this.#listManager.items.find((x) => !x.disabled);
+          this.#listManager.updateActiveItem(item);
+          // Focusing must not scroll the menu away from its items nearest the trigger, unless the keyboard opened it.
+          item?.focus({
+            preventScroll: !this.#trigger?.matches(":focus-visible"),
+          });
+        }, 40);
         break;
 
       case "closed":
         this.#clickOutsideController.unobserveAll();
-        this.#anchoringCleanup?.();
-        this.#anchoringCleanup = undefined;
+        if (!this.#trigger && !this.#closing && getComputedStyle(this).display === "none") {
+          this.#finishClose();
+        }
         break;
     }
   };
@@ -279,6 +374,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       this.hide();
     }
 
+    this.#cancelClose();
     this.#anchoringCleanup?.();
     this.#anchoringCleanup = await positionAnchor(
       this,
@@ -288,19 +384,27 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
         inline: true,
         shift: "main",
 
-        offset: 8,
+        offset: menuOffset,
       },
       (x, y, position) => {
         setCustomState(this, "--right", position.includes("end"));
         setCustomState(this, "--left", position.includes("start"));
+        this.#lastY = y;
+        this.#fit(trigger, y);
+        const style = getComputedStyle(this);
         if (M3eDirectionality.current === "rtl") {
-          this.style.right = `${window.innerWidth - x - this.clientWidth}px`;
+          const inset = parseFloat(style.paddingLeft) || 0;
+          this.style.right = `${window.innerWidth - x - this.clientWidth + inset}px`;
           this.style.left = "";
         } else {
-          this.style.left = `${x}px`;
+          const inset = parseFloat(style.paddingRight) || 0;
+          this.style.left = `${x + inset}px`;
           this.style.right = "";
         }
-        this.style.top = `${y}px`;
+
+        if (this.#clipTrigger(trigger) && this.#clipFrame === undefined && this.#trigger) {
+          this.#startClipping(trigger);
+        }
       },
     );
 
@@ -315,7 +419,14 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       this.#unpin(items);
     }
 
-    this.showPopover();
+    // A menu still closing is still open, so it has nothing to show and keeps its scroll position.
+    if (!this.matches(":popover-open")) {
+      this.#scrollToEnd = true;
+      this.showPopover();
+
+      // Anchoring may have last measured the menu while it was not displayed, and does not always update again.
+      this.#pinToEnd(trigger);
+    }
 
     if (animate && !closing) {
       this.#grow(items);
@@ -324,6 +435,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     this.#trigger = trigger;
     this.#trigger.ariaExpanded = "true";
     this.#scrollController.observe(this.#trigger);
+    this.#startClipping(trigger);
 
     this.#attachFab();
   }
@@ -333,8 +445,22 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
    * @param {boolean} [restoreFocus=false] Whether to restore focus to the menu's trigger.
    */
   hide(restoreFocus: boolean = false): void {
-    this.#anchoringCleanup?.();
-    this.#anchoringCleanup = undefined;
+    this.#hide(restoreFocus, true);
+  }
+
+  /** @private */
+  #hide(restoreFocus: boolean, animate: boolean): void {
+    clearTimeout(this.#focusTimer);
+    this.#focusTimer = undefined;
+    if (this.#closing) {
+      // The page is moving, so the menu must not keep animating against a trigger that is moving with it.
+      if (!animate) {
+        this.#cancelClose();
+        this.hidePopover();
+        this.#finishClose();
+      }
+      return;
+    }
 
     if (this.#trigger) {
       this.#trigger.ariaExpanded = "false";
@@ -349,11 +475,15 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     }
 
     const items = this.#items();
-    if (this.#animates() && this.matches(":popover-open")) {
-      this.#pin(items);
-    }
     this.#stagger(items, false);
-    this.hidePopover();
+
+    if (animate && this.#animates() && this.matches(":popover-open")) {
+      this.#pin(items);
+      this.#beginClose(items);
+    } else {
+      this.hidePopover();
+      this.#finishClose();
+    }
   }
 
   /**
@@ -377,6 +507,10 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
     this.tabIndex = -1;
     this.setAttribute("popover", "manual");
     this.addEventListener("keydown", this.#keyDownHandler);
+    this.addEventListener("wheel", this.#userScrollHandler, { passive: true });
+    this.addEventListener("touchstart", this.#userScrollHandler, {
+      passive: true,
+    });
     this.addEventListener("toggle", this.#toggleHandler);
     this.addEventListener("transitionend", this.#transitionEndHandler);
   }
@@ -385,7 +519,11 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
+    clearTimeout(this.#focusTimer);
+    this.#focusTimer = undefined;
     this.removeEventListener("keydown", this.#keyDownHandler);
+    this.removeEventListener("wheel", this.#userScrollHandler);
+    this.removeEventListener("touchstart", this.#userScrollHandler);
     this.removeEventListener("toggle", this.#toggleHandler);
     this.removeEventListener("transitionend", this.#transitionEndHandler);
   }
@@ -400,7 +538,196 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
   /** @inheritdoc */
   protected override render(): unknown {
-    return html`<div class="base"><slot @slotchange=${this.#handleSlotChange}></slot></div>`;
+    return html`<div class="base">
+      <slot @slotchange=${this.#handleSlotChange}></slot>
+      <div class="spacer" aria-hidden="true"></div>
+    </div>`;
+  }
+
+  /**
+   * Fits the menu above its trigger. When its items are taller than the space above the trigger, the menu instead
+   * spans the viewport and its items scroll behind the trigger. The menu begins scrolled to its last item,
+   * nearest the trigger.
+   * @private
+   */
+  #fit(trigger: HTMLElement, y: number): void {
+    const items = this.#items();
+    const gap = parseFloat(getComputedStyle(this).rowGap) || 0;
+    const natural =
+      items.reduce((sum, x) => sum + x.getBoundingClientRect().height, 0) + gap * Math.max(0, items.length - 1);
+
+    const rect = trigger.getBoundingClientRect();
+    const scrolls = natural > rect.top - menuOffset - viewportMargin;
+    setCustomState(this, "--scrolls", scrolls);
+
+    if (scrolls) {
+      const bottom = window.innerHeight;
+      this.style.setProperty(
+        "--_fab-menu-inset",
+        `calc(${Math.max(0, bottom - rect.top)}px + max(${menuOffset}px, var(--_fab-menu-ring-space)))`,
+      );
+      this.style.maxHeight = `max(0px, calc(${Math.max(0, bottom - viewportMargin)}px - var(--_fab-menu-ring-space)))`;
+      this.style.overflowY = "auto";
+      this.style.overflowX = "hidden";
+      // The menu is positioned against the document, so the viewport's top edge is offset by the page scroll.
+      this.style.top = `${window.scrollY + viewportMargin}px`;
+    } else {
+      this.style.removeProperty("--_fab-menu-inset");
+      this.style.maxHeight = "";
+      this.style.overflowY = "";
+      this.style.overflowX = "";
+      this.style.top = `${Math.max(y, viewportMargin)}px`;
+    }
+
+    // The menu's layout keeps settling as it opens, so it stays pinned to its end until the user takes over.
+    if (scrolls && this.#scrollToEnd && this.matches(":popover-open")) {
+      this.scrollTop = this.scrollHeight;
+    }
+  }
+
+  /** @private */
+  readonly #userScrollHandler = (): void => {
+    this.#scrollToEnd = false;
+  };
+
+  /** @private */
+  #pinToEnd(trigger: HTMLElement): void {
+    const start = performance.now();
+    const step = () => {
+      if (!this.#scrollToEnd || this.#trigger !== trigger || performance.now() - start > 800) {
+        this.#scrollToEnd = false;
+        return;
+      }
+      this.#fit(trigger, this.#lastY);
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  /**
+   * Clips the menu where it overlaps its trigger, so the trigger appears above the menu even though the menu
+   * is in the top layer.
+   * @private
+   */
+  #startClipping(trigger: HTMLElement): void {
+    this.#stopClipping();
+    if (!this.#clipTrigger(trigger)) return;
+
+    const tick = () => {
+      // Clipping continues while the items close, and ends once the menu is no longer displayed or no longer
+      // overlaps the trigger. It resumes when repositioning finds the two overlapping again.
+      const hidden = !this.#trigger && !this.matches(":popover-open") && getComputedStyle(this).display === "none";
+      if (hidden) {
+        this.#finishClose();
+        return;
+      }
+      if (!this.#clipTrigger(trigger)) {
+        this.#stopClipping();
+        return;
+      }
+      this.#clipFrame = requestAnimationFrame(tick);
+    };
+    this.#clipFrame = requestAnimationFrame(tick);
+  }
+
+  /** @private */
+  #finishClose(): void {
+    this.#anchoringCleanup?.();
+    this.#anchoringCleanup = undefined;
+    this.#stopClipping();
+  }
+
+  /**
+   * Closes the items while the menu stays open. Not every browser keeps a menu displayed, and in the top layer, while
+   * it transitions out, so the menu is hidden only once its items have closed. Until then it stays anchored to its
+   * trigger, which resizes as the menu closes.
+   * @private
+   */
+  #beginClose(items: HTMLElement[]): void {
+    const id = ++this.#closeId;
+    this.#closing = true;
+    setCustomState(this, "--closing", true);
+    void this.offsetWidth;
+
+    const animations = items.flatMap((x) => x.getAnimations());
+    Promise.allSettled(animations.map((x) => x.finished)).then(() => {
+      if (id !== this.#closeId) return;
+      this.#closing = false;
+      this.hidePopover();
+      setCustomState(this, "--closing", false);
+      this.#finishClose();
+    });
+  }
+
+  /** @private */
+  #cancelClose(): void {
+    this.#closeId++;
+    this.#closing = false;
+    setCustomState(this, "--closing", false);
+  }
+
+  /** @private */
+  #stopClipping(): void {
+    if (this.#clipFrame !== undefined) {
+      cancelAnimationFrame(this.#clipFrame);
+      this.#clipFrame = undefined;
+    }
+    this.style.clipPath = "";
+  }
+
+  /** @private */
+  #clipTrigger(trigger: HTMLElement): boolean {
+    const fab = trigger.closest<HTMLElement>("m3e-fab") ?? trigger;
+    const menu = this.getBoundingClientRect();
+    const fabRect = fab.getBoundingClientRect();
+
+    // The strong focus indicator is drawn outside the fab, so the cut-out grows to include it.
+    const outline = fab.shadowRoot?.querySelector("m3e-focus-ring")?.shadowRoot?.querySelector(".outline");
+    const outlineStyle = outline ? getComputedStyle(outline) : undefined;
+    const ring =
+      outlineStyle && outlineStyle.outlineStyle !== "none" && outlineStyle.visibility !== "hidden"
+        ? Math.max(0, (parseFloat(outlineStyle.outlineOffset) || 0) + (parseFloat(outlineStyle.outlineWidth) || 0))
+        : 0;
+
+    const rect = {
+      left: fabRect.left - ring,
+      top: fabRect.top - ring,
+      right: fabRect.right + ring,
+      bottom: fabRect.bottom + ring,
+      width: fabRect.width + 2 * ring,
+      height: fabRect.height + 2 * ring,
+    };
+
+    const overlaps =
+      rect.left < menu.right && rect.right > menu.left && rect.top < menu.bottom && rect.bottom > menu.top;
+    if (!overlaps) {
+      this.style.clipPath = "";
+      return false;
+    }
+
+    const base = fab.shadowRoot?.querySelector(".base") ?? fab;
+    const radius = Math.min(
+      (parseFloat(getComputedStyle(base).borderTopLeftRadius) || 0) + ring,
+      rect.width / 2,
+      rect.height / 2,
+    );
+
+    const l = rect.left - menu.left;
+    const t = rect.top - menu.top;
+    const r = l + rect.width;
+    const b = t + rect.height;
+    const c = radius;
+    const pad = 1000; // keeps anything that overflows the menu, like shadows, visible
+
+    const clipPath =
+      `path(evenodd, "M ${-pad} ${-pad} H ${menu.width + pad} V ${menu.height + pad} H ${-pad} Z ` +
+      `M ${l + c} ${t} H ${r - c} A ${c} ${c} 0 0 1 ${r} ${t + c} V ${b - c} A ${c} ${c} 0 0 1 ${r - c} ${b} ` +
+      `H ${l + c} A ${c} ${c} 0 0 1 ${l} ${b - c} V ${t + c} A ${c} ${c} 0 0 1 ${l + c} ${t} Z")`;
+
+    if (this.style.clipPath !== clipPath) {
+      this.style.clipPath = clipPath;
+    }
+    return true;
   }
 
   /** @private */
@@ -426,16 +753,13 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
 
   /** @private */
   #animates(): boolean {
-    return !hasCustomState(this, "--no-animate") && !prefersReducedMotion();
+    return !hasCustomState(this, "--no-animate") && !prefersReducedMotion() && !forcedColorsActive();
   }
 
   /** @private */
   #stagger(items: HTMLElement[], open: boolean): void {
     const delays = staggerDelays(items.length, open);
     items.forEach((x, i) => x.style.setProperty("--_fab-menu-item-delay", `${delays[i]}ms`));
-
-    // The menu stays displayed until its last item has closed.
-    this.style.setProperty("--_fab-menu-delay", `${open ? 0 : Math.max(0, ...delays)}ms`);
   }
 
   /** @private */
@@ -463,7 +787,9 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
       }
     }
     if (!this.style.getPropertyValue("--_fab-menu-width")) {
-      this.style.setProperty("--_fab-menu-width", `${this.getBoundingClientRect().width}px`);
+      const style = getComputedStyle(this);
+      const padding = (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.paddingRight) || 0);
+      this.style.setProperty("--_fab-menu-width", `${Math.max(0, this.getBoundingClientRect().width - padding)}px`);
     }
     void this.offsetWidth;
   }
@@ -477,7 +803,7 @@ export class M3eFabMenuElement extends SuppressInitialAnimation(AttachInternals(
   /** @private */
   #handleTransitionEnd(e: TransitionEvent): void {
     // Once grown, an item returns to its natural width, so that it follows later changes to its content.
-    if (e.propertyName !== "width" || !this.matches(":popover-open")) return;
+    if (e.propertyName !== "width" || !this.matches(":popover-open") || this.#closing) return;
     const items = this.#items();
     const item = items.find((x) => x === e.target);
     if (!item) return;

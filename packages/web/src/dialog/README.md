@@ -10,21 +10,33 @@ import "@m3e/web/dialog";
 
 - `m3e-dialog` — A Material 3 Expressive dialog for prompts, alerts, and actions.
 - `m3e-dialog-trigger` — An element for opening dialogs by reference (via the `for` attribute).
+- `m3e-dialog-action` — An element for closing a parent dialog with a return value.
 
 ## 🧪 Examples
 
-The following example illustrates a dialog with a header, content, and actions:
+Use a trigger to open a dismissible dialog with a header and a close action.
 
 ```html
 <m3e-button variant="filled">
   <m3e-dialog-trigger for="dlg">Open Dialog</m3e-dialog-trigger>
 </m3e-button>
-<m3e-dialog id="dlg" dismissible onclosed="console.log(this.returnValue)">
-  <span slot="header">Dialog Title</span>
-  Dialog content goes here.
+<m3e-dialog id="dlg" dismissible>
+  <span slot="header">Lorem ipsum dolor sit amet</span>
+  <!-- Content omitted for brevity -->
   <div slot="actions" end>
     <m3e-button autofocus><m3e-dialog-action return-value="ok">Close</m3e-dialog-action></m3e-button>
   </div>
+</m3e-dialog>
+```
+
+Nest the trigger in a button and match its `for` to the dialog's `id`.
+
+```html
+<m3e-button variant="filled">
+  <m3e-dialog-trigger for="dlg">Open Dialog</m3e-dialog-trigger>
+</m3e-button>
+<m3e-dialog id="dlg" dismissible>
+  <!-- Content omitted for brevity -->
 </m3e-dialog>
 ```
 

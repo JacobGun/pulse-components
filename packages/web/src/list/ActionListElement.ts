@@ -9,6 +9,95 @@ import { M3eListElement } from "./ListElement";
  * The `m3e-action-list` component provides a specialized list container for action-based
  * interactions following Material 3 design principles.
  *
+ * @example
+ * Use `m3e-list-action` inside an action list to present actions.
+ *
+ * ```html
+ * <m3e-action-list>
+ *   <m3e-list-action>Action 1</m3e-list-action>
+ *   <!-- Additional actions omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Use `variant="segmented"` to present actions as separated items.
+ *
+ * ```html
+ * <m3e-action-list variant="segmented">
+ *   <m3e-list-action>Action 1</m3e-list-action>
+ *   <!-- Additional actions omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Use `disabled` on an individual list action.
+ *
+ * ```html
+ * <m3e-action-list>
+ *   <m3e-list-action disabled>Disabled action 1</m3e-list-action>
+ *   <!-- Additional actions omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Use `disabled` on an action in a segmented action list.
+ *
+ * ```html
+ * <m3e-action-list variant="segmented">
+ *   <m3e-list-action disabled>Disabled action 1</m3e-list-action>
+ *   <!-- Additional actions omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Use `href` to navigate to a destination.
+ *
+ * ```html
+ * <m3e-action-list>
+ *   <m3e-list-action href="https://www.google.com" target="_blank">Google</m3e-list-action>
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Use `m3e-expandable-list-item` and its `items` slot to group nested actions.
+ *
+ * ```html
+ * <m3e-action-list>
+ *   <m3e-expandable-list-item open>
+ *     <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *     List item
+ *     <div slot="items">
+ *       <m3e-list-action>
+ *         <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *         List item
+ *       </m3e-list-action>
+ *       <!-- Additional actions omitted for brevity -->
+ *     </div>
+ *   </m3e-expandable-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Use an expandable item in a `segmented` action list to group nested actions.
+ *
+ * ```html
+ * <m3e-action-list variant="segmented">
+ *   <m3e-expandable-list-item open>
+ *     <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *     List item
+ *     <div slot="items">
+ *       <m3e-list-action>
+ *         <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *         List item
+ *       </m3e-list-action>
+ *       <!-- Additional actions omitted for brevity -->
+ *     </div>
+ *   </m3e-expandable-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
  * @tag m3e-action-list
  *
  * @slot - Renders the items of the list.

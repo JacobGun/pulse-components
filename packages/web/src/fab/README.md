@@ -16,20 +16,60 @@ import "@m3e/web/fab";
 
 ## 🧪 Examples
 
-The following example illustrates a basic floating action button.
+Use `variant="primary"` for a FAB in the theme's primary color.
 
 ```html
-<m3e-fab>
-  <m3e-icon>add</m3e-icon>
+<m3e-fab variant="primary">
+  <m3e-icon name="add"></m3e-icon>
+</m3e-fab>
+<!-- Additional variants omitted for brevity -->
+```
+
+Add `lowered` to reduce the elevation of the primary FAB.
+
+```html
+<m3e-fab lowered variant="primary">
+  <m3e-icon name="add"></m3e-icon>
+</m3e-fab>
+<!-- Additional variants omitted for brevity -->
+```
+
+Set `size="small"` for a compact icon-only FAB.
+
+```html
+<m3e-fab size="small">
+  <m3e-icon name="add"></m3e-icon>
+</m3e-fab>
+<!-- Additional variants omitted for brevity -->
+```
+
+Use `disabled` to make a FAB unavailable, or `disabled-interactive` to keep it keyboard-focusable.
+
+```html
+<m3e-fab disabled>
+  <m3e-icon name="add"></m3e-icon>
+</m3e-fab>
+<m3e-fab disabled-interactive>
+  <m3e-icon name="add"></m3e-icon>
 </m3e-fab>
 ```
 
-The next example illustrates an extended floating action button.
+Add `extended` and put text in the `label` slot to show an icon and label together.
 
 ```html
-<m3e-fab extended>
-  <m3e-icon>add</m3e-icon>
-  <span slot="label">Add</span>
+<m3e-fab extended size="small">
+  <m3e-icon name="add"></m3e-icon>
+  <span slot="label">Extended</span>
+</m3e-fab>
+<!-- Additional sizes omitted for brevity -->
+```
+
+Set `href` on an extended FAB to navigate to a destination labeled in the `label` slot.
+
+```html
+<m3e-fab extended href="https://www.google.com" target="_blank">
+  <m3e-icon name="open_in_new_window"></m3e-icon>
+  <span slot="label">Google</span>
 </m3e-fab>
 ```
 

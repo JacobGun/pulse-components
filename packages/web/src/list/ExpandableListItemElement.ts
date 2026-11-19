@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, PropertyValues, unsafeCSS } from "lit";
 import { property, query } from "lit/decorators.js";
 
-import { customElement, DesignToken, setCustomState } from "@pulse/web/core";
+import { customElement, DesignToken } from "@pulse/web/core";
 
 import type { M3eListElement } from "./ListElement";
 import { M3eListItemButtonElement } from "./ListItemButtonElement";
@@ -18,23 +18,42 @@ import { M3eListItemElement } from "./ListItemElement";
  * content support.
  *
  * @example
- * The following example illustrates an expandable list item.
+ * Use `m3e-expandable-list-item` and its `items` slot to group nested actions.
+ *
  * ```html
  * <m3e-action-list>
- *  <m3e-expandable-list-item>
- *    Pick up supplies
- *    <span slot="supporting-text">Due monday</span>
- *    <div slot="items">
- *      <m3e-list-action>
- *        Dry-erase board
- *        <span slot="supporting-text">$35.99</span>
- *      </m3e-list-action>
- *      <m3e-list-action>
- *        Markers
- *        <span slot="supporting-text">$8.99</span>
- *      </m3e-list-action>
- *    </div>
- *  </m3e-expandable-list-item>
+ *   <m3e-expandable-list-item open>
+ *     <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *     List item
+ *     <div slot="items">
+ *       <m3e-list-action>
+ *         <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *         List item
+ *       </m3e-list-action>
+ *       <!-- Additional actions omitted for brevity -->
+ *     </div>
+ *   </m3e-expandable-list-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-action-list>
+ * ```
+ *
+ * @example
+ * Use an expandable item in a `segmented` action list to group nested actions.
+ *
+ * ```html
+ * <m3e-action-list variant="segmented">
+ *   <m3e-expandable-list-item open>
+ *     <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *     List item
+ *     <div slot="items">
+ *       <m3e-list-action>
+ *         <m3e-icon slot="leading" name="stars"></m3e-icon>
+ *         List item
+ *       </m3e-list-action>
+ *       <!-- Additional actions omitted for brevity -->
+ *     </div>
+ *   </m3e-expandable-list-item>
+ *   <!-- Additional items omitted for brevity -->
  * </m3e-action-list>
  * ```
  *
@@ -172,7 +191,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
     :host([open]) .items {
       --_list-item-container-color: var(
         --m3e-expandable-list-item-expanded-container-color,
-        var(--m3e-list-item-container-color, ${DesignToken.color.surface})
+        var(--m3e-list-item-container-color, transparent)
       );
     }
     .base {
@@ -192,7 +211,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
     }
     .items {
       --m3e-collapsible-animation: var(--_expandable-list-item-animation);
-      --m3e-collapsible-slide-animation: var(--_expandable-list-item-slide-animation);
+      --m3e-collapsible-slide-dock: var(--_expandable-list-item-slide-dock, flex-end);
     }
     @media (forced-colors: active) {
       .header {
@@ -257,18 +276,7 @@ export class M3eExpandableListItemElement extends M3eListItemElement {
     super.updated(_changedProperties);
 
     if (_changedProperties.has("open")) {
-      for (let sibling = this.previousElementSibling; sibling; sibling = sibling.previousElementSibling) {
-        if (sibling instanceof M3eListItemElement) {
-          setCustomState(sibling, "--has-next-open", this.open);
-          break;
-        }
-      }
-      for (let sibling = this.nextElementSibling; sibling; sibling = sibling.nextElementSibling) {
-        if (sibling instanceof M3eListItemElement) {
-          setCustomState(sibling, "--has-previous-open", this.open);
-          break;
-        }
-      }
+      this.closest<M3eListElement>("m3e-list, m3e-action-list, m3e-selection-list")?.notifyOpenChange();
     }
   }
 

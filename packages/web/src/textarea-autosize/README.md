@@ -12,14 +12,34 @@ import "@m3e/web/textarea-autosize";
 
 ## 🧪 Examples
 
-The following example illustrates the `m3e-textarea-autosize` in conjunction with the `m3e-form-field` to automatically resize a field's `textarea` with a 5 row limit.
+Attach textarea autosize to a textarea by its id.
 
 ```html
-<m3e-form-field>
-  <label slot="label" for="fld">Textarea Autosize</label>
-  <textarea id="fld"></textarea>
-  <m3e-textarea-autosize for="fld" max-rows="5"></m3e-textarea-autosize>
+<m3e-form-field variant="filled">
+  <label slot="label" for="field">Textarea Autosize</label>
+  <textarea id="field">
+    <!-- Content omitted for brevity -->
+  </textarea>
 </m3e-form-field>
+<m3e-textarea-autosize for="field"></m3e-textarea-autosize>
+```
+
+Use `min-rows` and `max-rows` to constrain the textarea height.
+
+```html
+<m3e-form-field variant="filled">
+  <label slot="label" for="field">Textarea Autosize</label>
+  <textarea id="field">
+    <!-- Content omitted for brevity -->
+  </textarea>
+</m3e-form-field>
+<m3e-textarea-autosize for="field" max-rows="5"></m3e-textarea-autosize>
+```
+
+Use `disabled` to turn off autosizing.
+
+```html
+<m3e-textarea-autosize for="field" disabled></m3e-textarea-autosize>
 ```
 
 ## 📖 API Reference

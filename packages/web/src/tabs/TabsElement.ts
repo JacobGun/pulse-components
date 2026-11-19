@@ -43,17 +43,80 @@ const MIN_PRIMARY_TAB_WIDTH = 24;
  * with Material 3 guidance.
  *
  * @example
- * The following example illustrates using the `m3e-tabs`, `m3e-tab`, and `m3e-tab-panel` components to present
- * secondary tabs.
+ * Place tabs and their panels inside a tabs container.
+ *
  * ```html
  * <m3e-tabs>
- *  <m3e-tab selected for="videos"><m3e-icon slot="icon" name="videocam"></m3e-icon>Video</m3e-tab>
- *  <m3e-tab for="photos"><m3e-icon slot="icon" name="photo"></m3e-icon>Photos</m3e-tab>
- *  <m3e-tab for="audio"><m3e-icon slot="icon" name="music_note"></m3e-icon>Audio</m3e-tab>
- *  <m3e-tab-panel id="videos">Videos</m3e-tab-panel>
- *  <m3e-tab-panel id="photos">Photos</m3e-tab-panel>
- *  <m3e-tab-panel id="audio">Audio</m3e-tab-panel>
+ *   <m3e-tab selected for="videos">
+ *     <m3e-icon slot="icon" name="videocam"></m3e-icon>Video
+ *   </m3e-tab>
+ *   <m3e-tab for="photos">
+ *     <m3e-icon slot="icon" name="photo"></m3e-icon>Photos
+ *   </m3e-tab>
+ *   <m3e-tab for="audio">
+ *     <m3e-icon slot="icon" name="music_note"></m3e-icon>Audio
+ *   </m3e-tab>
+ *   <m3e-tab-panel id="videos">Videos</m3e-tab-panel>
+ *   <m3e-tab-panel id="photos">Photos</m3e-tab-panel>
+ *   <m3e-tab-panel id="audio">Audio</m3e-tab-panel>
  * </m3e-tabs>
+ * ```
+ *
+ * @example
+ * Use `variant` to choose `primary` or `secondary` (default).
+ *
+ * ```html
+ * <m3e-tabs variant="primary">
+ *   <!-- Content omitted for brevity -->
+ * </m3e-tabs>
+ * ```
+ *
+ * @example
+ * Use `stretch` to stretch tabs across the available space.
+ *
+ * ```html
+ * <m3e-tabs stretch>
+ *   <!-- Content omitted for brevity -->
+ * </m3e-tabs>
+ * ```
+ *
+ * @example
+ * Use `header-position` to place the tab header `before` (default) or `after` the panels.
+ *
+ * ```html
+ * <m3e-tabs header-position="after">
+ *   <!-- Content omitted for brevity -->
+ * </m3e-tabs>
+ * ```
+ *
+ * @example
+ * Use `disabled` to disable individual tabs.
+ *
+ * ```html
+ * <m3e-tabs>
+ *   <m3e-tab selected for="videos">
+ *     <m3e-icon slot="icon" name="videocam"></m3e-icon>Video
+ *   </m3e-tab>
+ *   <m3e-tab disabled for="photos">
+ *     <m3e-icon slot="icon" name="photo"></m3e-icon>Photos
+ *   </m3e-tab>
+ *   <!-- Additional content omitted for brevity -->
+ * </m3e-tabs>
+ * ```
+ *
+ * @example
+ * Apply a density scale of `-3` to adjust spacing.
+ *
+ * ```html
+ * <m3e-tabs class="density-3">
+ *   <!-- Tabs omitted for brevity -->
+ * </m3e-tabs>
+ * ```
+ *
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-tabs

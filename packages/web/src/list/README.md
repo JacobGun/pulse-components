@@ -18,9 +18,7 @@ import "@m3e/web/list";
 
 ## 🧪 Examples
 
-The following example illustrates a list with a single item using all supported slots.
-
-> Note: This example uses the `@m3e/icon` package to present Material Design symbols, but any icon package can be substituted depending on your design system or preferences
+Use the `leading`, `overline`, `supporting-text`, and `trailing` slots to arrange item content.
 
 ```html
 <m3e-list>
@@ -29,9 +27,282 @@ The following example illustrates a list with a single item using all supported 
     <span slot="overline">Overline</span>
     Headline
     <span slot="supporting-text">Supporting text</span>
-    <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+    <span slot="trailing">100+</span>
   </m3e-list-item>
 </m3e-list>
+```
+
+Use the default `standard` variant to present a list of items.
+
+```html
+<m3e-list>
+  <m3e-list-item>Item 1</m3e-list-item>
+  <!-- Additional items omitted for brevity -->
+</m3e-list>
+```
+
+Use `variant="segmented"` to separate the list items.
+
+```html
+<m3e-list variant="segmented">
+  <m3e-list-item>Item 1</m3e-list-item>
+  <!-- Additional items omitted for brevity -->
+</m3e-list>
+```
+
+Use the `overline` and `supporting-text` slots to create two- or three-line items.
+
+```html
+<m3e-list>
+  <m3e-list-item>Label text</m3e-list-item>
+  <m3e-list-item>
+    Label text
+    <span slot="supporting-text">Supporting text</span>
+  </m3e-list-item>
+  <m3e-list-item>
+    <span slot="overline">Overline</span>
+    Label text
+    <span slot="supporting-text">Supporting text</span>
+  </m3e-list-item>
+</m3e-list>
+```
+
+Use the `leading` and `trailing` slots for icons.
+
+```html
+<m3e-list>
+  <m3e-list-item>
+    <m3e-icon slot="leading" name="stars"></m3e-icon>
+    Label text
+    <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+  </m3e-list-item>
+  <!-- Additional items omitted for brevity -->
+</m3e-list>
+```
+
+Use the `leading` slot for an avatar and `trailing` for an icon.
+
+```html
+<m3e-list>
+  <m3e-list-item>
+    <m3e-avatar slot="leading">AB</m3e-avatar>
+    Label text
+    <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+  </m3e-list-item>
+  <!-- Additional items omitted for brevity -->
+</m3e-list>
+```
+
+Use the `leading` slot for an image and `trailing` for an icon.
+
+```html
+<m3e-list>
+  <m3e-list-item>
+    <img slot="leading" src="[YOUR IMAGE URL HERE]" />
+    Label text
+    <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+  </m3e-list-item>
+  <!-- Additional items omitted for brevity -->
+</m3e-list>
+```
+
+Use the `leading` slot for a video and `trailing` for an icon.
+
+```html
+<m3e-list>
+  <m3e-list-item>
+    <video slot="leading" autoplay loop poster="[YOUR IMAGE URL HERE]" preload="auto">
+      <source src="[YOUR VIDEO URL HERE]" type="video/mp4" />
+    </video>
+    Label text
+    <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
+  </m3e-list-item>
+  <!-- Additional items omitted for brevity -->
+</m3e-list>
+```
+
+Use dividers to separate items in a standard list; dividers are hidden in segmented lists.
+
+```html
+<m3e-list>
+  <m3e-list-item>Item 1</m3e-list-item>
+  <m3e-divider></m3e-divider>
+  <m3e-list-item>Item 2</m3e-list-item>
+  <m3e-divider></m3e-divider>
+  <m3e-list-item>Item 3</m3e-list-item>
+</m3e-list>
+```
+
+Use `inset` on a divider to inset it within a standard list.
+
+```html
+<m3e-list>
+  <m3e-list-item>Item 1</m3e-list-item>
+  <m3e-divider inset></m3e-divider>
+  <!-- Additional items omitted for brevity -->
+</m3e-list>
+```
+
+Use `m3e-list-action` inside an action list to present actions.
+
+```html
+<m3e-action-list>
+  <m3e-list-action>Action 1</m3e-list-action>
+  <!-- Additional actions omitted for brevity -->
+</m3e-action-list>
+```
+
+Use `variant="segmented"` to present actions as separated items.
+
+```html
+<m3e-action-list variant="segmented">
+  <m3e-list-action>Action 1</m3e-list-action>
+  <!-- Additional actions omitted for brevity -->
+</m3e-action-list>
+```
+
+Use `disabled` on an individual list action.
+
+```html
+<m3e-action-list>
+  <m3e-list-action disabled>Disabled action 1</m3e-list-action>
+  <!-- Additional actions omitted for brevity -->
+</m3e-action-list>
+```
+
+Use `disabled` on an action in a segmented action list.
+
+```html
+<m3e-action-list variant="segmented">
+  <m3e-list-action disabled>Disabled action 1</m3e-list-action>
+  <!-- Additional actions omitted for brevity -->
+</m3e-action-list>
+```
+
+Use `href` to navigate to a destination.
+
+```html
+<m3e-action-list>
+  <m3e-list-action href="https://www.google.com" target="_blank">Google</m3e-list-action>
+</m3e-action-list>
+```
+
+Use `m3e-expandable-list-item` and its `items` slot to group nested actions.
+
+```html
+<m3e-action-list>
+  <m3e-expandable-list-item open>
+    <m3e-icon slot="leading" name="stars"></m3e-icon>
+    List item
+    <div slot="items">
+      <m3e-list-action>
+        <m3e-icon slot="leading" name="stars"></m3e-icon>
+        List item
+      </m3e-list-action>
+      <!-- Additional actions omitted for brevity -->
+    </div>
+  </m3e-expandable-list-item>
+  <!-- Additional items omitted for brevity -->
+</m3e-action-list>
+```
+
+Use an expandable item in a `segmented` action list to group nested actions.
+
+```html
+<m3e-action-list variant="segmented">
+  <m3e-expandable-list-item open>
+    <m3e-icon slot="leading" name="stars"></m3e-icon>
+    List item
+    <div slot="items">
+      <m3e-list-action>
+        <m3e-icon slot="leading" name="stars"></m3e-icon>
+        List item
+      </m3e-list-action>
+      <!-- Additional actions omitted for brevity -->
+    </div>
+  </m3e-expandable-list-item>
+  <!-- Additional items omitted for brevity -->
+</m3e-action-list>
+```
+
+Place `m3e-list-option` elements in a single-selection list.
+
+```html
+<m3e-selection-list>
+  <m3e-list-option>Option 1</m3e-list-option>
+  <!-- Additional options omitted for brevity -->
+</m3e-selection-list>
+```
+
+Use `variant="segmented"` to present selectable list items separately.
+
+```html
+<m3e-selection-list variant="segmented">
+  <m3e-list-option>Option 1</m3e-list-option>
+  <!-- Additional options omitted for brevity -->
+</m3e-selection-list>
+```
+
+Use `multi` to allow multiple selected list options.
+
+```html
+<m3e-selection-list multi>
+  <m3e-list-option>Option 1</m3e-list-option>
+  <!-- Additional options omitted for brevity -->
+</m3e-selection-list>
+```
+
+Use `multi` with `variant="segmented"` to select multiple separated options.
+
+```html
+<m3e-selection-list variant="segmented" multi>
+  <m3e-list-option>Option 1</m3e-list-option>
+  <!-- Additional options omitted for brevity -->
+</m3e-selection-list>
+```
+
+Use `hide-selection-indicator` to hide the selection indicator.
+
+```html
+<m3e-selection-list multi hide-selection-indicator>
+  <m3e-list-option selected>Option 1<m3e-icon slot="trailing" name="bookmark"></m3e-icon></m3e-list-option>
+  <m3e-list-option>Option 2<m3e-icon slot="trailing" name="bookmark"></m3e-icon></m3e-list-option>
+  <m3e-list-option>Option 3<m3e-icon slot="trailing" name="bookmark"></m3e-icon></m3e-list-option>
+</m3e-selection-list>
+```
+
+Use `disabled` on individual list options; a disabled option can also be selected.
+
+```html
+<m3e-selection-list multi>
+  <m3e-list-option disabled>Option 1</m3e-list-option>
+  <m3e-list-option selected disabled>Option 1</m3e-list-option>
+  <!-- Additional options omitted for brevity -->
+</m3e-selection-list>
+```
+
+Use `disabled` on options in a segmented selection list; a disabled option can also be selected.
+
+```html
+<m3e-selection-list variant="segmented" multi>
+  <m3e-list-option disabled>Option 1</m3e-list-option>
+  <m3e-list-option selected disabled>Option 1</m3e-list-option>
+  <!-- Additional options omitted for brevity -->
+</m3e-selection-list>
+```
+
+Apply a density scale of `-3` to adjust spacing.
+
+```html
+<m3e-selection-list class="density-3" variant="segmented" multi>
+  <!-- Options omitted for brevity -->
+</m3e-selection-list>
+```
+
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
 ```
 
 ## 📖 API Reference

@@ -22,19 +22,33 @@ import { TooltipElementBase } from "./TooltipElementBase";
  * click‑outside light‑dismiss.
  *
  * @example
- * The following example illustrates connecting an interactive rich tooltip to a button using the `for` attribute.
+ * Connect a rich tooltip to a trigger by id.
+ *
  * ```html
- * <m3e-icon-button id="btnSettings">
- *  <m3e-icon name="settings"></m3e-icon>
+ * <m3e-icon-button id="button">
+ *   <m3e-icon name="settings"></m3e-icon>
  * </m3e-icon-button>
- * <m3e-rich-tooltip for="btnSettings">
- *  <span slot="subhead">New settings available</span>
- *  Now you can adjust the uploaded image quality, and upgrade your available storage space.
- *  <div slot="actions">
- *    <m3e-button>
- *      <m3e-rich-tooltip-action>Learn more</m3e-rich-tooltip-action>
- *    </m3e-button>
- *  </div>
+ * <m3e-rich-tooltip for="button">
+ *   <span slot="subhead">New settings available</span>
+ *   Now you can adjust the uploaded image quality, and upgrade your available storage space.
+ * </m3e-rich-tooltip>
+ * ```
+ *
+ * @example
+ * Place a `m3e-rich-tooltip-action` inside a clickable element in the `actions` slot to dismiss the tooltip.
+ *
+ * ```html
+ * <m3e-icon-button id="button">
+ *   <m3e-icon name="settings"></m3e-icon>
+ * </m3e-icon-button>
+ * <m3e-rich-tooltip for="button">
+ *   <span slot="subhead">New settings available</span>
+ *   Now you can adjust the uploaded image quality, and upgrade your available storage space.
+ *   <div slot="actions">
+ *     <m3e-button>
+ *       <m3e-rich-tooltip-action>Learn more</m3e-rich-tooltip-action>
+ *     </m3e-button>
+ *   </div>
  * </m3e-rich-tooltip>
  * ```
  *

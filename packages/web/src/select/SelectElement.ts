@@ -47,13 +47,11 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@pulse/web/option";
  * with form submission and reactive state management systems.
  *
  * @example
- * The following demonstrates a `m3e-select` component wrapped in a `m3e-form-field` with a slotted label.
- * The label is associated with the select via the `for` and `id` attributes, ensuring accessible form semantics.
- * Each `m3e-option` defines an option within the dropdown.
+ * Place a select and its options inside a form field.
  *
  * ```html
  * <m3e-form-field>
- *   <label slot="label" for="select">Choose your favorite fruit</label>
+ *   <label slot="label" for="select">Favorite fruit</label>
  *   <m3e-select id="select">
  *     <m3e-option>Apples</m3e-option>
  *     <m3e-option>Oranges</m3e-option>
@@ -61,6 +59,127 @@ import { M3eOptionElement, M3eOptionPanelElement } from "@pulse/web/option";
  *     <m3e-option>Grapes</m3e-option>
  *   </m3e-select>
  * </m3e-form-field>
+ * ```
+ *
+ * @example
+ * Use an option with an empty value to represent no meaningful selection.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Favorite fruit</label>
+ *   <m3e-select id="select">
+ *     <m3e-option value="">None</m3e-option>
+ *     <m3e-option>Apples</m3e-option>
+ *     <m3e-option>Oranges</m3e-option>
+ *     <m3e-option>Bananas</m3e-option>
+ *     <m3e-option>Grapes</m3e-option>
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
+ * @example
+ * Group options with `m3e-optgroup`; nested groups are not supported.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Pokemon</label>
+ *   <m3e-select id="select">
+ *     <m3e-optgroup>
+ *       <span slot="label">Grass</span>
+ *       <m3e-option>Bulbasaur</m3e-option>
+ *       <m3e-option>Oddish</m3e-option>
+ *       <m3e-option>Bellsprout</m3e-option>
+ *     </m3e-optgroup>
+ *     <!-- Additional option groups omitted for brevity -->
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
+ * @example
+ * Use `multi` to allow multiple selections and `selected` to select options.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Toppings</label>
+ *   <m3e-select id="select" multi>
+ *     <m3e-option selected>Extra cheese</m3e-option>
+ *     <m3e-option selected>Mushroom</m3e-option>
+ *     <!-- Additional option groups omitted for brevity -->
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
+ * @example
+ * Use `multi` and `value` to set multiple selected options; do not combine this with option-level `selected`.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Toppings</label>
+ *   <m3e-select id="select" multi value="extra-cheese,mushroom">
+ *     <m3e-option value="extra-cheese">Extra cheese</m3e-option>
+ *     <m3e-option value="mushroom">Mushroom</m3e-option>
+ *     <!-- Additional option groups omitted for brevity -->
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
+ * @example
+ * Use `disabled` on the select to disable the entire control.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Favorite fruit</label>
+ *   <m3e-select id="select" disabled>
+ *     <m3e-option selected>Apples</m3e-option>
+ *     <!-- Additional option groups omitted for brevity -->
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
+ * @example
+ * Use `disabled` on an individual option.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Favorite fruit</label>
+ *   <m3e-select id="select">
+ *     <m3e-option disabled>Apples</m3e-option>
+ *     <!-- Additional option groups omitted for brevity -->
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
+ * @example
+ * Use `required` to require a selection.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Favorite fruit</label>
+ *   <m3e-select id="select" required>
+ *     <m3e-option value="">None</m3e-option>
+ *     <m3e-option>Apples</m3e-option>
+ *     <!-- Additional option groups omitted for brevity -->
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
+ * @example
+ * Apply a density scale of `-3` to the form field and the select panel using `panel-class`.
+ *
+ * ```html
+ * <m3e-form-field class="density-3">
+ *   <label slot="label" for="select">Density -3</label>
+ *   <m3e-select id="select" panel-class="density-3">
+ *     <!-- Options omitted for brevity -->
+ *   </m3e-select>
+ * </m3e-form-field>
+ * <!-- Additional fields omitted for brevity -->
+ * ```
+ *
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-select
@@ -702,6 +821,7 @@ export class M3eSelectElement
     }
 
     this.#menu.style.overflowX = "hidden";
+    this.#menu.scrollStrategy = "reposition";
     this.#menu.fitAnchorWidth = true;
     this.#menu.addEventListener("toggle", this.#menuToggleHandler);
     this.#menu.addEventListener("pointerdown", this.#menuPointerDownHandler);

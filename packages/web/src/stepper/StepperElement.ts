@@ -32,45 +32,84 @@ import { isStepperOrientation, StepperOrientation } from "./StepperOrientation";
  * linear progression, and configurable label and header positioning.
  *
  * @example
- * The following example demonstrates a linear multi-step form flow using the `m3e-stepper`
- * component. Each `m3e-step` defines a navigable step label, linked to its corresponding
- * `m3e-step-panel` via the `for` attribute. Navigation is orchestrated using the
- * `m3e-stepper-next`, `m3e-stepper-previous`, and `m3e-stepper-reset` components.
+ * Connect each step to a panel with `for` and use stepper actions to navigate.
  *
+ * ```html
  * <m3e-stepper>
- *  <m3e-step for="step1">Fill out your name</m3e-step>
- *  <m3e-step for="step2">Fill out your address</m3e-step>
- *  <m3e-step for="step3">Done</m3e-step>
- *  <m3e-step-panel id="step1">
- *    <form>
- *      <m3e-form-field>
- *        <label slot="label" for="name">Name</label>
- *        <input name="name" id="name" required />
- *      </m3e-form-field>
- *    </form>
- *    <div slot="actions">
- *      <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
- *    </div>
- *  </m3e-step-panel>
- *  <m3e-step-panel id="step2">
- *    <form>
- *      <m3e-form-field>
- *        <label slot="label" for="address">Address</label>
- *        <input name="address" id="address" required />
- *      </m3e-form-field>
- *    </form>
- *    <div slot="actions">
- *      <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
- *      <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
- *    </div>
- *  </m3e-step-panel>
- *  <m3e-step-panel id="step3">Done
- *    <div slot="actions">
- *      <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
- *      <m3e-button><m3e-stepper-reset>Reset</m3e-stepper-reset></m3e-button>
- *    </div>
- *  </m3e-step-panel>
+ *   <m3e-step for="step1">Fill out your name</m3e-step>
+ *   <m3e-step for="step2">Fill out your address</m3e-step>
+ *   <m3e-step for="step3">Done</m3e-step>
+ *   <m3e-step-panel id="step1">
+ *     <form>
+ *       <m3e-form-field>
+ *         <label slot="label" for="name">Name</label>
+ *         <input name="name" id="name" required />
+ *       </m3e-form-field>
+ *     </form>
+ *     <div slot="actions">
+ *       <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+ *     </div>
+ *   </m3e-step-panel>
+ *   <m3e-step-panel id="step2">
+ *     <form>
+ *       <m3e-form-field>
+ *         <label slot="label" for="address">Address</label>
+ *         <input name="address" id="address" required />
+ *       </m3e-form-field>
+ *     </form>
+ *     <div slot="actions">
+ *       <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+ *       <m3e-button><m3e-stepper-next>Next</m3e-stepper-next></m3e-button>
+ *     </div>
+ *   </m3e-step-panel>
+ *   <m3e-step-panel id="step3">
+ *     Done
+ *     <div slot="actions">
+ *       <m3e-button><m3e-stepper-previous>Back</m3e-stepper-previous></m3e-button>
+ *       <m3e-button><m3e-stepper-reset>Reset</m3e-stepper-reset></m3e-button>
+ *     </div>
+ *   </m3e-step-panel>
  * </m3e-stepper>
+ * ```
+ *
+ * @example
+ * Use `orientation` to choose `horizontal` (default), `vertical`, or `auto`.
+ *
+ * ```html
+ * <m3e-stepper orientation="vertical">
+ *   <!-- Content omitted for brevity -->
+ * </m3e-stepper>
+ * ```
+ *
+ * @example
+ * Use `header-position` to place horizontal step headers above or below the content.
+ *
+ * ```html
+ * <m3e-stepper header-position="below">
+ *   <!-- Content omitted for brevity -->
+ * </m3e-stepper>
+ * ```
+ *
+ * @example
+ * Use `label-position` to place horizontal step labels after or below their icons.
+ *
+ * ```html
+ * <m3e-stepper label-position="below">
+ *   <!-- Content omitted for brevity -->
+ * </m3e-stepper>
+ * ```
+ *
+ * @example
+ * Use `linear` to require steps in order; mark completed steps `editable` to allow returning.
+ *
+ * ```html
+ * <m3e-stepper linear>
+ *   <m3e-step for="step1" editable>Fill out your name</m3e-step>
+ *   <m3e-step for="step2" editable>Fill out your address</m3e-step>
+ *   <m3e-step for="step3">Done</m3e-step>
+ *   <!-- Content omitted for brevity -->
+ * </m3e-stepper>
+ * ```
  *
  * @tag m3e-stepper
  *

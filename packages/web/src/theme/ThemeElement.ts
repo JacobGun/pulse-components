@@ -9,7 +9,12 @@ import {
   MaterialDynamicColors,
 } from "@material/material-color-utilities";
 
-import { customElement, DesignToken, registerStyleSheet } from "@pulse/web/core";
+import {
+  customElement,
+  DesignToken,
+  ReconnectedCallback,
+  registerStyleSheet,
+} from "@pulse/web/core";
 
 import { ColorScheme, isColorScheme } from "./ColorScheme";
 import { ContrastLevel, isContrastLevel } from "./ContrastLevel";
@@ -54,18 +59,54 @@ function omitKeys<T extends object, K extends keyof T>(obj: T, ...keys: readonly
  * when supported, cascades to all viewport scrollbars.
  *
  * @example
- * The following example adds a top-level `m3e-theme` directly beneath a document's `<body>` element to
- * apply application-level theming.  In this example, `color` and `scheme` are used to create a dynamic color
- * palette which automatically adjusts to a user's light or dark color preference. In addition, expressive motion
- * and strong focus indicators are enabled.
+ * Use `color` to derive Material color palettes from a HEX color.
  *
  * ```html
- * <body>
- *  <m3e-theme color="#6750A4" scheme="auto" motion="expressive" strong-focus>
- *      <!-- Normal body content here. -->
- *  </m3e-theme>
- * <body/>
+ * <m3e-theme color="#4285F4">
+ *   <!-- Swatches omitted for brevity -->
+ * </m3e-theme>
  * ```
+ *
+ * @example
+ * Use `scheme` to choose a color scheme, or `auto` to follow system preferences.
+ *
+ * ```html
+ * <m3e-theme color="#4285F4" scheme="dark">
+ *   <!-- Swatches omitted for brevity -->
+ * </m3e-theme>
+ * ```
+ *
+ * @example
+ * Use `contrast` to adjust the theme contrast.
+ *
+ * ```html
+ * <m3e-theme color="#4285F4" contrast="high">
+ *   <!-- Swatches omitted for brevity -->
+ * </m3e-theme>
+ * ```
+ *
+ * @example
+ * Use `density` to adjust component density.
+ *
+ * ```html
+ * <m3e-theme density="-3">
+ *   <!-- Buttons omitted for brevity -->
+ * </m3e-theme>
+ * <!-- Additional densities omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Use `motion` to choose the theme motion scheme.
+ *
+ * ```html
+ * <m3e-theme motion="standard">
+ *   <!-- Switch omitted for brevity -->
+ * </m3e-theme>
+ * <m3e-theme motion="expressive">
+ *   <!-- Switch omitted for brevity -->
+ * </m3e-theme>
+ * ```
+ *
  * @tag m3e-theme
  *
  * @slot - Renders content styled by the theme.
@@ -80,7 +121,7 @@ function omitKeys<T extends object, K extends keyof T>(obj: T, ...keys: readonly
  * @fires change - Dispatched when the theme changes.
  */
 @customElement("m3e-theme")
-export class M3eThemeElement extends LitElement {
+export class M3eThemeElement extends ReconnectedCallback(LitElement) {
   static {
     if (typeof window !== "undefined") {
       let css = "";
@@ -152,25 +193,25 @@ export class M3eThemeElement extends LitElement {
    * The hex color from which to derive dynamic color palettes.
    * @default "#6750A4"
    */
-  @property({ reflect: false }) color = "#6750A4";
+  @property({ reflect: false, useDefault: true }) color = "#6750A4";
 
   /**
    * The color variant of the theme.
    * @default "tonal-spot"
    */
-  @property({ reflect: false }) variant: ThemeVariant = "tonal-spot";
+  @property({ reflect: false, useDefault: true }) variant: ThemeVariant = "tonal-spot";
 
   /**
    * The color scheme of the theme.
    * @default "auto"
    */
-  @property({ reflect: false }) scheme: ColorScheme = "auto";
+  @property({ reflect: false, useDefault: true }) scheme: ColorScheme = "auto";
 
   /**
    * The contrast level of the theme.
    * @default "standard"
    */
-  @property({ reflect: false }) contrast: ContrastLevel = "standard";
+  @property({ reflect: false, useDefault: true }) contrast: ContrastLevel = "standard";
 
   /**
    * Whether to enable strong focus indicators.
@@ -182,12 +223,12 @@ export class M3eThemeElement extends LitElement {
    * The density scale (0, -1, -2).
    * @default 0
    */
-  @property({ type: Number, reflect: false }) density = 0;
+  @property({ type: Number, reflect: false, useDefault: true }) density = 0;
 
   /** The motion scheme.
    * @default "expressive"
    */
-  @property({ reflect: false }) motion: MotionScheme = "expressive";
+  @property({ reflect: false, useDefault: true }) motion: MotionScheme = "expressive";
 
   /** Whether a dark theme is applied. */
   get isDark(): boolean {
@@ -250,6 +291,12 @@ export class M3eThemeElement extends LitElement {
     if (document.adoptedStyleSheets.includes(this.#styleSheet)) {
       document.adoptedStyleSheets = document.adoptedStyleSheets.filter((x) => x !== this.#styleSheet);
     }
+  }
+
+  /** @inheritdoc */
+  override reconnectedCallback(): void {
+    super.reconnectedCallback();
+    this.requestUpdate();
   }
 
   /** @inheritdoc */

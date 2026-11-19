@@ -29,23 +29,24 @@ import { selectionManager } from "@pulse/web/core/a11y";
  * based on their position and state.
  *
  * @example
- * The following example illustrates a single-select segmented button with four segments.
+ * Place button segments inside a segmented button.
+ *
  * ```html
  * <m3e-segmented-button>
- *  <m3e-button-segment checked>8 oz</m3e-button-segment>
- *  <m3e-button-segment>12 oz</m3e-button-segment>
- *  <m3e-button-segment>16 oz</m3e-button-segment>
- *  <m3e-button-segment>20 oz</m3e-button-segment>
+ *   <m3e-button-segment checked>8 oz</m3e-button-segment>
+ *   <!-- Additional segments omitted for brevity -->
  * </m3e-segmented-button>
  * ```
+ *
  * @example
- * The next example illustrates a multiselect segmented button designated using the `multi` attribute.
+ * Use the `icon` slot to add a segment icon; the selected state replaces it with a check.
+ *
  * ```html
- * <m3e-segmented-button multi>
- *  <m3e-button-segment checked>$</m3e-button-segment>
- *  <m3e-button-segment checked>$$</m3e-button-segment>
- *  <m3e-button-segment>$$$</m3e-button-segment>
- *  <m3e-button-segment>$$$$</m3e-button-segment>
+ * <m3e-segmented-button>
+ *   <m3e-button-segment>
+ *     <m3e-icon slot="icon" name="palette"></m3e-icon>Design
+ *   </m3e-button-segment>
+ *   <!-- Additional segments omitted for brevity -->
  * </m3e-segmented-button>
  * ```
  *

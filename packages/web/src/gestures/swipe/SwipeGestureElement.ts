@@ -14,6 +14,29 @@ import { SwipeGestureDirection, SwipeGestureOptions } from "./SwipeGestureOption
  * A non-visual element used to detect and interpret swipe gestures from an input stream
  * produced from an attached element.
  *
+ * @example
+ * Bind `m3e-swipe-gesture` to the target with `for` and listen for `gesture` to respond to a swipe. Size the target and use `touch-action` to avoid conflicts with page scrolling.
+ *
+ * ```html
+ * <div id="item"></div>
+ * <m3e-swipe-gesture for="item"></m3e-swipe-gesture>
+ * ```
+ *
+ * @example
+ * Alternatively, use the same target with `detectGesture` and `phase`. Replace the handler placeholders and retain the returned controller to call `destroy()` when no longer needed.
+ *
+ * ```js
+ * import { detectGesture, phase } from "@m3e/web/gestures";
+ * import { swipe } from "@m3e/web/gestures/swipe";
+ *
+ * const item = document.getElementById("item");
+ * detectGesture(item, swipe(phase({
+ *   onEnd: (detail) => {
+ *     // Handle swipe
+ *   }
+ * })));
+ * ```
+ *
  * @tag m3e-swipe-gesture
  *
  * @attr for - The identifier of the interactive control to which this element is attached.
@@ -24,7 +47,7 @@ import { SwipeGestureDirection, SwipeGestureOptions } from "./SwipeGestureOption
  * @attr pointers - Number of pointers required for the gesture to be recognized.
  * @attr start-threshold - Minimum distance (px) a pointer must move before the gesture starts.
  * @attr min-displacement - * Minimum distance (px) a pointer must move before the gesture can be recognized.
- * @attr min-velocity - Minimum velocity (px/ms) required to recognize a swipe.
+ * @attr min-velocity - Minimum release velocity (px/ms) required before the gesture fails.
  * @attr direction-threshold - Minimum displacement (px) required before direction is considered valid.
  * @attr direction-grace-period - Maximum amount of time (ms) a pointer can move in an uncommitted or
  * disallowed direction before the gesture is rejected.
@@ -59,7 +82,7 @@ export class M3eSwipeGestureElement extends GestureElementBase<SwipeGestureOptio
     this.recognizer.defaultOptions.minDisplacement;
 
   /**
-   * Minimum velocity (px/ms) required before the gesture fails.
+   * Minimum release velocity (px/ms) required before the gesture fails.
    * @default 0.3
    */
   @property({ attribute: "min-velocity", type: Number, reflect: false }) minVelocity =

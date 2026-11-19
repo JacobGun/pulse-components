@@ -24,20 +24,27 @@ import { ListItemContentType } from "./ListItemContentType";
  * is designed for accessibility and flexible layout.
  *
  * @example
- * The following example illustrates a list with a single item using all supported slots.
- *
- * Note: This example uses the `@m3e/icon` package to present Material Design symbols, but any icon package can be
- * substituted depending on your design system or preferences
+ * Use the `leading`, `overline`, `supporting-text`, and `trailing` slots to arrange item content.
  *
  * ```html
  * <m3e-list>
- *  <m3e-list-item>
- *    <m3e-icon slot="leading" name="person"></m3e-icon>
- *    <span slot="overline">Overline</span>
- *    Headline
- *    <span slot="supporting-text">Supporting text</span>
- *    <m3e-icon slot="trailing" name="arrow_right"></m3e-icon>
- *  </m3e-list-item>
+ *   <m3e-list-item>
+ *     <m3e-icon slot="leading" name="person"></m3e-icon>
+ *     <span slot="overline">Overline</span>
+ *     Headline
+ *     <span slot="supporting-text">Supporting text</span>
+ *     <span slot="trailing">100+</span>
+ *   </m3e-list-item>
+ * </m3e-list>
+ * ```
+ *
+ * @example
+ * Use the default `standard` variant to present a list of items.
+ *
+ * ```html
+ * <m3e-list>
+ *   <m3e-list-item>Item 1</m3e-list-item>
+ *   <!-- Additional items omitted for brevity -->
  * </m3e-list>
  * ```
  *
@@ -112,21 +119,30 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       column-gap: var(--m3e-list-item-between-space, ${DesignToken.measurement.space200});
       padding-inline-start: var(--m3e-list-item-leading-space, ${DesignToken.measurement.space200});
       padding-inline-end: var(--m3e-list-item-trailing-space, ${DesignToken.measurement.space200});
-      border-top-left-radius: var(
+      --_shape-top: var(
         --_list-item-top-container-shape,
         var(--m3e-list-item-container-shape, ${DesignToken.shape.corner.none})
       );
-      border-top-right-radius: var(
-        --_list-item-top-container-shape,
-        var(--m3e-list-item-container-shape, ${DesignToken.shape.corner.none})
-      );
-      border-bottom-left-radius: var(
+      --_shape-bottom: var(
         --_list-item-bottom-container-shape,
         var(--m3e-list-item-container-shape, ${DesignToken.shape.corner.none})
       );
-      border-bottom-right-radius: var(
-        --_list-item-bottom-container-shape,
-        var(--m3e-list-item-container-shape, ${DesignToken.shape.corner.none})
+      --_growth: var(--m3e-swipe-reveal-shape-growth, 0px);
+      border-top-left-radius: min(
+        max(var(--_shape-top), calc(var(--_shape-top) + var(--_growth))),
+        max(var(--_shape-top), ${DesignToken.shape.corner.large})
+      );
+      border-top-right-radius: min(
+        max(var(--_shape-top), calc(var(--_shape-top) + var(--_growth))),
+        max(var(--_shape-top), ${DesignToken.shape.corner.large})
+      );
+      border-bottom-left-radius: min(
+        max(var(--_shape-bottom), calc(var(--_shape-bottom) + var(--_growth))),
+        max(var(--_shape-bottom), ${DesignToken.shape.corner.large})
+      );
+      border-bottom-right-radius: min(
+        max(var(--_shape-bottom), calc(var(--_shape-bottom) + var(--_growth))),
+        max(var(--_shape-bottom), ${DesignToken.shape.corner.large})
       );
       transition: ${unsafeCSS(
         `border-radius ${DesignToken.motion.spring.fastEffects}, background-color ${DesignToken.motion.duration.short4} ${DesignToken.motion.easing.standard}`,
@@ -160,44 +176,29 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       align-items: flex-start;
     }
     :host(:not(:disabled):not([selected])) .base:not(.hover).focus-visible:not(.pressed) {
-      border-top-left-radius: var(
+      --_shape-top: var(
         --_list-item-top-container-shape,
         var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
       );
-      border-top-right-radius: var(
-        --_list-item-top-container-shape,
-        var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
-      );
-      border-bottom-left-radius: var(
-        --_list-item-bottom-container-shape,
-        var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
-      );
-      border-bottom-right-radius: var(
+      --_shape-bottom: var(
         --_list-item-bottom-container-shape,
         var(--m3e-list-item-focus-container-shape, ${DesignToken.shape.corner.large})
       );
     }
     :host(:not(:disabled):not([selected])) .base.hover,
     :host(:not(:disabled):not([selected])) .base.pressed {
-      border-top-left-radius: var(
+      --_shape-top: var(
         --_list-item-top-container-shape,
         var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
       );
-      border-top-right-radius: var(
-        --_list-item-top-container-shape,
-        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
-      );
-      border-bottom-left-radius: var(
-        --_list-item-bottom-container-shape,
-        var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
-      );
-      border-bottom-right-radius: var(
+      --_shape-bottom: var(
         --_list-item-bottom-container-shape,
         var(--m3e-list-item-hover-container-shape, ${DesignToken.shape.corner.medium})
       );
     }
     .content {
       flex: 1 1 auto;
+      min-width: 0;
       display: flex;
       flex-direction: column;
       align-items: unset;
@@ -233,6 +234,7 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
     :host(:is(:state(--has-leading), :--has-leading)) slot[name="leading"],
     :host(:is(:state(--has-trailing), :--has-trailing)) slot[name="trailing"] {
       display: flex;
+      flex: none;
       justify-content: center;
     }
     :host(:not(:is(:state(--has-leading), :--has-leading))) slot[name="leading"] {
@@ -330,10 +332,7 @@ export class M3eListItemElement extends ReconnectedCallback(AttachInternals(Role
       color: var(--m3e-list-item-trailing-color, ${DesignToken.color.onSurfaceVariant});
     }
     :host(:not(:disabled)) .base {
-      background-color: var(
-        --_list-item-container-color,
-        var(--m3e-list-item-container-color, ${DesignToken.color.surface})
-      );
+      background-color: var(--_list-item-container-color, var(--m3e-list-item-container-color, transparent));
     }
     :host(:disabled) .base {
       background-color: var(--m3e-list-item-disabled-container-color, transparent);

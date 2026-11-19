@@ -26,14 +26,54 @@ import { M3eChipElement } from "./ChipElement";
  * differentiation and contextual emphasis.
  *
  * @example
- * The following example illustrates a single-select `m3e-filter-chip-set` containing multiple `m3e-filter-chip` components that
- * allow a user to choose an option. You can use the `multi` attribute to enable multiselect.
+ * Use a filter chip set to select a filter; chips support `outlined` and `elevated` variants.
+ *
+ * ```html
+ * <m3e-filter-chip-set>
+ *   <m3e-filter-chip>Outlined</m3e-filter-chip>
+ *   <m3e-filter-chip variant="elevated">Elevated</m3e-filter-chip>
+ * </m3e-filter-chip-set>
+ * ```
+ *
+ * @example
+ * Use `selected` to preselect a filter chip and the `icon` slot to identify its topic.
+ *
  * ```html
  * <m3e-filter-chip-set aria-label="Filter by topic">
- *  <m3e-filter-chip><m3e-icon slot="icon" name="palette"></m3e-icon>Design</m3e-filter-chip>
- *  <m3e-filter-chip><m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility</m3e-filter-chip>
- *  <m3e-filter-chip><m3e-icon slot="icon" name="motion_photos_on"></m3e-icon>Motion</m3e-filter-chip>
- *  <m3e-filter-chip><m3e-icon slot="icon" name="description"></m3e-icon>Documentation</m3e-filter-chip>
+ *   <m3e-filter-chip selected>
+ *     <m3e-icon slot="icon" name="palette"></m3e-icon>Design
+ *   </m3e-filter-chip>
+ *   <!-- Additional chips omitted for brevity -->
+ * </m3e-filter-chip-set>
+ * ```
+ *
+ * @example
+ * Set `multi` on the filter chip set to allow more than one topic to be selected.
+ *
+ * ```html
+ * <m3e-filter-chip-set aria-label="Filter by topic" multi>
+ *   <m3e-filter-chip selected>
+ *     <m3e-icon slot="icon" name="palette"></m3e-icon>Design
+ *   </m3e-filter-chip>
+ *   <m3e-filter-chip selected>
+ *     <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+ *   </m3e-filter-chip>
+ *   <!-- Additional chips omitted for brevity -->
+ * </m3e-filter-chip-set>
+ * ```
+ *
+ * @example
+ * Use `disabled` to disable a filter chip or `disabled-interactive` to leave it keyboard-focusable.
+ *
+ * ```html
+ * <m3e-filter-chip-set aria-label="Filter by topic">
+ *   <m3e-filter-chip disabled>
+ *     <m3e-icon slot="icon" name="palette"></m3e-icon>Design
+ *   </m3e-filter-chip>
+ *   <m3e-filter-chip disabled-interactive>
+ *     <m3e-icon slot="icon" name="accessibility_new"></m3e-icon>Accessibility
+ *   </m3e-filter-chip>
+ *   <!-- Additional chips omitted for brevity -->
  * </m3e-filter-chip-set>
  * ```
  *
@@ -124,14 +164,30 @@ export class M3eFilterChipElement extends Selected(
       :host(:not(:disabled):not([disabled-interactive])) .check {
         color: var(--m3e-chip-selected-leading-icon-color, ${DesignToken.color.onSecondaryContainer});
       }
+      :host([selected]:not(:is(:state(--no-animate), :--no-animate))) .check {
+        animation: draw ${DesignToken.motion.duration.medium4} ${DesignToken.motion.easing.standardDecelerate} both;
+        animation-delay: ${DesignToken.motion.duration.short1};
+      }
+      @keyframes draw {
+        from {
+          clip-path: inset(0 100% 0 0);
+          opacity: 0.8;
+        }
+        to {
+          clip-path: inset(0);
+          opacity: 1;
+        }
+      }
       :host(:not([selected])) .check,
       :host(:is(:state(--hide-selection), :--hide-selection)) .check,
       :host(:is(:state(--hide-selection), :--hide-selection):not(:is(:state(--with-icon), :--with-icon))) .icon {
         display: none;
       }
+      :host(:not(:is(:state(--with-icon), :--with-icon)):not(:is(:state(--no-animate), :--no-animate))) .icon {
+        transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
+      }
       :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
         margin-inline-start: calc(0px - var(--m3e-chip-with-icon-padding-start, ${DesignToken.measurement.space100}));
-        transition: margin-inline-start ${DesignToken.motion.spring.fastEffects};
       }
       :host([selected]) .icon {
         margin-inline-start: 0;
@@ -188,9 +244,11 @@ export class M3eFilterChipElement extends Selected(
         color: var(--m3e-chip-selected-trailing-icon-color, ${DesignToken.color.onSecondaryContainer});
       }
       @media (prefers-reduced-motion) {
-        .base,
-        :host(:not(:is(:state(--with-icon), :--with-icon))) .icon {
+        :host(:not(:is(:state(--with-icon), :--with-icon)):not(:is(:state(--no-animate), :--no-animate))) .icon {
           transition: none;
+        }
+        :host([selected]:not(:is(:state(--no-animate), :--no-animate))) .check {
+          animation: none;
         }
       }
       @media (forced-colors: active) {

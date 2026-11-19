@@ -13,7 +13,7 @@ import "@m3e/web/tree";
 
 ## 🧪 Examples
 
-The following example illustrates a simple tree with nested child items.
+Nest tree items, use the `label` slot for text, and `open` to expand children.
 
 ```html
 <m3e-tree>
@@ -26,19 +26,48 @@ The following example illustrates a simple tree with nested child items.
       <span slot="label">Installation</span>
     </m3e-tree-item>
   </m3e-tree-item>
-  <m3e-tree-item>
-    <span slot="label">Components</span>
-    <m3e-tree-item>
-      <span slot="label">Button</span>
-    </m3e-tree-item>
-    <m3e-tree-item>
-      <span slot="label">Card</span>
-    </m3e-tree-item>
-  </m3e-tree-item>
+  <!-- Additional items omitted for brevity -->
 </m3e-tree>
 ```
 
-The next example demonstrates multi-selection with cascading selection state.
+Use `selected` to select a tree item.
+
+```html
+<m3e-tree>
+  <m3e-tree-item open>
+    <span slot="label">Getting Started</span>
+    <m3e-tree-item selected>
+      <span slot="label">Overview</span>
+    </m3e-tree-item>
+    <m3e-tree-item>
+      <span slot="label">Installation</span>
+    </m3e-tree-item>
+  </m3e-tree-item>
+  <!-- Additional items omitted for brevity -->
+</m3e-tree>
+```
+
+Use `multi` to allow multiple selections.
+
+```html
+<m3e-tree multi>
+  <m3e-tree-item>
+    <span slot="label">Fruits</span>
+    <m3e-tree-item>
+      <span slot="label">Apples</span>
+    </m3e-tree-item>
+    <m3e-tree-item>
+      <span slot="label">Oranges</span>
+    </m3e-tree-item>
+    <m3e-tree-item>
+      <span slot="label">Bananas</span>
+    </m3e-tree-item>
+  </m3e-tree-item>
+<!-- Additional items omitted for brevity -->
+</m3e-tree>
+```
+
+Use `multi` and `cascade` to cascade selection through the tree.
 
 ```html
 <m3e-tree multi cascade>
@@ -54,19 +83,54 @@ The next example demonstrates multi-selection with cascading selection state.
       <span slot="label">Bananas</span>
     </m3e-tree-item>
   </m3e-tree-item>
-  <m3e-tree-item>
-    <span slot="label">Vegetables</span>
+<!-- Additional items omitted for brevity -->
+</m3e-tree>
+```
+
+Use the `icon` and `selected-icon` slots to show item icons.
+
+```html
+<m3e-tree>
+  <m3e-tree-item open>
+    <m3e-icon slot="icon" name="rocket_launch"></m3e-icon>
+    <span slot="label">Getting Started</span>
     <m3e-tree-item>
-      <span slot="label">Carrots</span>
+      <m3e-icon slot="icon" name="near_me"></m3e-icon>
+      <span slot="label">Overview</span>
     </m3e-tree-item>
     <m3e-tree-item>
-      <span slot="label">Broccoli</span>
-    </m3e-tree-item>
-    <m3e-tree-item>
-      <span slot="label">Spinach</span>
+      <m3e-icon slot="icon" name="package_2"></m3e-icon>
+      <span slot="label">Installation</span>
     </m3e-tree-item>
   </m3e-tree-item>
 </m3e-tree>
+```
+
+Use the `toggle-icon` and `open-toggle-icon` slots to customize expand and collapse icons.
+
+```html
+<m3e-tree>
+  <m3e-tree-item open>
+    <m3e-icon slot="toggle-icon" name="add_box"></m3e-icon>
+    <m3e-icon slot="open-toggle-icon" name="indeterminate_check_box"></m3e-icon>
+    <span slot="label">Getting Started</span>
+    <!-- Items omitted for brevity -->
+  </m3e-tree-item>
+</m3e-tree>
+```
+
+Apply a density scale of `-3` to adjust spacing.
+
+```html
+<m3e-tree class="density-3">
+  <!-- Tree items omitted for brevity -->
+</m3e-tree>
+```
+
+```css
+.density-3 {
+  --md-sys-density-scale: -3;
+}
 ```
 
 ## 📖 API Reference

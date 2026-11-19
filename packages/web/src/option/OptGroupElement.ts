@@ -14,6 +14,24 @@ import { addAriaReferencedId, removeAriaReferencedId } from "@pulse/web/core/a11
  * ensuring that assistive technologies correctly interpret the hierarchical relationship between the label
  * and contained options.
  *
+ * @example
+ * Use `m3e-optgroup` to put related options under a group label in a select.
+ *
+ * ```html
+ * <m3e-form-field>
+ *   <label slot="label" for="select">Pokemon</label>
+ *   <m3e-select id="select">
+ *     <m3e-optgroup>
+ *       <span slot="label">Grass</span>
+ *       <m3e-option>Bulbasaur</m3e-option>
+ *       <m3e-option>Oddish</m3e-option>
+ *       <m3e-option>Bellsprout</m3e-option>
+ *     </m3e-optgroup>
+ *     <!-- Additional option groups omitted for brevity -->
+ *   </m3e-select>
+ * </m3e-form-field>
+ * ```
+ *
  * @tag m3e-optgroup
  *
  * @slot - Renders the options of the group.

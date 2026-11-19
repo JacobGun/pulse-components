@@ -34,22 +34,129 @@ import { ButtonGroupSize, isButtonGroupSize } from "./ButtonGroupSize";
  * in a visually harmonious and intuitive way.
  *
  * @example
- * The following example illustrates a standard button group.
- * ``` html
+ * Group related icon buttons in an `m3e-button-group` to get the standard spacing and interaction between adjacent buttons.
+ * ```html
  * <m3e-button-group>
- *  <m3e-icon-button variant="tonal" toggle><m3e-icon name="format_bold"></m3e-icon></m3e-icon-button>
- *  <m3e-icon-button variant="tonal" toggle><m3e-icon name="format_italic"></m3e-icon></m3e-icon-button>
- *  <m3e-icon-button variant="tonal" toggle><m3e-icon name="format_underlined"></m3e-icon></m3e-icon-button>
+ *   <m3e-icon-button>
+ *     <m3e-icon name="arrow_back"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button>
+ *     <m3e-icon name="arrow_forward"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button width="wide" variant="filled">
+ *     <m3e-icon name="add"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button>
+ *     <m3e-icon name="picture_in_picture"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button>
+ *     <m3e-icon name="more_vert"></m3e-icon>
+ *   </m3e-icon-button>
  * </m3e-button-group>
  * ```
+ *
  * @example
- * The next example illustrates a connected button group.
+ * Group text buttons with leading icons to present related actions.
+ * ```html
+ * <m3e-button-group>
+ *   <m3e-button variant="tonal">
+ *     <m3e-icon slot="icon" name="play_arrow"></m3e-icon>Start
+ *   </m3e-button>
+ *   <m3e-button variant="tonal">
+ *     <m3e-icon slot="icon" name="directions_car"></m3e-icon>Directions
+ *   </m3e-button>
+ *   <m3e-button variant="tonal">
+ *     <m3e-icon slot="icon" name="share"></m3e-icon>Share
+ *   </m3e-button>
+ * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * Mix text buttons and icon buttons in a standard group. Set `width="wide"` on the icon buttons to give them more space.
+ * ```html
+ * <m3e-button-group>
+ *   <m3e-icon-button variant="filled" width="wide">
+ *     <m3e-icon name="fast_rewind"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-button variant="filled">
+ *     <m3e-icon slot="icon" name="play_arrow"></m3e-icon>Play
+ *   </m3e-button>
+ *   <m3e-icon-button variant="filled" width="wide">
+ *     <m3e-icon name="fast_forward"></m3e-icon>
+ *   </m3e-icon-button>
+ * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * Use `variant="connected"` to join adjacent toggle buttons into a single control.
  * ```html
  * <m3e-button-group variant="connected">
- *  <m3e-button variant="tonal" shape="square" toggle>Start</m3e-button>
- *  <m3e-button variant="tonal" shape="square" toggle>Directions</m3e-button>
- *  <m3e-button variant="tonal" shape="square" toggle>Share</m3e-button>
+ *   <m3e-button variant="tonal" toggle>Start</m3e-button>
+ *   <m3e-button variant="tonal" toggle>Directions</m3e-button>
+ *   <m3e-button variant="tonal" toggle>Share</m3e-button>
  * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * Set `size="large"` on the standard group and its buttons to match the spacing to the button size.
+ * ```html
+ * <m3e-button-group size="large">
+ *   <m3e-icon-button size="large">
+ *     <m3e-icon name="arrow_back"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button size="large">
+ *     <m3e-icon name="arrow_forward"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button size="large" width="wide" variant="filled">
+ *     <m3e-icon name="add"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button size="large">
+ *     <m3e-icon name="picture_in_picture"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button size="large">
+ *     <m3e-icon name="more_vert"></m3e-icon>
+ *   </m3e-icon-button>
+ * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * Set `size="large"` on the connected group and its buttons for a uniform height. Connected buttons stay joined at any size.
+ * ```html
+ * <m3e-button-group size="large" variant="connected">
+ *   <m3e-button variant="tonal" size="large" toggle>Start</m3e-button>
+ *   <m3e-button variant="tonal" size="large" toggle>Directions</m3e-button>
+ *   <m3e-button variant="tonal" size="large" toggle>Share</m3e-button>
+ * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * Set `multi` to let users turn on more than one formatting option at a time.
+ * ```html
+ * <m3e-button-group multi>
+ *   <m3e-icon-button variant="tonal" toggle>
+ *     <m3e-icon name="format_bold"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button variant="tonal" toggle>
+ *     <m3e-icon name="format_italic"></m3e-icon>
+ *   </m3e-icon-button>
+ *   <m3e-icon-button variant="tonal" toggle>
+ *     <m3e-icon name="format_underlined"></m3e-icon>
+ *   </m3e-icon-button>
+ * </m3e-button-group>
+ * ```
+ *
+ * @example
+ * Set `--md-sys-density-scale: -3` on the group to make its buttons more compact.
+ * ```html
+ * <m3e-button-group class="density-3">
+ *   <!-- Buttons omitted for brevity -->
+ * </m3e-button-group>
+ * <!-- Additional groups and variants omitted for brevity -->
+ * ```
+ * ```css
+ * .density-3 {
+ *   --md-sys-density-scale: -3;
+ * }
  * ```
  *
  * @tag m3e-button-group

@@ -16,15 +16,22 @@ import "@pulse/web/icon-button";
  * encodes accessibility through customizable labels and interaction states.
  *
  * @example
- * The following example illustrates a horizontally scrollable group of items with directional pagination buttons.
- * The scroll controls appear when content exceeds the `48px` threshold.
+ * Place content inside a slide group; pagination controls appear when it overflows.
+ *
  * ```html
- * <m3e-slide-group threshold="48">
- *  <div>Item 1</div>
- *  <div>Item 2</div>
- *  <div>Item 3</div>
- *  <div>Item 4</div>
- *  <div>Item 5</div>
+ * <m3e-slide-group>
+ *   <div>Item 1</div>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-slide-group>
+ * ```
+ *
+ * @example
+ * Use `vertical` to orient the slide group vertically.
+ *
+ * ```html
+ * <m3e-slide-group vertical>
+ *   <div>Item 1</div>
+ *   <!-- Additional items omitted for brevity -->
  * </m3e-slide-group>
  * ```
  *

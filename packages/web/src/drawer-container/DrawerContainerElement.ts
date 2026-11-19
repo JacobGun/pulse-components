@@ -31,19 +31,80 @@ import { DrawerContainerStyle } from "./styles";
  * and permanent navigation.
  *
  * @example
- * The following example illustrates a typical drawer layout.
+ * Use the `start` and `end` slots for drawers and the default slot for main content.
+ *
+ * ```html
+ * <m3e-drawer-container start end>
+ *   <div slot="start">Start drawer</div>
+ *   <div>Main content</div>
+ *   <div slot="end">End drawer</div>
+ * </m3e-drawer-container>
+ * ```
+ *
+ * @example
+ * Set the width of a drawer on its slotted element.
+ *
+ * ```html
+ * <m3e-drawer-container start>
+ *   <div slot="start" style="width: 200px;">Start drawer</div>
+ *   <div>Main content</div>
+ * </m3e-drawer-container>
+ * ```
+ *
+ * @example
+ * Use `start-mode="push"` to move content when the drawer opens.
+ *
+ * ```html
+ * <m3e-drawer-container start start-mode="push">
+ *   <div slot="start">Start drawer</div>
+ *   <div>Main content</div>
+ * </m3e-drawer-container>
+ * ```
+ *
+ * @example
+ * Use `start-mode="over"` to overlay the main content.
+ *
+ * ```html
+ * <m3e-drawer-container start start-mode="over">
+ *   <div slot="start">Start drawer</div>
+ *   <div>Main content</div>
+ * </m3e-drawer-container>
+ * ```
+ *
+ * @example
+ * Use `end-divider` to show a divider for a side-mode drawer.
+ *
+ * ```html
+ * <m3e-drawer-container end end-mode="side" end-divider>
+ *   <div>Main content</div>
+ *   <div slot="end">End drawer</div>
+ * </m3e-drawer-container>
+ * ```
+ *
+ * @example
+ * Nest the drawer toggle in a toggleable icon button and match its `for` to the drawer's `id`. Place the button in the host element's `leading-icon` slot.
+ *
+ * ```html
+ * <m3e-icon-button slot="leading-icon" aria-label="Menu" toggle>
+ *   <m3e-icon name="menu"></m3e-icon>
+ *   <m3e-icon slot="selected" name="menu_open"></m3e-icon>
+ *   <m3e-drawer-toggle for="nav-drawer"></m3e-drawer-toggle>
+ * </m3e-icon-button>
+ * <m3e-drawer-container start-mode="over">
+ *   <div slot="start" id="nav-drawer">Start drawer</div>
+ *   <div>Main content</div>
+ * </m3e-drawer-container>
+ * ```
+ *
+ * @example
+ * Use semantic elements for drawer and main content as appropriate.
+ *
  * ```html
  * <m3e-drawer-container>
- *  <nav slot="start">
- *    <!-- Start drawer content -->
- *  </nav>
- *  <main>
- *    <!-- Main content -->
- *  </main>
- *  <aside slot="end">
- *    <!-- End drawer content -->
- *  </aside>
- * <m3e-drawer-container>
+ *   <nav slot="start"></nav>
+ *   <main></main>
+ *   <aside slot="end"></aside>
+ * </m3e-drawer-container>
  * ```
  *
  * @tag m3e-drawer-container
@@ -63,7 +124,8 @@ import { DrawerContainerStyle } from "./styles";
  *
  * @cssprop --m3e-drawer-container-color - The background color of the drawer container.
  * @cssprop --m3e-drawer-container-elevation - The elevation level of the drawer container.
- * @cssprop --m3e-drawer-container-width - The width of the drawer container.
+ * @cssprop --m3e-drawer-container-width - The preferred drawer width, constrained by the available viewport space.
+ * @cssprop --m3e-drawer-container-scrim-min-space - The minimum space reserved beside the drawer.
  * @cssprop --m3e-drawer-container-scrim-opacity - The opacity of the scrim behind the drawer.
  * @cssprop --m3e-modal-drawer-start-shape - The shape of the drawer's start edge (typically left in LTR), used by a modal end drawer.
  * @cssprop --m3e-modal-drawer-end-shape - The shape of the drawer's end edge (typically right in LTR), used by a modal start drawer.

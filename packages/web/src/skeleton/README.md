@@ -12,12 +12,57 @@ import "@m3e/web/skeleton";
 
 ## 🧪 Examples
 
-The following example illustrates a skeleton shaped and sized by the slotted `m3e-card`.
+Wrap a card in a skeleton to provide a placeholder while content loads.
 
 ```html
 <m3e-skeleton>
-  <m3e-card></m3e-card>
+  <m3e-card>
+    <m3e-heading slot="header" variant="display" size="small">Card Header</m3e-heading>
+    <div slot="content">Card Content</div>
+    <div slot="actions">
+      <m3e-button variant="filled">Action</m3e-button>
+    </div>
+    <div slot="footer">Card Footer</div>
+  </m3e-card>
 </m3e-skeleton>
+```
+
+Use `shape` to choose `circular`, `rounded`, `square`, or `auto`.
+
+```html
+<m3e-skeleton shape="circular">
+  <div style="width: 100px; height: 100px"></div>
+</m3e-skeleton>
+<br />
+<m3e-skeleton shape="rounded">
+  <div style="width: 100px; height: 100px"></div>
+</m3e-skeleton>
+<br />
+<m3e-skeleton shape="square">
+  <div style="width: 100px; height: 100px"></div>
+</m3e-skeleton>
+<br />
+<m3e-skeleton shape="auto">
+  <div style="width: 100px; height: 100px; border-radius: 16px"></div>
+</m3e-skeleton>
+```
+
+Use `animation="pulse"` to animate the skeleton with a fade.
+
+```html
+<m3e-skeleton shape="circular" animation="pulse">
+  <div style="width: 100px; height: 100px"></div>
+</m3e-skeleton>
+<!-- Additional skeletons omitted for brevity -->
+```
+
+Use `animation="none"` to display a static skeleton.
+
+```html
+<m3e-skeleton shape="circular" animation="none">
+  <div style="width: 100px; height: 100px"></div>
+</m3e-skeleton>
+<!-- Additional skeletons omitted for brevity -->
 ```
 
 ## 📖 API Reference

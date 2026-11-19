@@ -46,13 +46,89 @@ import { CardOrientation, isCardOrientation } from "./CardOrientation";
  * and a cohesive user experience in accordance with Material Design 3 guidelines.
  *
  * @example
- * The following example illustrates each of the dedicated slots of a card.
+ * Use the `header`, `content`, `actions`, and `footer` slots to lay out a card.
  * ```html
  * <m3e-card>
- *  <div slot="header">Header section</div>
- *  <div slot="content">Content section</div>
- *  <div slot="actions">Actions section</div>
- *  <div slot="footer">Footer section</div>
+ *   <m3e-heading slot="header" variant="display" size="small">Card Header</m3e-heading>
+ *   <div slot="content">Card Content</div>
+ *   <div slot="actions">
+ *     <m3e-button variant="filled">Action</m3e-button>
+ *   </div>
+ *   <div slot="footer">Card Footer</div>
+ * </m3e-card>
+ * ```
+ *
+ * @example
+ * Wrap the buttons in an element with `slot="actions"` and add `end` to align them at the end of the card.
+ * ```html
+ * <m3e-card>
+ *   <m3e-heading slot="header" variant="display" size="small">Card Header</m3e-heading>
+ *   <div slot="content">Card Content</div>
+ *   <div slot="actions" end>
+ *     <m3e-button variant="filled">Action</m3e-button>
+ *   </div>
+ * </m3e-card>
+ * ```
+ *
+ * @example
+ * Content in the default slot has no added padding.
+ * ```html
+ * <m3e-card>Card content</m3e-card>
+ * ```
+ *
+ * @example
+ * Select `filled` (default), `outlined`, or `elevated` with `variant`.
+ * ```html
+ * <m3e-card variant="filled">
+ *   <div slot="content">Filled</div>
+ * </m3e-card>
+ * <!-- Additional variants omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Use `inline` to render a card inline with surrounding content.
+ * ```html
+ * <m3e-card inline>
+ *   <div slot="content">Inline</div>
+ * </m3e-card>
+ * ```
+ *
+ * @example
+ * Use `orientation="horizontal"` for a horizontal layout. Replace the image URL
+ * placeholder and define the `image-card` class for the desired image and card sizes.
+ * ```html
+ * <m3e-card class="image-card" inline orientation="horizontal">
+ *   <img slot="header" src="[YOUR IMAGE URL HERE]" />
+ *   <div slot="content">Horizontal</div>
+ * </m3e-card>
+ * ```
+ *
+ * @example
+ * Use `actionable` to make the entire card interactive.
+ * ```html
+ * <m3e-card variant="filled" actionable>
+ *   <div slot="content">Filled</div>
+ * </m3e-card>
+ * <!-- Additional variants omitted for brevity -->
+ * ```
+ *
+ * @example
+ * Disable an actionable card with `disabled` or use `disabled-interactive` to retain keyboard focusability.
+ * ```html
+ * <m3e-card variant="filled" actionable disabled>
+ *   <div slot="content">Disabled</div>
+ * </m3e-card>
+ * <br />
+ * <m3e-card variant="filled" actionable disabled-interactive>
+ *   <div slot="content">Disabled Interactive</div>
+ * </m3e-card>
+ * ```
+ *
+ * @example
+ * Give an actionable card an `href` to make it a link.
+ * ```html
+ * <m3e-card actionable href="https://www.google.com" target="_blank">
+ *   <div slot="content">Google</div>
  * </m3e-card>
  * ```
  *

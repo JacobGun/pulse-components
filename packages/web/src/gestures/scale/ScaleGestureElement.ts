@@ -13,6 +13,38 @@ import { ScaleGestureRecognizer } from "./ScaleGestureRecognizer";
  * A non-visual element used to detect and interpret scale gestures from an input stream
  * produced from an attached element.
  *
+ * @example
+ * Bind `m3e-scale-gesture` to the target with `for` and listen for `gesture` to track changes in scale. Give the target a visible size and account for the browser's own pinch gesture with `touch-action`.
+ *
+ * ```html
+ * <div id="item"></div>
+ * <m3e-scale-gesture for="item"></m3e-scale-gesture>
+ * ```
+ *
+ * @example
+ * Use `detectGesture` with `scale` and `phase` to handle scale changes in JavaScript. Keep the returned controller and call `destroy()` when you no longer need it.
+ *
+ * ```js
+ * import { detectGesture, phase } from "@m3e/web/gestures";
+ * import { scale } from "@m3e/web/gestures/scale";
+ *
+ * const item = document.getElementById("item");
+ * detectGesture(item, scale(phase({
+ *   onStart: (detail) => {
+ *     // Begin tracking
+ *   },
+ *   onUpdate: (detail) => {
+ *     // Continuous movement
+ *   },
+ *   onEnd: (detail) => {
+ *     // Finalize scaling
+ *   },
+ *   onCancel: (detail) => {
+ *     // Cancel scaling
+ *   }
+ * })));
+ * ```
+ *
  * @tag m3e-scale-gesture
  *
  * @attr for - The identifier of the interactive control to which this element is attached.

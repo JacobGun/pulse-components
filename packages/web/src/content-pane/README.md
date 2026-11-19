@@ -12,12 +12,14 @@ import "@m3e/web/content-pane";
 
 ## 🧪 Examples
 
-The following example illustrates basic usage of the content pane.
+Place document content in an `m3e-content-pane` for consistent padding. Constrain the pane's height to let overflowing content scroll vertically.
 
 ```html
 <m3e-content-pane>
-  <p>This is some scrollable content.</p>
-  <p>More content here...</p>
+  <m3e-heading variant="display" size="large">Content header</m3e-heading>
+  <p>
+    <!-- Content omitted for brevity -->
+  </p>
 </m3e-content-pane>
 ```
 

@@ -18,6 +18,43 @@ import "./BreadcrumbItemButtonElement";
  * navigation trail. It renders an internal button and supports navigation
  * attributes for link behavior.
  *
+ * @example
+ * Place items inside a breadcrumb. The last item is automatically treated as
+ * the current page.
+ * ```html
+ * <m3e-breadcrumb>
+ *   <m3e-breadcrumb-item>Dashboard</m3e-breadcrumb-item>
+ *   <m3e-breadcrumb-item>Reports</m3e-breadcrumb-item>
+ *   <m3e-breadcrumb-item>Annual</m3e-breadcrumb-item>
+ * </m3e-breadcrumb>
+ * ```
+ *
+ * @example
+ * Use `href` for links on earlier items. The last item is not interactive; supply
+ * additional items as in the basic example.
+ * ```html
+ * <m3e-breadcrumb>
+ *   <m3e-breadcrumb-item href="https://developer.mozilla.org/en-US/docs/Web" target="_blank">Web</m3e-breadcrumb-item>
+ *   <!-- Additional items omitted for brevity -->
+ * </m3e-breadcrumb>
+ * ```
+ *
+ * @example
+ * Use the `icon` slot to place an icon before a label. For an icon-only item, place the icon in the default slot and set `item-label`.
+ * ```html
+ * <m3e-breadcrumb>
+ *   <m3e-breadcrumb-item item-label="Dashboard">
+ *     <m3e-icon name="dashboard"></m3e-icon>
+ *   </m3e-breadcrumb-item>
+ *   <m3e-breadcrumb-item>
+ *     <m3e-icon slot="icon" name="analytics"></m3e-icon>Reports
+ *   </m3e-breadcrumb-item>
+ *   <m3e-breadcrumb-item>
+ *     <m3e-icon slot="icon" name="calendar_month"></m3e-icon>Annual
+ *   </m3e-breadcrumb-item>
+ * </m3e-breadcrumb>
+ * ```
+ *
  * @tag m3e-breadcrumb-item
  *
  * @slot - Renders the content of the breadcrumb item.
