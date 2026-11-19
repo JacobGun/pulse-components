@@ -1,0 +1,11 @@
+export * from "./DelegatingGestureRecognizerBase";
+export * from "./GestureDetail";
+export * from "./GestureElementBase";
+export * from "./GestureInput";
+export * from "./GestureOptions";
+export * from "./GestureRecognizer";
+export * from "./GestureRecognizerBase";
+export * from "./PointerTracker";
+export * from "./detectGesture";
+export * from "./phase";
+//# sourceMappingURL=index.d.ts.map

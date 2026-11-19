@@ -1,0 +1,1 @@
+{"version":3,"file":"VelocityTracker.d.ts","sourceRoot":"","sources":["../../../../../src/core/shared/utils/VelocityTracker.ts"],"names":[],"mappings":"AAAA,yEAAyE;AACzE,qBAAa,eAAe;;IAI1B;;OAEG;gBACS,QAAQ,GAAE,MAAY;IAIlC;;;;OAIG;IACH,GAAG,CAAC,KAAK,EAAE,MAAM,EAAE,SAAS,GAAE,MAA0B,GAAG,IAAI;IAQ/D;;;OAGG;IACH,WAAW,IAAI,MAAM;IASrB,iCAAiC;IACjC,KAAK,IAAI,IAAI;CAGd"}

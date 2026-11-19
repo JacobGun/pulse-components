@@ -1,0 +1,1 @@
+{"version":3,"file":"PaginatorPageEventDetail.d.ts","sourceRoot":"","sources":["../../../src/paginator/PaginatorPageEventDetail.ts"],"names":[],"mappings":"AAAA,yFAAyF;AACzF,MAAM,WAAW,wBAAwB;IACvC,sDAAsD;IACtD,SAAS,EAAE,MAAM,CAAC;IAElB,sEAAsE;IACtE,iBAAiB,CAAC,EAAE,MAAM,CAAC;IAE3B,6BAA6B;IAC7B,QAAQ,EAAE,MAAM,GAAG,KAAK,CAAC;IAEzB,qDAAqD;IACrD,MAAM,EAAE,MAAM,CAAC;CAChB"}
